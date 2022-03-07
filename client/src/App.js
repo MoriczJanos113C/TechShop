@@ -1,11 +1,6 @@
 import './App.css';
-import { BrowserRouter as Router,Routes, Route} from 'react-router-dom';
-import { CreateProductPage } from './pages/CreateProductPage';
-import {ProductsPage} from './pages/ProductsPage';
-import React, { useState } from 'react';
-import { Header } from './components/Header';
-import { ShoppingCartPage } from './pages/ShoppingCartPage';
-import { RegisterPage } from './pages/RegisterPage';
+import React, { useEffect, useState } from 'react';
+import { AppRouter } from './AppRouter';
 
 //modulok telepítése
 //npm install react-bootstrap bootstrap@5.1.3
@@ -19,21 +14,23 @@ export const UserContext = React.createContext();
 function App() {
 
   const cartState = useState([]);
-  const userState = useState({});
+
+  const userState = useState(() => {
+    const userInLocalStorage = localStorage.getItem('user');
+    return userInLocalStorage ? JSON.parse(userInLocalStorage) : {};
+  });
+  
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(userState[0]));
+  }, userState)
+
+  
 
   return (
     <div className="App">
       <UserContext.Provider value={userState}>
       <ShoppingCartContext.Provider value={cartState}>
-        <Router>
-          <Header />
-            <Routes>
-              <Route path="/create-product" element={<CreateProductPage/>}/>
-              <Route path="/" element={<ProductsPage />}/>
-              <Route path="/cart" element={<ShoppingCartPage />}/>
-              <Route path="/register" element={<RegisterPage />}/>
-        </Routes>
-        </Router>
+        <AppRouter />
       </ShoppingCartContext.Provider>
       </UserContext.Provider>
     </div>

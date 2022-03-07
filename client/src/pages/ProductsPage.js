@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Form, ToastContainer, Toast } from "react-bootstrap";
-import { ShoppingCartContext } from '../App';
+import { Link } from "react-router-dom";
+import { ShoppingCartContext, UserContext } from '../App';
+import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 
 export function ProductsPage(){
 
@@ -10,6 +12,8 @@ export function ProductsPage(){
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [search, setSearch] = useState("");
     const [showToast, setShowToast] = useState(false);
+    const isLoggedIn = useIsLoggedIn();
+    const [user] = useContext(UserContext);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -38,7 +42,7 @@ export function ProductsPage(){
         return products.filter((product) => product.name.includes(search))
     }
 
-    const ProductCard = ({ product, addProductToCart }) => {
+    const ProductCard = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
             <Card key={product.id} className="mb-4">
                 <Card.Img style={{ width: '6rem' }} variant="top" src="./logo192.png" />
@@ -47,7 +51,13 @@ export function ProductsPage(){
                     <Card.Text>
                         {product.description}
                     </Card.Text>
-                    <Button variant="primary" onClick={() => addProductToCart(product)}>Kosárba</Button>
+                    {isLoggedIn && (
+                        <Button variant="primary" onClick={() => addProductToCart(product)}>Kosárba</Button>
+                    )} 
+                    
+                        <Link to={`/products/${product.id}`}>Szerkesztés</Link>
+                    
+                    
                 </Card.Body>
             </Card>
         )
@@ -56,7 +66,7 @@ export function ProductsPage(){
     return(
         <>
         <ToastContainer 
-        style={{"z-index": "1"}}
+        style={{"zIndex": "1"}}
         className="p-3 position-fixed" 
         position={"top-center"}>
           <Toast 
@@ -92,6 +102,8 @@ export function ProductsPage(){
                         column
                         ).map((product) => ( 
                     <ProductCard 
+                    isLoggedIn={isLoggedIn}
+                    isAdmin={user.role==="admin"}
                     key={product.id}
                     product={product} 
                     addProductToCart={addProductToCart}/>

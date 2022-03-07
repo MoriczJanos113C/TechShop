@@ -11,7 +11,7 @@ app.use(cors());
 //!!db szerkezet!!
 //tábla                 (oszlopok())
 //product - (cost(int), name(string), description(string))
-//user    - (username(string), password(string))    
+//user    - (username(string), password(string)), role((string))   
 //
 //
 //
@@ -40,9 +40,26 @@ app.post('/products', (req, res)=> {
 });
 
 app.get('/products', (req, res)=> {
+
+    /*const authorization = req.headers.authorization;
+    console.log(authorization);
+    const token = authorization.substring(7);
+    console.log(token);
+    try{
+        const user = jwt.verify(token, "my-super-secret-password");
+        console.log("user", user);
+        if(user.role !== 'admin'){
+            return res.status(403).send("authorization error");
+        }
+    }catch(err){
+        res.status(403).send("authorization error");
+    }*/
+    
+    
+
     db.query("SELECT * FROM product", (err, result) => {
         if (err) throw err;
-        console.log(req.body);//postmanben teszthez verifikálni, hogy tenyleg mukodik-e
+        //console.log(req.body); //postmanben teszthez verifikálni, hogy tenyleg mukodik-e
         if(result){
         res.send(result);
         }
@@ -79,8 +96,27 @@ app.post('/login', (req, res)=> {
     );
 });
 
+app.put('/products/:id', (req, res)=> {
+    const {cost, name, description, id} = req.body;
 
+    db.query("UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ?", [cost, name, description, id], (err, result) => {
+        if(err){
+            console.log(err);
+        }else{
+            
+            res.send(result);
+        }
+        console.log(result);
+    }
+    );
+});
 
+app.get('/products/:id', (req, res)=> {
+    db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
 
 app.listen(8080, () => {
     console.log("running server");

@@ -1,22 +1,40 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Col, Form, Button, Container, Row } from "react-bootstrap";
 import Axios from "axios";
 import React from "react";
 import { UserContext } from "../App";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export function CreateProductPage(){
-
+export function EditProduct(){
+    
+    
     const DEFAULT_FORM_OBJECT = {
         name:'',
         cost: 0,
         description:''
     };
-
+    
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const [user] = useContext(UserContext);
+    const { productId } = useParams();
     const navigate = useNavigate();
 
+    useEffect(()=> {
+        const getProduct = async () => {
+            const { data: product } = await Axios.get(`http://localhost:8080/products/${productId}`);
+            setForm({
+                name: product.name, 
+                cost: product.cost, 
+                description: product.description
+            });
+        };   
+        getProduct();
+    }, [])
+
+    
+
+    
+    
     const updateFormValue = (key) => (e) => {
         setForm({
             ...form,
@@ -24,13 +42,16 @@ export function CreateProductPage(){
         });
     };
 
-    const createProduct =  async (e) => {
+    
+
+    const updateProduct =  async (e) => {
         e.preventDefault();
-        await Axios.post("http://localhost:8080/products", form, {
+        await Axios.put(`http://localhost:8080/products/${productId}`, form, {
             headers:{
                 'Authorization': `Bearer ${user.token}`
             }
         });
+        
         navigate("/");
         setForm(DEFAULT_FORM_OBJECT);
     };
@@ -38,12 +59,13 @@ export function CreateProductPage(){
     return(
         
         <div className="product">
+            
             <Container>
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1>Új termék hozzáadása</h1>
-                        <Form onSubmit={createProduct}>
+                    <h1>Termék szerkesztése</h1>
+                        <Form onSubmit={updateProduct}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Név</Form.Label>
                                     <Form.Control 
@@ -69,7 +91,7 @@ export function CreateProductPage(){
                                             rows={3}/>
                                 </Form.Group>
                                 <Button variant="primary" type="submit">
-                                    Új termék felvétele
+                                   Mentés
                                 </Button>
                             </Form>
                         </Col>
