@@ -23,14 +23,14 @@ const db = mysql.createConnection({
     database:"techshop",
 });
 
-//uj product felvevése (create product oldalhoz)
+//new product (create product page)
 app.post('/products', (req, res)=> {
 
     const cost = req.body.cost;
     const name = req.body.name;
     const description = req.body.description;
 
-    db.query("INSERT INTO product (cost, name, description)  VALUES (?, ?, ?) ", [cost, name, description], (err, result) => {
+    db.query("INSERT INTO product (cost, name, description)  VALUES (?, ?, ?)", [cost, name, description], (err, result) => {
         if (err) throw err;
         console.log(req.body);//postmanben teszthez verifikálni, hogy tenyleg mukodik-e
         if(result){
@@ -38,7 +38,7 @@ app.post('/products', (req, res)=> {
         }
     });
 });
-
+//getting all prod 
 app.get('/products', (req, res)=> {
 
     /*const authorization = req.headers.authorization;
@@ -70,32 +70,28 @@ app.post('/register', (req, res)=> {
 
     const username = req.body.username
     const password = req.body.password
+    const role = req.body.role;
 
-
-    db.query("INSERT INTO user (username, password) VALUES (?, ?)",[username,password], (err, result) => {
+    db.query("INSERT INTO user (username, password, role) VALUES (?, ?, 'user')",[username,password, role], (err, result) => {
         if (err) throw err;
     });
 });
 
 app.post('/login', (req, res)=> {
-    const username = req.body.username;
-    const password = req.body.password;
+    const username = req.body.username
+    const password = req.body.password
 
-
-    db.query("SELECT * FROM users WHERE username = ? AND password = ?",[username,password], (err, result) => {
-        if(err){
-            res.send({err: err});
-        }
-        if (result.length > 0) {
-            res.send(result);
-        }
-        else{
-            res.send({message: "Rossz felhasználónév jelszó kombináció"});
-        }
-    }
-    );
+    db.query("SELECT * FROM user WHERE username = ? AND password = ?",[username,password], (err, result) => {
+        if(err) throw err;
+        const token = jwt.sign(username, "my-super-secret-password");
+        res.json({
+            token,
+            user: username
+        
+    }); 
+}) 
 });
-
+//updating prod
 app.put('/products/:id', (req, res)=> {
     const {cost, name, description, id} = req.body;
 
@@ -103,14 +99,20 @@ app.put('/products/:id', (req, res)=> {
         if(err){
             console.log(err);
         }else{
-            
-            res.send(result);
+            res.send("affected rows"+result.affectedRows);
         }
-        console.log(result);
     }
     );
 });
+//deleting prod
+app.delete('/products/:id', (req, res) => {
+    db.query("DELETE FROM product WHERE id=?", req.params.id, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
 
+//getting 1 prod with id
 app.get('/products/:id', (req, res)=> {
     db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
         if (err) throw err;

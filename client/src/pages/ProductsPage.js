@@ -42,6 +42,8 @@ export function ProductsPage(){
         return products.filter((product) => product.name.includes(search))
     }
 
+    
+
     const ProductCard = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
             <Card key={product.id} className="mb-4">
@@ -54,10 +56,10 @@ export function ProductsPage(){
                     {isLoggedIn && (
                         <Button variant="primary" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )} 
-                    
+                    {isAdmin && (
                         <Link to={`/products/${product.id}`}>Szerkesztés</Link>
-                    
-                    
+                        )} 
+                    <Link to={`/products/${product.id}/product`}>Leírás</Link>    
                 </Card.Body>
             </Card>
         )
