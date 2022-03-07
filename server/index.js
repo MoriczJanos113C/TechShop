@@ -30,31 +30,25 @@ app.post('/products', (req, res)=> {
     const name = req.body.name;
     const description = req.body.description;
 
+    
+
     db.query("INSERT INTO product (cost, name, description)  VALUES (?, ?, ?)", [cost, name, description], (err, result) => {
-        if (err) throw err;
-        console.log(req.body);//postmanben teszthez verifikálni, hogy tenyleg mukodik-e
-        if(result){
-        res.send(result);
+        
+        const authorization = req.headers.authorization;
+        const token = authorization.substring(7);
+        try{
+            const user = jwt.verify(token, "my-super-secret-password");
+            if(user.role !== "admin") {
+                return res.status(403).send('author error');
+            }
+        } catch{
+            res.status(403).send('author error');
         }
     });
 });
 //getting all prod 
 app.get('/products', (req, res)=> {
 
-    /*const authorization = req.headers.authorization;
-    console.log(authorization);
-    const token = authorization.substring(7);
-    console.log(token);
-    try{
-        const user = jwt.verify(token, "my-super-secret-password");
-        console.log("user", user);
-        if(user.role !== 'admin'){
-            return res.status(403).send("authorization error");
-        }
-    }catch(err){
-        res.status(403).send("authorization error");
-    }*/
-    
     
 
     db.query("SELECT * FROM product", (err, result) => {
@@ -68,29 +62,42 @@ app.get('/products', (req, res)=> {
 
 app.post('/register', (req, res)=> {
 
-    const username = req.body.username
-    const password = req.body.password
+    const username = req.body.username;
+    const password = req.body.password;
     const role = req.body.role;
 
-    db.query("INSERT INTO user (username, password, role) VALUES (?, ?, 'user')",[username,password, role], (err, result) => {
+    db.query("INSERT INTO user (username, password, role) VALUES (?, ?, '')",[username,password, role], (err, result) => {
         if (err) throw err;
+        
     });
 });
 
 app.post('/login', (req, res)=> {
-    const username = req.body.username
-    const password = req.body.password
+        const userInDb=({
+            username: req.body.username,
+            password: req.body.password,
+        })
 
-    db.query("SELECT * FROM user WHERE username = ? AND password = ?",[username,password], (err, result) => {
+        const username = req.body.username;
+        const password = req.body.password;
+    db.query("SELECT * FROM user WHERE username = ? AND password = ?",[username, password], (err, result) => {
         if(err) throw err;
-        const token = jwt.sign(username, "my-super-secret-password");
-        res.json({
-            token,
-            user: username
-        
-    }); 
-}) 
+        if (result.length > 0) {
+            delete userInDb.password;
+            const userObject = userInDb;
+            const token = jwt.sign(userObject, "my-super-secret-password");
+            res.json({
+                token,
+                user: userInDb,
+            })
+        }
+        else{
+            res.send({message: "Rossz felhasználónév jelszó kombináció"});
+        }
+    }) 
 });
+
+
 //updating prod
 app.put('/products/:id', (req, res)=> {
     const {cost, name, description, id} = req.body;

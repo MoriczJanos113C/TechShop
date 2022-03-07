@@ -16,12 +16,12 @@ function App() {
   const cartState = useState([]);
 
   const userState = useState(() => {
-    const userInLocalStorage = localStorage.getItem('user');
+    const userInLocalStorage = localStorage.getItem("user");
     return userInLocalStorage ? JSON.parse(userInLocalStorage) : {};
   });
   
   useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(userState[0]));
+    localStorage.setItem("user", JSON.stringify(userState[0]));
   }, userState)
 
   

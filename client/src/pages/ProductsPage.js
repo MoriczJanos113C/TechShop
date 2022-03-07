@@ -97,18 +97,18 @@ export function ProductsPage(){
             </Row>
             <Row>
                 {new Array(NUMBER_OF_COLUMNS).fill('').map((value, column) => (
-                    <Col>
+                    <Col key={column}>
                     {getProductsInColumn(
                         getFilteredProducts(products), 
                         NUMBER_OF_COLUMNS, 
                         column
                         ).map((product) => ( 
                     <ProductCard 
-                    isLoggedIn={isLoggedIn}
-                    isAdmin={user.role==="admin"}
-                    key={product.id}
-                    product={product} 
-                    addProductToCart={addProductToCart}/>
+                        key={product.id}
+                        isLoggedIn={isLoggedIn}
+                        isAdmin={user.role==="admin"}
+                        product={product} 
+                        addProductToCart={addProductToCart}/>
                         )
                     )}
                 </Col>
