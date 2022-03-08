@@ -3,8 +3,7 @@ const app = express();
 const cors = require('cors');
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
-
-
+const bcrypt = require('bcryptjs');
 app.use(express.json());
 app.use(cors());
 
@@ -40,83 +39,103 @@ app.post('/products', (req, res)=> {
 });
 
 app.get('/products', (req, res)=> {
-
-    /*const authorization = req.headers.authorization;
-    console.log(authorization);
-    const token = authorization.substring(7);
-    console.log(token);
-    try{
-        const user = jwt.verify(token, "my-super-secret-password");
-        console.log("user", user);
-        if(user.role !== 'admin'){
-            return res.status(403).send("authorization error");
-        }
-    }catch(err){
-        res.status(403).send("authorization error");
-    }*/
     
-    
-
     db.query("SELECT * FROM product", (err, result) => {
-        if (err) throw err;
-        //console.log(req.body); //postmanben teszthez verifikálni, hogy tenyleg mukodik-e
-        if(result){
-        res.send(result);
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any product"})
         }
     });
 });
 
-app.post('/register', (req, res)=> {
+app.post('/register', async (req, res)=> {
+    const username = req.body.username;
+    const password = req.body.password;
+    const role = req.body.role;
 
-    const username = req.body.username
-    const password = req.body.password
+    const hashedPass = await bcrypt.hashSync(password,10)
+    console.log(req.body.password+'\n'+hashedPass)
 
-
-    db.query("INSERT INTO user (username, password) VALUES (?, ?)",[username,password], (err, result) => {
-        if (err) throw err;
-    });
+    db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
+        if (err) return err;
+            if(result.length === 0){
+                db.query("INSERT INTO user (username, password, role) VALUES (?, ?, '')",[username, hashedPass, role], (err, result) => {
+                    if (err) {
+                        res.send({err: err})
+                    }
+                        res.send({result, message: "REGISTERED"});
+                    }
+                );
+            }else{
+                    res.send({message: "username is exist"});
+                    }    
+    })
 });
 
 app.post('/login', (req, res)=> {
-    const username = req.body.username;
-    const password = req.body.password;
 
+    const {username, password} = req.body;
 
-    db.query("SELECT * FROM users WHERE username = ? AND password = ?",[username,password], (err, result) => {
+    db.query("SELECT * FROM user WHERE username = ?",
+    [username], 
+    (err, result) => {
         if(err){
             res.send({err: err});
         }
         if (result.length > 0) {
-            res.send(result);
-        }
+            bcrypt.compare(password, result[0].password, function (err, Logresult) {
+                if(err) throw err;
+                if(Logresult){
+                    res.send(result);
+                }else{
+                    res.send(result);
+                }
+            })
+    }
         else{
-            res.send({message: "Rossz felhasználónév jelszó kombináció"});
+            res.send({message: "Not good username"});
         }
     }
     );
 });
 
-app.put('/products/:id', (req, res)=> {
-    const {cost, name, description, id} = req.body;
+app.put('/products/:id', async (req, res)=> {
+    const {cost, name, description} = req.body;
 
-    db.query("UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ?", [cost, name, description, id], (err, result) => {
-        if(err){
-            console.log(err);
+    db.query(`UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, name, description], (err, result) => {
+        if(err) throw err;
+        if(result){
+            console.log(result);
+            res.send({message: "Saved"})
         }else{
-            
-            res.send(result);
+            res.send({message: "Not saved"})
+            }
+
         }
-        console.log(result);
-    }
     );
 });
 
 app.get('/products/:id', (req, res)=> {
     db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
-        if (err) throw err;
-        res.send(result);
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any product"})
+        }
+        
     });
 });
+
+app.delete('/deleteProduct/:id', (req, res) => {
+    db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
+        if(result){
+            res.send(result);
+        }else{
+            res.send({message: "Not deleted any product"})
+        }
+    })
+})
 
 app.listen(8080, () => {
     console.log("running server");
