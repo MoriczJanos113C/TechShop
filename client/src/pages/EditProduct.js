@@ -19,7 +19,17 @@ export function EditProduct(){
     const { productId } = useParams();
     const navigate = useNavigate();
 
-    
+    useEffect(()=> {
+        const getProduct = async () => {
+            const { data: product } = await Axios.get(`http://localhost:8080/products/${productId}`);
+            setForm({
+                name: product.name, 
+                cost: product.cost, 
+                description: product.description
+            });
+        };   
+        getProduct();
+    }, [])
 
     
 
@@ -46,19 +56,6 @@ export function EditProduct(){
         setForm(DEFAULT_FORM_OBJECT);
     };
 
-    useEffect(()=> {
-        const getProduct = async () => {
-            const { data: product } = await Axios.get(`http://localhost:8080/products/${productId}`);
-            setForm({
-                name: product.name, 
-                cost: product.cost, 
-                description: product.description
-            });
-        };   
-        getProduct();
-    }, [])
-
-    
     return(
         
         <div className="product">

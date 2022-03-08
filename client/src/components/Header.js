@@ -1,20 +1,19 @@
 import React, { useContext } from "react";
 import { Container, Navbar} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { ShoppingCartContext, UserContext } from '../App';
+import { ShoppingCartContext } from '../App';
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 
 export function Header(){
 
     const [cart] = useContext(ShoppingCartContext);
-    const [user] = useContext(UserContext);
     const isLoggedIn = useIsLoggedIn();
 
     return(
-        <Navbar bg="light" expand="lg" className="mb-4">
+        <Navbar bg="light" expand="lg">
         <Container>
             <Navbar.Brand>
-                <Link to="/">Kezdőlap |||| Bejelentkezve: {user.user?.username}-ként :D</Link>
+                <Link to="/">Kezdőlap</Link>
             </Navbar.Brand>
             {!isLoggedIn && <Link to="/login">Bejelentkezés</Link>}
             {!isLoggedIn && <Link to="/register">Regisztráció</Link>}

@@ -42,8 +42,6 @@ export function ProductsPage(){
         return products.filter((product) => product.name.includes(search))
     }
 
-    
-
     const ProductCard = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
             <Card key={product.id} className="mb-4">
@@ -56,10 +54,10 @@ export function ProductsPage(){
                     {isLoggedIn && (
                         <Button variant="primary" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )} 
-                    {isAdmin && (
+                    
                         <Link to={`/products/${product.id}`}>Szerkesztés</Link>
-                        )} 
-                    <Link to={`/products/${product.id}/product`}>Leírás</Link>    
+                    
+                    
                 </Card.Body>
             </Card>
         )
@@ -97,18 +95,18 @@ export function ProductsPage(){
             </Row>
             <Row>
                 {new Array(NUMBER_OF_COLUMNS).fill('').map((value, column) => (
-                    <Col key={column}>
+                    <Col>
                     {getProductsInColumn(
                         getFilteredProducts(products), 
                         NUMBER_OF_COLUMNS, 
                         column
                         ).map((product) => ( 
                     <ProductCard 
-                        key={product.id}
-                        isLoggedIn={isLoggedIn}
-                        isAdmin={user.role==="admin"}
-                        product={product} 
-                        addProductToCart={addProductToCart}/>
+                    isLoggedIn={isLoggedIn}
+                    isAdmin={user.role==="admin"}
+                    key={product.id}
+                    product={product} 
+                    addProductToCart={addProductToCart}/>
                         )
                     )}
                 </Col>

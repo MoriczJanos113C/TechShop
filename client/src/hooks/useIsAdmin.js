@@ -3,5 +3,5 @@ import { UserContext } from "../App";
 
 export const useIsAdmin = () => {
     const [user] = useContext(UserContext);
-    return user.user?.role === "admin";
+    return user.user?.role ==="admin";
 }

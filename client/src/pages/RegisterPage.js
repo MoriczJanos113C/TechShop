@@ -14,7 +14,6 @@ export function RegisterPage(){
 
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const [user, setUser] = useContext(UserContext);
-    
     const navigate = useNavigate();
 
     const updateFormValue = (key) => (e) => {
@@ -28,13 +27,13 @@ export function RegisterPage(){
         e.preventDefault();
         await Axios.post("http://localhost:8080/register", form);
         const response = await Axios.post("http://localhost:8080/login", form);
-        const { token, user } = response.data;
+        const {token, user} = response.data;
         console.log("token", token);
         setUser({
             token,
             user,
         });
-        navigate("/");   
+        navigate("/");
     };
 
     return(
