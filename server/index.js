@@ -5,8 +5,16 @@ const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 
 
+const { Users } = require("./models");
+const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
+const { createTokens, validateToken } = require("./JWT");
+app.use(cookieParser());
+
 app.use(express.json());
 app.use(cors());
+
+
 
 //!!db szerkezet!!
 //tábla                 (oszlopok())
@@ -48,9 +56,6 @@ app.post('/products', (req, res)=> {
 });
 //getting all prod 
 app.get('/products', (req, res)=> {
-
-    
-
     db.query("SELECT * FROM product", (err, result) => {
         if (err) throw err;
         //console.log(req.body); //postmanben teszthez verifikálni, hogy tenyleg mukodik-e
@@ -62,40 +67,51 @@ app.get('/products', (req, res)=> {
 
 app.post('/register', (req, res)=> {
 
-    const username = req.body.username;
-    const password = req.body.password;
-    const role = req.body.role;
+    const { username, password } = req.body;
+    bcrypt.hash(password, 12, function(err,hash){
+    Users.create({
+      username: username,
+      password: hash,
+    })
+      .then(() => {
+        res.json("USER REGISTERED");
+      })
+      .catch((err) => {
+        if (err) {
+          res.status(400).json({ error: err });
+        }
+      });
+  });
+});
 
-    db.query("INSERT INTO user (username, password, role) VALUES (?, ?, '')",[username,password, role], (err, result) => {
-        if (err) throw err;
-        
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+    console.log(req.body)
+  
+    const user = await Users.findOne({ where: { username: username } });
+  
+    if (!user) res.status(400).json({ error: "User Doesn't Exist" });
+  
+    const dbPassword = user.password;
+    console.log(dbPassword);
+    bcrypt.compare(password, dbPassword, function(err, match) {
+        console.log(match)
+        console.log(err)
+      if (!match) {
+        res
+          .status(400)
+          .json({ error: "Wrong Username and Password Combination!" });
+      } else {
+        const accessToken = createTokens(user);
+        res.cookie("access-token", accessToken, {
+          maxAge: 60 * 60 * 24 * 30 * 1000,
+          httpOnly: true,
+        });
+  
+        res.json("LOGGED IN");
+      }
     });
-});
-
-app.post('/login', (req, res)=> {
-        const userInDb=({
-            username: req.body.username,
-            password: req.body.password,
-        })
-
-        const username = req.body.username;
-        const password = req.body.password;
-    db.query("SELECT * FROM user WHERE username = ? AND password = ?",[username, password], (err, result) => {
-        if(err) throw err;
-        if (result.length > 0) {
-            delete userInDb.password;
-            const userObject = userInDb;
-            const token = jwt.sign(userObject, "my-super-secret-password");
-            res.json({
-                token,
-                user: userInDb,
-            })
-        }
-        else{
-            res.send({message: "Rossz felhasználónév jelszó kombináció"});
-        }
-    }) 
-});
+  });
 
 
 //updating prod
