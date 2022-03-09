@@ -11,7 +11,7 @@ app.use(cors());
 //tábla                 (oszlopok())
 //product - (cost(int), name(string), description(string)), image(blob)
 //user    - (username(string), password(string)), role((string))   
-//
+//news    - (title(string), thePost(string), someDescription(string))
 //
 //
 
@@ -186,8 +186,209 @@ app.delete('/usersDelete/:id', (req, res) => {
     })
 })
 
+//ENTRIES operations
+app.post('/news', (req, res)=> {
+
+    const title = req.body.title;
+    const thePost = req.body.thePost;
+    const someDescription = req.body.someDescription;
+
+    db.query("INSERT INTO news (title, thePost, someDescription)  VALUES (?, ?, ?) ", [title, thePost, someDescription], (err, result) => {
+        if (err) throw err;
+        console.log(req.body);
+        if(result){
+        res.send(result);
+        }
+    });
+});
+
+app.get('/news', (req, res)=> {
+    
+    db.query("SELECT * FROM news", (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any news"})
+        }
+    });
+});
+
+app.put('/news/:id', async (req, res)=> {
+    const title = req.body.title;
+    const thePost = req.body.thePost;
+    const someDescription = req.body.someDescription;
+
+    db.query(`UPDATE news SET title = ?, thePost = ?, someDescription = ? WHERE id = ${req.params.id}`, [title, thePost, someDescription], (err, result) => {
+        if(err) throw err;
+        if(result){
+            console.log(result);
+            res.send({message: "Saved"})
+        }else{
+            res.send({message: "Not saved"})
+            }
+
+        }
+    );
+});
+
+app.get('/news/:id', (req, res)=> {
+    db.query("SELECT * FROM news WHERE id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any news"})
+        }
+        
+    });
+});
+
+app.delete('/deleteNews/:id', (req, res) => {
+    db.query(`DELETE FROM news WHERE id = ${req.params.id}`,(err, result) => {
+        if(result){
+            res.send(result);
+        }else{
+            res.send({message: "Not deleted any news"})
+        }
+    })
+})
 
 
+//Suppliers operations
+app.post('/suppliers', (req, res)=> {
+
+    const name = req.body.name;
+    const telephone = req.body.telephone;
+    const fromCountry = req.body.fromCountry;
+    const productsBrand = req.body.productsBrand;
+
+    db.query("INSERT INTO suppliers (name, telephone, fromCountry, productsBrand)  VALUES (?, ?, ?, ?) ", [name, telephone, fromCountry, productsBrand], (err, result) => {
+        if (err) throw err;
+        console.log(req.body);
+        if(result){
+        res.send(result);
+        }
+    });
+});
+
+app.get('/suppliers', (req, res)=> {
+    
+    db.query("SELECT * FROM suppliers", (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any supplier"})
+        }
+    });
+});
+
+app.put('/suppliers/:id', async (req, res)=> {
+    const name = req.body.name;
+    const telephone = req.body.telephone;
+    const fromCountry = req.body.fromCountry;
+    const productsBrand = req.body.productsBrand;
+
+    db.query(`UPDATE suppliers SET name = ?, telephone = ?, fromCountry = ?, productsBrand = ? WHERE id = ${req.params.id}`, [name, telephone, fromCountry, productsBrand], (err, result) => {
+        if(err) throw err;
+        if(result){
+            console.log(result);
+            res.send({message: "Saved"})
+        }else{
+            res.send({message: "Not saved"})
+            }
+
+        }
+    );
+});
+
+app.get('/suppliers/:id', (req, res)=> {
+    db.query("SELECT * FROM suppliers WHERE id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any supplier"})
+        }
+        
+    });
+});
+
+app.delete('/deleteSupplier/:id', (req, res) => {
+    db.query(`DELETE FROM suppliers WHERE id = ${req.params.id}`,(err, result) => {
+        if(result){
+            res.send(result);
+        }else{
+            res.send({message: "Not deleted any supplier"})
+        }
+    })
+})
+
+
+//Orders operations MINTA, még nem tervezett tábla
+app.post('/orders', (req, res)=> {
+
+    const name = req.body.name;
+    const telephone = req.body.telephone;
+    const fromCountry = req.body.fromCountry;
+    const productsBrand = req.body.productsBrand;
+
+    db.query("INSERT INTO suppliers (name, telephone, fromCountry, productsBrand)  VALUES (?, ?, ?, ?) ", [name, telephone, fromCountry, productsBrand], (err, result) => {
+        if (err) throw err;
+        console.log(req.body);
+        if(result){
+        res.send(result);
+        }
+    });
+});
+
+app.get('/suppliers', (req, res)=> {
+    
+    db.query("SELECT * FROM suppliers", (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any supplier"})
+        }
+    });
+});
+
+app.put('/suppliers/:id', async (req, res)=> {
+    const name = req.body.name;
+    const telephone = req.body.telephone;
+    const fromCountry = req.body.fromCountry;
+    const productsBrand = req.body.productsBrand;
+
+    db.query(`UPDATE suppliers SET name = ?, telephone = ?, fromCountry = ?, productsBrand = ? WHERE id = ${req.params.id}`, [name, telephone, fromCountry, productsBrand], (err, result) => {
+        if(err) throw err;
+        if(result){
+            console.log(result);
+            res.send({message: "Saved"})
+        }else{
+            res.send({message: "Not saved"})
+            }
+
+        }
+    );
+});
+
+app.get('/suppliers/:id', (req, res)=> {
+    db.query("SELECT * FROM suppliers WHERE id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any supplier"})
+        }
+        
+    });
+});
+
+app.delete('/deleteSupplier/:id', (req, res) => {
+    db.query(`DELETE FROM suppliers WHERE id = ${req.params.id}`,(err, result) => {
+        if(result){
+            res.send(result);
+        }else{
+            res.send({message: "Not deleted any supplier"})
+        }
+    })
+})
 
 app.listen(8080, () => {
     console.log("running server");
