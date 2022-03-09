@@ -9,7 +9,7 @@ app.use(cors());
 
 //!!db szerkezet!!
 //tábla                 (oszlopok())
-//product - (cost(int), name(string), description(string))
+//product - (cost(int), name(string), description(string)), image(blob)
 //user    - (username(string), password(string)), role((string))   
 //
 //
@@ -22,7 +22,8 @@ const db = mysql.createConnection({
     database:"techshop",
 });
 
-//uj product felvevése (create product oldalhoz)
+
+//PRODUCT operations
 app.post('/products', (req, res)=> {
 
     const cost = req.body.cost;
@@ -31,7 +32,7 @@ app.post('/products', (req, res)=> {
 
     db.query("INSERT INTO product (cost, name, description)  VALUES (?, ?, ?) ", [cost, name, description], (err, result) => {
         if (err) throw err;
-        console.log(req.body);//postmanben teszthez verifikálni, hogy tenyleg mukodik-e
+        console.log(req.body);
         if(result){
         res.send(result);
         }
@@ -47,57 +48,6 @@ app.get('/products', (req, res)=> {
             res.send({message: "Not found any product"})
         }
     });
-});
-
-app.post('/register', async (req, res)=> {
-    const username = req.body.username;
-    const password = req.body.password;
-    const role = req.body.role;
-
-    const hashedPass = await bcrypt.hashSync(password,10)
-    console.log(req.body.password+'\n'+hashedPass)
-
-    db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
-        if (err) return err;
-            if(result.length === 0){
-                db.query("INSERT INTO user (username, password, role) VALUES (?, ?, '')",[username, hashedPass, role], (err, result) => {
-                    if (err) {
-                        res.send({err: err})
-                    }
-                        res.send({result, message: "REGISTERED"});
-                    }
-                );
-            }else{
-                    res.send({message: "username is exist"});
-                    }    
-    })
-});
-
-app.post('/login', (req, res)=> {
-
-    const {username, password} = req.body;
-
-    db.query("SELECT * FROM user WHERE username = ?",
-    [username], 
-    (err, result) => {
-        if(err){
-            res.send({err: err});
-        }
-        if (result.length > 0) {
-            bcrypt.compare(password, result[0].password, function (err, Logresult) {
-                if(err) throw err;
-                if(Logresult){
-                    res.send(result);
-                }else{
-                    res.send(result);
-                }
-            })
-    }
-        else{
-            res.send({message: "Not good username"});
-        }
-    }
-    );
 });
 
 app.put('/products/:id', async (req, res)=> {
@@ -136,6 +86,108 @@ app.delete('/deleteProduct/:id', (req, res) => {
         }
     })
 })
+
+
+//USER OPERATIONS
+app.post('/register', async (req, res)=> {
+    const username = req.body.username;
+    const password = req.body.password;
+    const role = req.body.role;
+
+    const hashedPass = await bcrypt.hashSync(password,10)
+    console.log(req.body.password+'\n'+hashedPass)
+
+    db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
+        if (err) return err;
+            if(result.length === 0){
+                db.query("INSERT INTO user (username, password, role) VALUES (?, ?, '')",[username, hashedPass, role], (err, result) => {
+                    if (err) {
+                        res.send({err: err})
+                    }
+                        res.send({result, message: "REGISTERED"});
+                    }
+                );
+            }else{
+                    res.send({message: "username is exist"});
+                    }    
+    })
+});
+
+app.post('/login', (req, res)=> {
+    const {username, password} = req.body;
+
+    db.query("SELECT * FROM user WHERE username = ?",
+    [username], 
+    (err, result) => {
+        if(err){
+            res.send({err: err});
+        }
+        if (result.length > 0) {
+            bcrypt.compare(password, result[0].password, function (err, Logresult) {
+                if(err) throw err;
+                if(Logresult){
+                    res.send(result);
+                }else{
+                    res.send(result);
+                }
+            })
+    }
+        else{
+            res.send({message: "Not good username"});
+        }
+    }
+    );
+});
+
+app.get('/users', (req, res)=> {
+    
+    db.query("SELECT * FROM user", (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any user"})
+        }
+    });
+});
+
+app.get('/users/:id', (req, res)=> {
+    db.query("SELECT * FROM user WHERE id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any user"})
+        }
+        
+    });
+});
+
+app.put('/users/:id', async (req, res)=> {
+    const {username, password, role} = req.body;
+
+    db.query(`UPDATE user SET username = ?, password = ?, role = ? WHERE id = ${req.params.id}`, [username, password, role], (err, result) => {
+        if(err) throw err;
+        if(result){
+            res.send({message: "Saved"})
+        }else{
+            res.send({message: "Not saved"})
+            }
+
+        }
+    );
+});
+
+app.delete('/usersDelete/:id', (req, res) => {
+    db.query(`DELETE FROM user WHERE id = ${req.params.id}`,(err, result) => {
+        if(result){
+            res.send(result);
+        }else{
+            res.send({message: "Not deleted any user"})
+        }
+    })
+})
+
+
+
 
 app.listen(8080, () => {
     console.log("running server");
