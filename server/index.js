@@ -339,7 +339,7 @@ app.post('/orders', (req, res)=> {
     });
 });
 
-app.get('/suppliers', (req, res)=> {
+app.get('/orders', (req, res)=> {
     
     db.query("SELECT * FROM suppliers", (err, result) => {
         if (result){
@@ -350,7 +350,7 @@ app.get('/suppliers', (req, res)=> {
     });
 });
 
-app.put('/suppliers/:id', async (req, res)=> {
+app.put('/orders/:id', async (req, res)=> {
     const name = req.body.name;
     const telephone = req.body.telephone;
     const fromCountry = req.body.fromCountry;
@@ -369,7 +369,7 @@ app.put('/suppliers/:id', async (req, res)=> {
     );
 });
 
-app.get('/suppliers/:id', (req, res)=> {
+app.get('/orders/:id', (req, res)=> {
     db.query("SELECT * FROM suppliers WHERE id = ?", req.params.id, (err, result) => {
         if (result){
             res.send(result);
@@ -380,7 +380,7 @@ app.get('/suppliers/:id', (req, res)=> {
     });
 });
 
-app.delete('/deleteSupplier/:id', (req, res) => {
+app.delete('/deleteOrders/:id', (req, res) => {
     db.query(`DELETE FROM suppliers WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             res.send(result);
