@@ -89,12 +89,12 @@ app.delete('/deleteProduct/:id', (req, res) => {
 
 
 //USER OPERATIONS
-app.post('/register', async (req, res)=> {
+app.post('/register', (req, res)=> {
     const username = req.body.username;
     const password = req.body.password;
     const role = req.body.role;
-
-    const hashedPass = await bcrypt.hashSync(password,10)
+    console.log(password);
+    const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
     console.log(req.body.password+'\n'+hashedPass)
 
     db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
@@ -122,16 +122,18 @@ app.post('/login', (req, res)=> {
         if(err){
             res.send({err: err});
         }
+        
         if (result.length > 0) {
-            bcrypt.compare(password, result[0].password, function (err, Logresult) {
-                if(err) throw err;
-                if(Logresult){
-                    res.send(result);
-                }else{
-                    res.send(result);
-                }
-            })
-    }
+            const token = jwt.sign(username, "secret-password");
+            console.log("token",token)
+            console.log("bcrypt",bcrypt.hashSync(password, 10))
+            if(bcrypt.compareSync(password, result[0].password)){
+                res.send(JSON.stringify({token : token, user: result}))
+            }
+            else{
+                res.send("hiba")
+                }       
+            }
         else{
             res.send({message: "Not good username"});
         }

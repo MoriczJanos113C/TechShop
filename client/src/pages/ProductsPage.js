@@ -54,10 +54,10 @@ export function ProductsPage(){
                     {isLoggedIn && (
                         <Button variant="primary" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )} 
-                    
+                    {isAdmin && (
                         <Link to={`/products/${product.id}`}>Szerkesztés</Link>
-                    
-                    
+                    )}    
+                    <Link to={`/products/product/${product.id}`}>Szerkesztés</Link>              
                 </Card.Body>
             </Card>
         )

@@ -27,7 +27,7 @@ export function LoginPage(){
         e.preventDefault();
         const response = await Axios.post("http://localhost:8080/login", form);
         const {token, user} = response.data;
-        console.log("token", token);
+        console.log(response.data);
         setUser({
             token,
             user,
