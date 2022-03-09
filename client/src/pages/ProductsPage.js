@@ -57,7 +57,8 @@ export function ProductsPage(){
                     {isAdmin && (
                         <Link to={`/products/${product.id}`}>Szerkesztés</Link>
                     )}    
-                    <Link to={`/products/product/${product.id}`}>Szerkesztés</Link>              
+                    <Link to={`/products/product/${product.id}`}>Szerkesztés</Link>   
+                    <Link to={`/product/:id`}>Leírás</Link>            
                 </Card.Body>
             </Card>
         )

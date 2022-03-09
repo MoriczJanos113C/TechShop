@@ -77,6 +77,17 @@ app.get('/products/:id', (req, res)=> {
     });
 });
 
+app.get('/product/:id', (req, res)=> {
+    db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any product"})
+        }
+        
+    });
+});
+
 app.delete('/deleteProduct/:id', (req, res) => {
     db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
