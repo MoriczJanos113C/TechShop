@@ -12,7 +12,7 @@ app.use(cors());
 //product - (cost(int), name(string), description(string)), image(blob)
 //user    - (username(string), password(string)), role((string))   
 //news    - (title(string), thePost(string), someDescription(string))
-//
+//supplier - (name(string), (fromCountry(String), telephone(string), productsBrand(string))
 //
 
 const db = mysql.createConnection({
