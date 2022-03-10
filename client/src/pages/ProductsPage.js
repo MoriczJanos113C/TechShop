@@ -59,8 +59,11 @@ export function ProductsPage(){
                     )} 
                     {isAdmin && (
                         <Link to={`/products/${product.id}`}>Szerkesztés</Link>
-                    )}          
-                    <Link to={`/products/product/${product.id}`}>Leírás</Link>   
+                    )} 
+                    {!isAdmin && (
+                        <Link to={`/products/product/${product.id}`}>Leírás</Link>   
+                    )}         
+                    
                 </Card.Body>
             </Card>
         )

@@ -17,11 +17,10 @@ function App() {
 
   const userState = useState(() => {
     const userInLocalStorage = localStorage.getItem('user');
-    console.log(JSON.parse(userInLocalStorage));
     return userInLocalStorage ? JSON.parse(userInLocalStorage) : {};
   });
   
-  console.log(userState)
+
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(userState[0]));
   }, userState)

@@ -50,10 +50,12 @@ app.get('/products', (req, res)=> {
     });
 });
 
-/*app.put('/products/:id', async (req, res)=> {
-    
+app.put('/products/:id', async (req, res)=> {
+    const cost= req.body.cost;
+    const name = req.body.name;
+    const description = req.body.description;
 
-    db.query(`UPDATE product SET cost = ${req.body.cost}, name = ${req.body.name}, description = ${req.body.description} WHERE id = ${req.params.id}`, (err, result) => {
+    db.query(`UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, name, description], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
@@ -64,7 +66,7 @@ app.get('/products', (req, res)=> {
 
         }
     );
-});*/
+});
 
 app.get('/products/:id', (req, res)=> {
     db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
@@ -91,6 +93,7 @@ app.get('/products/product/:id', (req, res)=> {
 app.delete('/deleteProduct/:id', (req, res) => {
     db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
+            console.log(result)
             res.send(result);
         }else{
             res.send({message: "Not deleted any product"})
@@ -104,9 +107,7 @@ app.post('/register', (req, res)=> {
     const username = req.body.username;
     const password = req.body.password;
     const role = req.body.role;
-    console.log(password);
     const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
-    console.log(req.body.password+'\n'+hashedPass)
 
     db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
         if (err) return err;
@@ -135,10 +136,7 @@ app.post('/login', (req, res)=> {
         }
         
         if (result.length > 0) {
-            console.log(role);
             const token = jwt.sign(username, "secret-password");
-            console.log("token",token)
-            console.log("bcrypt",bcrypt.hashSync(password, 10))
             if(bcrypt.compareSync(password, result[0].password)){
                 res.send(JSON.stringify({token : token, user: result[0]}))
             }
@@ -176,11 +174,13 @@ app.get('/users/:id', (req, res)=> {
 });
 
 app.put('/users/:id', async (req, res)=> {
-    const {username, password, role} = req.body;
+    const username= req.body.username;
+    const password = req.body.password;
 
-    db.query(`UPDATE user SET username = ?, password = ?, role = ? WHERE id = ${req.params.id}`, [username, password, role], (err, result) => {
+    db.query(`UPDATE user SET username = ?, password = ? WHERE id = ${req.params.id}`, [username, password], (err, result) => {
         if(err) throw err;
         if(result){
+            console.log(result);
             res.send({message: "Saved"})
         }else{
             res.send({message: "Not saved"})

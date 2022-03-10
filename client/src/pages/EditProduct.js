@@ -16,7 +16,7 @@ export function EditProduct(){
     
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const {user} = useContext(UserContext);
-    const { productId } = useParams();
+    const { id: productId } = useParams();
     const navigate = useNavigate();
 
     useEffect(()=> {
@@ -44,9 +44,9 @@ export function EditProduct(){
 
     
 
-    const updateProduct =  async (e) => {
+    const updateProduct = (e) => {
         e.preventDefault();
-        await Axios.put(`http://localhost:8080/products/${productId}`, form, {
+            Axios.put(`http://localhost:8080/products/${productId}`, form, {
             headers:{
                 'Authorization': `Bearer ${user.token}`
             }
@@ -56,6 +56,14 @@ export function EditProduct(){
         setForm(DEFAULT_FORM_OBJECT);
     };
 
+    const deleteProduct = () => {
+            Axios.delete(`http://localhost:8080/deleteProduct/${productId}`, form, {
+            headers:{
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
+        navigate("/")
+    }
     return(
         
         <div className="product">
@@ -65,6 +73,7 @@ export function EditProduct(){
                     <Col></Col>
                     <Col xs={6}>
                     <h1>Termék szerkesztése</h1>
+                    <Button onClick={deleteProduct} variant="danger">Törlés</Button>
                         <Form onSubmit={updateProduct}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Név</Form.Label>
