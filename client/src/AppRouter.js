@@ -9,6 +9,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { LoginPage } from './pages/LoginPage';
 import { LogoutPage } from './pages/LogoutPage';
 import { EditProduct } from './pages/EditProduct';
+import { ProductPage } from './pages/ProductPage';
 
 export const AppRouter = () => {
 
@@ -21,6 +22,7 @@ export const AppRouter = () => {
             <Routes>
               {isAdmin && (<Route path="/create-product" element={<CreateProductPage/>}/>)}
               <Route path="/products/:id" element={<EditProduct/>}/>
+              <Route path="/products/product/:id" element={<ProductPage/>}/>
               <Route path="/" element={<ProductsPage />}/>
               <Route path="/cart" element={<ShoppingCartPage />}/>
               <Route path="/register" element={<RegisterPage />}/>
