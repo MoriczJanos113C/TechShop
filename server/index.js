@@ -50,10 +50,10 @@ app.get('/products', (req, res)=> {
     });
 });
 
-app.put('/products/:id', async (req, res)=> {
-    const {cost, name, description} = req.body;
+/*app.put('/products/:id', async (req, res)=> {
+    
 
-    db.query(`UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, name, description], (err, result) => {
+    db.query(`UPDATE product SET cost = ${req.body.cost}, name = ${req.body.name}, description = ${req.body.description} WHERE id = ${req.params.id}`, (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
@@ -64,20 +64,9 @@ app.put('/products/:id', async (req, res)=> {
 
         }
     );
-});
+});*/
 
 app.get('/products/:id', (req, res)=> {
-    db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any product"})
-        }
-        
-    });
-});
-
-app.get('/product/:id', (req, res)=> {
     db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
         if (result){
             res.send(result);
@@ -125,7 +114,7 @@ app.post('/register', (req, res)=> {
 });
 
 app.post('/login', (req, res)=> {
-    const {username, password} = req.body;
+    const {username, password, role} = req.body;
 
     db.query("SELECT * FROM user WHERE username = ?",
     [username], 
@@ -135,11 +124,12 @@ app.post('/login', (req, res)=> {
         }
         
         if (result.length > 0) {
+            console.log(role);
             const token = jwt.sign(username, "secret-password");
             console.log("token",token)
             console.log("bcrypt",bcrypt.hashSync(password, 10))
             if(bcrypt.compareSync(password, result[0].password)){
-                res.send(JSON.stringify({token : token, user: result}))
+                res.send(JSON.stringify({token : token, user: result[0]}))
             }
             else{
                 res.send("hiba")

@@ -13,7 +13,7 @@ export function ProductsPage(){
     const [search, setSearch] = useState("");
     const [showToast, setShowToast] = useState(false);
     const isLoggedIn = useIsLoggedIn();
-    const [user] = useContext(UserContext);
+    const {user} = useContext(UserContext);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -51,14 +51,15 @@ export function ProductsPage(){
                     <Card.Text>
                         {product.description}
                     </Card.Text>
+                    <Card.Text>
+                        {product.cost}HUF
+                    </Card.Text>
                     {isLoggedIn && (
                         <Button variant="primary" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )} 
                     {isAdmin && (
                         <Link to={`/products/${product.id}`}>Szerkesztés</Link>
-                    )}    
-                    <Link to={`/products/product/${product.id}`}>Szerkesztés</Link>   
-                    <Link to={`/product/:id`}>Leírás</Link>            
+                    )}             
                 </Card.Body>
             </Card>
         )
@@ -104,7 +105,7 @@ export function ProductsPage(){
                         ).map((product) => ( 
                     <ProductCard 
                     isLoggedIn={isLoggedIn}
-                    isAdmin={user.role==="admin"}
+                    isAdmin={user?.role==="admin"}
                     key={product.id}
                     product={product} 
                     addProductToCart={addProductToCart}/>

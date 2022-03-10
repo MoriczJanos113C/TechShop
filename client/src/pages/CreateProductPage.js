@@ -14,7 +14,7 @@ export function CreateProductPage(){
     };
 
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
-    const [user] = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const navigate = useNavigate();
 
     const updateFormValue = (key) => (e) => {

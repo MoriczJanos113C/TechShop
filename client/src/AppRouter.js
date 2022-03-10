@@ -9,17 +9,10 @@ import { RegisterPage } from './pages/RegisterPage';
 import { LoginPage } from './pages/LoginPage';
 import { LogoutPage } from './pages/LogoutPage';
 import { EditProduct } from './pages/EditProduct';
-import { ProductPage } from './pages/ProductPage';
 
 export const AppRouter = () => {
 
-  const [id, setId] = React.useState(null);
   const isAdmin = useIsAdmin();
-  const putId = (ProductId) => {
-    setId(ProductId);
-    console.log("Router id: " + id)
-    console.log("Product id: " + ProductId)
-  }
 
 
     return(
@@ -33,8 +26,6 @@ export const AppRouter = () => {
               <Route path="/register" element={<RegisterPage />}/>
               <Route path="/login" element={<LoginPage />}/>
               <Route path="/logout" element={<LogoutPage />}/>
-              <Route path="/products/product/:id" element={<ProductsPage/>}/>
-              <Route path="/product/:id" element={<ProductPage />}/>
         </Routes>
         </Router>
     )

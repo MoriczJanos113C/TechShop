@@ -15,7 +15,7 @@ export function EditProduct(){
     };
     
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
-    const [user] = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const { productId } = useParams();
     const navigate = useNavigate();
 

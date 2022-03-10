@@ -23,6 +23,9 @@ export function ShoppingCartPage(){
                     <Card.Text>
                         {product.description}
                     </Card.Text>
+                    <Card.Text>
+                        {product.cost}HUF
+                    </Card.Text>
                 </Col>
                     <Col>
                         <Button variant="primary"

@@ -13,7 +13,7 @@ export function LoginPage(){
     };
 
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
-    const [user, setUser] = useContext(UserContext);
+    const { setUser} = useContext(UserContext);
     const navigate = useNavigate();
 
     const updateFormValue = (key) => (e) => {

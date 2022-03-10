@@ -4,7 +4,8 @@ import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 export function LogoutPage(){
 
-    const [user, setUser] = useContext(UserContext);
+    const { setUser} = useContext(UserContext);
+    console.log(setUser);
     const navigate = useNavigate();
 
 
