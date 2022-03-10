@@ -177,7 +177,7 @@ app.put('/users/:id', async (req, res)=> {
     const username= req.body.username;
     const password = req.body.password;
 
-    db.query(`UPDATE user SET username = ?, password = ? WHERE id = ${req.params.id}`, [username, password], (err, result) => {
+    db.query(`UPDATE user SET username = ?, password = ?, role = ? WHERE id = ${req.params.id}`, [username, password], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
