@@ -10,6 +10,8 @@ import { LoginPage } from './pages/LoginPage';
 import { LogoutPage } from './pages/LogoutPage';
 import { EditProduct } from './pages/EditProduct';
 import { ProductPage } from './pages/ProductPage';
+import { CheckOutPage } from './pages/CheckOutPage';
+import { ConfirmationPage } from './pages/ConfirmationPage';
 
 export const AppRouter = () => {
 
@@ -25,6 +27,8 @@ export const AppRouter = () => {
               <Route path="/products/product/:id" element={<ProductPage/>}/>
               <Route path="/" element={<ProductsPage />}/>
               <Route path="/cart" element={<ShoppingCartPage />}/>
+              <Route path="/checkout" element={<CheckOutPage />}/>
+              <Route path="/confirmation" element={<ConfirmationPage />}/>
               <Route path="/register" element={<RegisterPage />}/>
               <Route path="/login" element={<LoginPage />}/>
               <Route path="/logout" element={<LogoutPage />}/>

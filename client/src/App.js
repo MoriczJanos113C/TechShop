@@ -10,10 +10,15 @@ import { AppRouter } from './AppRouter';
 
 export const ShoppingCartContext = React.createContext();
 export const UserContext = React.createContext();
+export const ConfirmationContext = React.createContext();
 
 function App() {
+  const confirmationState = useState(null);
 
-  const cartState = useState([]);
+  const cartState = useState(() => {
+    const cartInLocalStorage = localStorage.getItem('cart');
+    return cartInLocalStorage ? JSON.parse(cartInLocalStorage) : [];
+  });
 
   const userState = useState(() => {
     const userInLocalStorage = localStorage.getItem('user');
@@ -25,13 +30,17 @@ function App() {
     localStorage.setItem('user', JSON.stringify(userState[0]));
   }, userState)
 
-  
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cartState[0]));
+  }, cartState)
 
   return (
     <div className="App">
       <UserContext.Provider value={{token: userState[0].token, user:userState[0].user, setUser: userState[1]}}>
       <ShoppingCartContext.Provider value={cartState}>
-        <AppRouter />
+        <ConfirmationContext.Provider value={confirmationState}>
+          <AppRouter />
+        </ConfirmationContext.Provider> 
       </ShoppingCartContext.Provider>
       </UserContext.Provider>
     </div>

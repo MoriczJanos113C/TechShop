@@ -4,6 +4,7 @@ import Axios from "axios";
 import React from "react";
 import { UserContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
+import { updateFormFileValue, updateFormValue } from "./CreateProductPage";
 
 export function EditProduct(){
     
@@ -25,45 +26,42 @@ export function EditProduct(){
             setForm({
                 name: product.name, 
                 cost: product.cost, 
-                description: product.description
+                description: product.description,
+                image: product.image,
             });
         };   
         getProduct();
     }, [])
 
-    
 
-    
-    
-    const updateFormValue = (key) => (e) => {
-        setForm({
-            ...form,
-            [key]: e.currentTarget.value,
-        });
-    };
 
-    
-
-    const updateProduct = (e) => {
+    const updateProduct = async (e) => {
         e.preventDefault();
-            Axios.put(`http://localhost:8080/products/${productId}`, form, {
-            headers:{
-                'Authorization': `Bearer ${user.token}`
+        const formData = new FormData();
+        formData.append("name", form.name);
+        formData.append("cost", form.cost);
+        formData.append("description", form.description);
+        formData.append("file", form.file);
+        await Axios.put(`http://localhost:8080/products/${productId}`, formData, {
+            headers: {
+                'content-type': 'multipart/form-data',
+                Authorization: `Bearer ${user.token}`,
             }
         });
-        
-        navigate("/");
         setForm(DEFAULT_FORM_OBJECT);
+        navigate("/");
     };
 
     const deleteProduct = () => {
-            Axios.delete(`http://localhost:8080/deleteProduct/${productId}`, form, {
+            Axios.delete(`http://localhost:8080/deleteProduct/${productId}`, {
             headers:{
                 'Authorization': `Bearer ${user.token}`
             }
         });
         navigate("/")
     }
+
+
     return(
         
         <div className="product">
@@ -78,7 +76,7 @@ export function EditProduct(){
                                 <Form.Group className="mb-3">
                                     <Form.Label className="textTwo">Név</Form.Label>
                                     <Form.Control 
-                                            onChange={updateFormValue("name")}
+                                            onChange={updateFormValue("name", form, setForm)}
                                             value={form.name} 
                                             type="name" placeholder="ide írd a termék nevét" />
                                 </Form.Group>
@@ -86,7 +84,7 @@ export function EditProduct(){
                                 <Form.Group className="mb-3">
                                         <Form.Label className="textTwo">Ár</Form.Label>
                                         <Form.Control 
-                                            onChange={updateFormValue("cost")}
+                                            onChange={updateFormValue("cost", form, setForm)}
                                             value={form.cost} 
                                             type="number" 
                                             placeholder="Ide írd a termék árát" />
@@ -94,10 +92,16 @@ export function EditProduct(){
                                 <Form.Group className="mb-3" >
                                     <Form.Label className="textTwo">Termék leírása</Form.Label>
                                         <Form.Control 
-                                            onChange={updateFormValue("description")}
+                                            onChange={updateFormValue("description", form, setForm)}
                                             value={form.description} 
                                             type="text" as="textarea" 
                                             rows={3}/>
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label className="textTwo">Kép</Form.Label>
+                                    <Form.Control 
+                                            onChange={updateFormFileValue("file", form, setForm)}
+                                            type="file"/>
                                 </Form.Group>
                                 <Button variant="success" type="submit">
                                    Mentés

@@ -46,7 +46,7 @@ export function ProductsPage(){
     const ProductCard = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
             <Card key={product.id} >
-                <Card.Img style={{ width: '6rem' }} variant="top" src="./logo192.png" />
+                <Card.Img style={{ width: '6rem' }} variant="top" src={`http://localhost:8080/${product.image}`} />
                 <Card.Body className="card">
                     <Card.Title className="textOne">{product.name}</Card.Title>
                     <Card.Text className="textTwo">

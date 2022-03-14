@@ -4,12 +4,32 @@ const cors = require('cors');
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const multer = require('multer');
+const {nanoid} = require('nanoid');
+const mime = require('mime-types');
+const { isAdmin } = require('./middlewares/isAdmin');
 app.use(express.json());
 app.use(cors());
+
+
+app.use(express.static('./images'))
+const storage = multer.diskStorage({
+    destination : function (req,file,cb){
+        cb(null, './images')
+    },
+    filename: function (req, file, cb){
+        let id = nanoid();
+        let ext = mime.extension(file.mimetype);
+        cb(null, `${id}.${ext}`);
+    }
+})
+const upload = multer({ storage: storage })
+
 
 //!!db szerkezet!!
 //tábla                 (oszlopok())
 //product - (cost(int), name(string), description(string)), image(blob)
+//order - (contactInfo(object), (items(array))))
 //user    - (username(string), password(string)), role((string))   
 //news    - (title(string), thePost(string), someDescription(string))
 //supplier - (name(string), (fromCountry(String), telephone(string), productsBrand(string))
@@ -24,13 +44,14 @@ const db = mysql.createConnection({
 
 
 //PRODUCT operations
-app.post('/products', (req, res)=> {
+app.post('/products', /*isAdmin,*/  upload.single('file'), (req, res)=> {
 
     const cost = req.body.cost;
     const name = req.body.name;
     const description = req.body.description;
+    const image = req.file.filename;
 
-    db.query("INSERT INTO product (cost, name, description)  VALUES (?, ?, ?) ", [cost, name, description], (err, result) => {
+    db.query(`INSERT INTO product (cost, name, description, image)  VALUES (?, ?, ?, ?)`, [cost, name, description, image], (err, result) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
@@ -50,12 +71,13 @@ app.get('/products', (req, res)=> {
     });
 });
 
-app.put('/products/:id', async (req, res)=> {
+app.put('/products/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> {
     const cost= req.body.cost;
     const name = req.body.name;
     const description = req.body.description;
-
-    db.query(`UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, name, description], (err, result) => {
+    const image = req.file?.filename;
+    //image holding mikor nem valasztunk ki kepet akk maradjon ami vlt kellesz még + az adatok ami adott produktnak van azokat se jeleniti meg a frontend mikro szerkesztesre katt van
+    db.query(`UPDATE product SET cost = ?, name = ?, description = ?, image = ? WHERE id = ${req.params.id}`, [cost, name, description, image], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
@@ -63,6 +85,7 @@ app.put('/products/:id', async (req, res)=> {
         }else{
             res.send({message: "Not saved"})
             }
+            
 
         }
     );
@@ -90,7 +113,7 @@ app.get('/products/product/:id', (req, res)=> {
     });
 });
 
-app.delete('/deleteProduct/:id', (req, res) => {
+app.delete('/deleteProduct/:id', /*isAdmin,*/ (req, res) => {
     db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)
@@ -151,258 +174,23 @@ app.post('/login', (req, res)=> {
     );
 });
 
-app.get('/users', (req, res)=> {
+
+app.post('/checkout', (req, res) => {
+    console.log(req.body);
+    const contactInfo = req.body.contactInfo;
+    const items = req.body.items;
     
-    db.query("SELECT * FROM user", (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any user"})
-        }
-    });
-});
-
-app.get('/users/:id', (req, res)=> {
-    db.query("SELECT * FROM user WHERE id = ?", req.params.id, (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any user"})
-        }
-        
-    });
-});
-
-app.put('/users/:id', async (req, res)=> {
-    const username= req.body.username;
-    const password = req.body.password;
-
-    db.query(`UPDATE user SET username = ?, password = ?, role = ? WHERE id = ${req.params.id}`, [username, password], (err, result) => {
-        if(err) throw err;
-        if(result){
-            console.log(result);
-            res.send({message: "Saved"})
-        }else{
-            res.send({message: "Not saved"})
-            }
-
-        }
-    );
-});
-
-app.delete('/usersDelete/:id', (req, res) => {
-    db.query(`DELETE FROM user WHERE id = ${req.params.id}`,(err, result) => {
-        if(result){
-            res.send(result);
-        }else{
-            res.send({message: "Not deleted any user"})
-        }
-    })
-})
-
-//ENTRIES operations
-app.post('/news', (req, res)=> {
-
-    const title = req.body.title;
-    const thePost = req.body.thePost;
-    const someDescription = req.body.someDescription;
-
-    db.query("INSERT INTO news (title, thePost, someDescription)  VALUES (?, ?, ?) ", [title, thePost, someDescription], (err, result) => {
+    //array, object tárolás dbben kéne
+    const data = JSON.stringify({contactInfo : contactInfo, items: items});
+    db.query('INSERT INTO orders (contactInfo, items) VALUES (?, ?)', [contactInfo, items], (err, result) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
-        res.send(result);
+            res.send(JSON.parse(data));
         }
     });
-});
-
-app.get('/news', (req, res)=> {
     
-    db.query("SELECT * FROM news", (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any news"})
-        }
-    });
 });
-
-app.put('/news/:id', async (req, res)=> {
-    const title = req.body.title;
-    const thePost = req.body.thePost;
-    const someDescription = req.body.someDescription;
-
-    db.query(`UPDATE news SET title = ?, thePost = ?, someDescription = ? WHERE id = ${req.params.id}`, [title, thePost, someDescription], (err, result) => {
-        if(err) throw err;
-        if(result){
-            console.log(result);
-            res.send({message: "Saved"})
-        }else{
-            res.send({message: "Not saved"})
-            }
-
-        }
-    );
-});
-
-app.get('/news/:id', (req, res)=> {
-    db.query("SELECT * FROM news WHERE id = ?", req.params.id, (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any news"})
-        }
-        
-    });
-});
-
-app.delete('/deleteNews/:id', (req, res) => {
-    db.query(`DELETE FROM news WHERE id = ${req.params.id}`,(err, result) => {
-        if(result){
-            res.send(result);
-        }else{
-            res.send({message: "Not deleted any news"})
-        }
-    })
-})
-
-
-//Suppliers operations
-app.post('/suppliers', (req, res)=> {
-
-    const name = req.body.name;
-    const telephone = req.body.telephone;
-    const fromCountry = req.body.fromCountry;
-    const productsBrand = req.body.productsBrand;
-
-    db.query("INSERT INTO suppliers (name, telephone, fromCountry, productsBrand)  VALUES (?, ?, ?, ?) ", [name, telephone, fromCountry, productsBrand], (err, result) => {
-        if (err) throw err;
-        console.log(req.body);
-        if(result){
-        res.send(result);
-        }
-    });
-});
-
-app.get('/suppliers', (req, res)=> {
-    
-    db.query("SELECT * FROM suppliers", (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any supplier"})
-        }
-    });
-});
-
-app.put('/suppliers/:id', async (req, res)=> {
-    const name = req.body.name;
-    const telephone = req.body.telephone;
-    const fromCountry = req.body.fromCountry;
-    const productsBrand = req.body.productsBrand;
-
-    db.query(`UPDATE suppliers SET name = ?, telephone = ?, fromCountry = ?, productsBrand = ? WHERE id = ${req.params.id}`, [name, telephone, fromCountry, productsBrand], (err, result) => {
-        if(err) throw err;
-        if(result){
-            console.log(result);
-            res.send({message: "Saved"})
-        }else{
-            res.send({message: "Not saved"})
-            }
-
-        }
-    );
-});
-
-app.get('/suppliers/:id', (req, res)=> {
-    db.query("SELECT * FROM suppliers WHERE id = ?", req.params.id, (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any supplier"})
-        }
-        
-    });
-});
-
-app.delete('/deleteSupplier/:id', (req, res) => {
-    db.query(`DELETE FROM suppliers WHERE id = ${req.params.id}`,(err, result) => {
-        if(result){
-            res.send(result);
-        }else{
-            res.send({message: "Not deleted any supplier"})
-        }
-    })
-})
-
-
-//Orders operations MINTA, még nem tervezett tábla
-app.post('/orders', (req, res)=> {
-
-    const name = req.body.name;
-    const telephone = req.body.telephone;
-    const fromCountry = req.body.fromCountry;
-    const productsBrand = req.body.productsBrand;
-
-    db.query("INSERT INTO suppliers (name, telephone, fromCountry, productsBrand)  VALUES (?, ?, ?, ?) ", [name, telephone, fromCountry, productsBrand], (err, result) => {
-        if (err) throw err;
-        console.log(req.body);
-        if(result){
-        res.send(result);
-        }
-    });
-});
-
-app.get('/orders', (req, res)=> {
-    
-    db.query("SELECT * FROM suppliers", (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any supplier"})
-        }
-    });
-});
-
-app.put('/orders/:id', async (req, res)=> {
-    const name = req.body.name;
-    const telephone = req.body.telephone;
-    const fromCountry = req.body.fromCountry;
-    const productsBrand = req.body.productsBrand;
-
-    db.query(`UPDATE suppliers SET name = ?, telephone = ?, fromCountry = ?, productsBrand = ? WHERE id = ${req.params.id}`, [name, telephone, fromCountry, productsBrand], (err, result) => {
-        if(err) throw err;
-        if(result){
-            console.log(result);
-            res.send({message: "Saved"})
-        }else{
-            res.send({message: "Not saved"})
-            }
-
-        }
-    );
-});
-
-app.get('/orders/:id', (req, res)=> {
-    db.query("SELECT * FROM suppliers WHERE id = ?", req.params.id, (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any supplier"})
-        }
-        
-    });
-});
-
-app.delete('/deleteOrders/:id', (req, res) => {
-    db.query(`DELETE FROM suppliers WHERE id = ${req.params.id}`,(err, result) => {
-        if(result){
-            res.send(result);
-        }else{
-            res.send({message: "Not deleted any supplier"})
-        }
-    })
-})
 
 app.listen(8080, () => {
     console.log("running server");
