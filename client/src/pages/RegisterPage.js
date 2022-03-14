@@ -43,10 +43,10 @@ export function RegisterPage(){
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1>Regisztráció</h1>
+                    <h1 className="cimsor">Regisztráció</h1>
                         <Form onSubmit={registerUser}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label>Felhasználónév</Form.Label>
+                                    <Form.Label className="textTwo">Felhasználónév</Form.Label>
                                     <Form.Control 
                                             onChange={updateFormValue("username")}
                                             value={form.username} 
@@ -54,14 +54,14 @@ export function RegisterPage(){
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label>Jelszó</Form.Label>
+                                        <Form.Label className="textTwo">Jelszó</Form.Label>
                                         <Form.Control 
                                             onChange={updateFormValue("password")}
                                             value={form.password} 
                                             type="password" 
                                             placeholder="A kívánt jelszó megadása" />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
+                                <Button variant="success" type="submit">
                                     Regisztráció
                                 </Button>
                             </Form>

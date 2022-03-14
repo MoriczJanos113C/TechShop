@@ -42,10 +42,10 @@ export function LoginPage(){
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1>Bejelentkezés</h1>
+                    <h1 className="cimsor">Bejelentkezés</h1>
                         <Form onSubmit={loginUser}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label>Felhasználónév</Form.Label>
+                                    <Form.Label className="textTwo">Felhasználónév</Form.Label>
                                     <Form.Control 
                                             onChange={updateFormValue("username")}
                                             value={form.username} 
@@ -53,14 +53,14 @@ export function LoginPage(){
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label>Jelszó</Form.Label>
+                                        <Form.Label className="textTwo">Jelszó</Form.Label>
                                         <Form.Control 
                                             onChange={updateFormValue("password")}
                                             value={form.password} 
                                             type="password" 
                                             placeholder="Jelszó" />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
+                                <Button variant="success" type="submit">
                                     Bejelentkezés
                                 </Button>
                             </Form>

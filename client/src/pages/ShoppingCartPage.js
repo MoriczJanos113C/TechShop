@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { ShoppingCartContext } from "../App";
+import "../style/style.css"
 
 export function ShoppingCartPage(){
 
@@ -17,18 +18,18 @@ export function ShoppingCartPage(){
                     <img src="./logo192.png"/>
                 </Col>
                 <Col>
-                    <Card.Title>
+                    <Card.Title className="textOne">
                         {product.name}
                     </Card.Title>
-                    <Card.Text>
+                    <Card.Text className="textTwo">
                         {product.description}
                     </Card.Text>
-                    <Card.Text>
-                        {product.cost}HUF
+                    <Card.Text className="textTwo">
+                        {product.cost} HUF
                     </Card.Text>
                 </Col>
                     <Col>
-                        <Button variant="primary"
+                        <Button variant="danger"
                             onClick={() => removeProduct(product)} removeProduct={removeProduct}>
                             Eltávolítás a kosárból
                         </Button>
@@ -41,7 +42,7 @@ export function ShoppingCartPage(){
         <Container>
             <Row className="mb-4">
                 <Col>
-                <h2>Kosár tartalma ({cart.length} db) termék összesen</h2>
+                <h2 className="cimsor">Kosár tartalma ({cart.length} db) termék összesen</h2>
                 </Col>
             </Row>
 

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: orange; /* Átmeneti háttér, kép kerűl majd a helyére. */
 }
 
 .App-logo {

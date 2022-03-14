@@ -72,11 +72,11 @@ export function EditProduct(){
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1>Termék szerkesztése</h1>
-                    <Button onClick={deleteProduct} variant="danger">Törlés</Button>
+                    <h1 className="cimsor">Termék szerkesztése</h1>
+                    
                         <Form onSubmit={updateProduct}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label>Név</Form.Label>
+                                    <Form.Label className="textTwo">Név</Form.Label>
                                     <Form.Control 
                                             onChange={updateFormValue("name")}
                                             value={form.name} 
@@ -84,7 +84,7 @@ export function EditProduct(){
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label>Ár</Form.Label>
+                                        <Form.Label className="textTwo">Ár</Form.Label>
                                         <Form.Control 
                                             onChange={updateFormValue("cost")}
                                             value={form.cost} 
@@ -92,16 +92,17 @@ export function EditProduct(){
                                             placeholder="Ide írd a termék árát" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" >
-                                    <Form.Label>Termék leírása</Form.Label>
+                                    <Form.Label className="textTwo">Termék leírása</Form.Label>
                                         <Form.Control 
                                             onChange={updateFormValue("description")}
                                             value={form.description} 
                                             type="text" as="textarea" 
                                             rows={3}/>
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
+                                <Button variant="success" type="submit">
                                    Mentés
-                                </Button>
+                                </Button><br /><br />
+                                <Button onClick={deleteProduct} variant="danger">Törlés</Button>
                             </Form>
                         </Col>
                     <Col></Col>

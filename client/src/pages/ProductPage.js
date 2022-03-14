@@ -4,6 +4,7 @@ import { Container, Row, Col, Card, Button, Form, ToastContainer, Toast } from "
 import { Link, useParams } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
+import "../style/style.css"
 
 export function ProductPage(){
 
@@ -46,16 +47,16 @@ export function ProductPage(){
                 <div>
                     <section>{product.name}</section>
                     <section>
-                        {product.cost}HUF
+                        {product.cost} HUF
                     </section>
                     <footer>
                         {product.description}
                     </footer>
                     {!isAdmin && isLoggedIn && (
-                        <Button variant="primary" onClick={() => addProductToCart(product)}>Kosárba</Button>
+                        <Button variant="success" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )} 
                     {isAdmin && (
-                        <Link to={`/products/${product.id}`}>Szerkesztés</Link>
+                        <Link className="textTwo" to={`/products/${product.id}`}>Szerkesztés</Link>
                     )}            
                 </div>
             </div>

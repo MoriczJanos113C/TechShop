@@ -4,6 +4,7 @@ import { Container, Row, Col, Card, Button, Form, ToastContainer, Toast } from "
 import { Link } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
+import "../style/style.css"
 
 export function ProductsPage(){
 
@@ -44,24 +45,24 @@ export function ProductsPage(){
 
     const ProductCard = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
-            <Card key={product.id} className="mb-4">
+            <Card key={product.id} >
                 <Card.Img style={{ width: '6rem' }} variant="top" src="./logo192.png" />
-                <Card.Body>
-                    <Card.Title>{product.name}</Card.Title>
-                    <Card.Text>
-                        {product.description}
+                <Card.Body className="card">
+                    <Card.Title className="textOne">{product.name}</Card.Title>
+                    <Card.Text className="textTwo">
+                        {product.description} 
                     </Card.Text>
-                    <Card.Text>
-                        {product.cost}HUF
+                    <Card.Text className="textTwo">
+                        {product.cost} HUF
                     </Card.Text>
                     {!isAdmin && isLoggedIn && (
-                        <Button variant="primary" onClick={() => addProductToCart(product)}>Kosárba</Button>
+                        <Button variant="success" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )} 
                     {isAdmin && (
-                        <Link to={`/products/${product.id}`}>Szerkesztés</Link>
+                        <Link className="textTwo" to={`/products/${product.id}`}>Szerkesztés</Link>
                     )} 
                     {!isAdmin && (
-                        <Link to={`/products/product/${product.id}`}>Leírás</Link>   
+                        <Link className="description" to={`/products/product/${product.id}`}>Leírás</Link>   
                     )}         
                     
                 </Card.Body>

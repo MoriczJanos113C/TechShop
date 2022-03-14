@@ -42,10 +42,10 @@ export function CreateProductPage(){
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1>Új termék hozzáadása</h1>
+                    <h1 className="cimsor">Új termék hozzáadása</h1>
                         <Form onSubmit={createProduct}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label>Név</Form.Label>
+                                    <Form.Label className="textTwo">Név</Form.Label>
                                     <Form.Control 
                                             onChange={updateFormValue("name")}
                                             value={form.name} 
@@ -53,7 +53,7 @@ export function CreateProductPage(){
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label>Ár</Form.Label>
+                                        <Form.Label className="textTwo">Ár</Form.Label>
                                         <Form.Control 
                                             onChange={updateFormValue("cost")}
                                             value={form.cost} 
@@ -61,14 +61,14 @@ export function CreateProductPage(){
                                             placeholder="Ide írd a termék árát" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" >
-                                    <Form.Label>Termék leírása</Form.Label>
+                                    <Form.Label className="textTwo">Termék leírása</Form.Label>
                                         <Form.Control 
                                             onChange={updateFormValue("description")}
                                             value={form.description} 
                                             type="text" as="textarea" 
                                             rows={3}/>
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
+                                <Button variant="success" type="submit">
                                     Új termék felvétele
                                 </Button>
                             </Form>
