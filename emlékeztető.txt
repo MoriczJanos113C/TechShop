@@ -5,4 +5,3 @@ hiba:
 !backendben!
 update productban a ha képet nem akar cserélni akkor fent kéne maradnia a meglévőnek
 admin middleware nem mukodik
-checkout backend rész nincs jol lekezelve
