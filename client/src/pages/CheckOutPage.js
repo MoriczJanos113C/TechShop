@@ -12,21 +12,22 @@ export function CheckOutPage(){
         firstname:'',
         lastname:'',
         cardNumber:'',
+        email:''
     };
 
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const [cart, setCart] = useContext(ShoppingCartContext)
     const navigate = useNavigate();
-    const [setConfirmation] = useContext(ConfirmationContext);
+    const [confirmation, setConfirmation] = useContext(ConfirmationContext);
 
     const checkOut = async (e) => {
         e.preventDefault();
-        const {data:order} = await axios.post("http://localhost:8080/checkout", { 
+        const {data: orders } = await axios.post("http://localhost:8080/checkout", { 
         contactInfo: form,
         items: cart.map((item) => item.id),
         });
         setCart([]);
-        setConfirmation(order.id);
+        setConfirmation(orders.id);
         navigate("/confirmation");
     };
     
@@ -52,6 +53,13 @@ export function CheckOutPage(){
                                             onChange={updateFormValue("lastname", form, setForm)}
                                             value={form.lastname} 
                                             placeholder="Keresztnév" />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                        <Form.Label className="textTwo">E-mail cím</Form.Label>
+                                        <Form.Control 
+                                            onChange={updateFormValue("email", form, setForm)}
+                                            value={form.email} 
+                                            placeholder="E-mail cím" />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                         <Form.Label className="textTwo">Lakcím</Form.Label>

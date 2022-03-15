@@ -13,6 +13,7 @@ export const UserContext = React.createContext();
 export const ConfirmationContext = React.createContext();
 
 function App() {
+
   const confirmationState = useState(null);
 
   const cartState = useState(() => {
@@ -37,11 +38,11 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={{token: userState[0].token, user:userState[0].user, setUser: userState[1]}}>
-      <ShoppingCartContext.Provider value={cartState}>
-        <ConfirmationContext.Provider value={confirmationState}>
-          <AppRouter />
-        </ConfirmationContext.Provider> 
-      </ShoppingCartContext.Provider>
+        <ShoppingCartContext.Provider value={cartState}>
+          <ConfirmationContext.Provider value={confirmationState}>
+            <AppRouter />
+          </ConfirmationContext.Provider> 
+        </ShoppingCartContext.Provider>
       </UserContext.Provider>
     </div>
   );

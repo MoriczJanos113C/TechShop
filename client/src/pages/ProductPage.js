@@ -11,11 +11,11 @@ export function ProductPage(){
     const [product, setProduct] = useState([]);
     const NUMBER_OF_COLUMNS = 2;
     const [cart, setCart] = useContext(ShoppingCartContext);
-    const [search, setSearch] = useState("");
     const [showToast, setShowToast] = useState(false);
     const isLoggedIn = useIsLoggedIn();
     const {user} = useContext(UserContext);
     const { id: productID } = useParams()
+
     useEffect(() => {
         const fetchProduct = async () => {
             const { data: prods } = await axios.get(`http://localhost:8080/products/product/${productID}`);
@@ -24,42 +24,31 @@ export function ProductPage(){
         fetchProduct();
     }, []);
 
-    const getProductInColumn = (products, numberOfColumns, columns) => {
-        return products.filter((col, index) => index % numberOfColumns === columns);
-    };
-
 
     const addProductToCart = (product) => {
         setCart([...cart, {...product}]);
         setShowToast(true);
     };
 
-    const getFilteredProduct = (prod) => {
-        return prod.filter((product) => product.name.includes(search))
-    }
-
 
  //ide barmit tehetesz, diveket akár ki is cserelheted masra 44-61es sorig, ez jelenik meg majd amit az also returnba be injektálsz (91.sor)
     const Product = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
-            <div key={product.id} className="mb-4">
-                <Card.Img style={{ width: '6rem' }} variant="top" src="./logo192.png" />
-                <div>
-                    <section>{product.name}</section>
-                    <section>
+            <Card key={product.id} >
+                <Card.Img style={{ width: '6rem' }} variant="top" src={`http://localhost:8080/${product.image}`} />
+                <Card.Body className="card">
+                    <Card.Title className="textOne">{product.name}</Card.Title>
+                    <Card.Text className="textTwo">
+                        {product.description} 
+                    </Card.Text>
+                    <Card.Text className="textTwo">
                         {product.cost} HUF
-                    </section>
-                    <footer>
-                        {product.description}
-                    </footer>
+                    </Card.Text>
                     {!isAdmin && isLoggedIn && (
                         <Button variant="success" onClick={() => addProductToCart(product)}>Kosárba</Button>
-                    )} 
-                    {isAdmin && (
-                        <Link className="textTwo" to={`/products/${product.id}`}>Szerkesztés</Link>
-                    )}            
-                </div>
-            </div>
+                    )}
+                </Card.Body>
+            </Card>
         )
     }
 
@@ -82,23 +71,16 @@ export function ProductPage(){
         </ToastContainer>
         <Container>
             <Row>
-                {new Array(NUMBER_OF_COLUMNS).fill('').map((value, column) => (
-                    <Col>
-                    {getProductInColumn(
-                        getFilteredProduct(product), 
-                        NUMBER_OF_COLUMNS, 
-                        column
-                        ).map((product) => ( 
-                    <Product 
+            {product.map(p =>  
+                <Product 
                     isLoggedIn={isLoggedIn}
                     isAdmin={user?.role==="admin"}
-                    key={product.id}
-                    product={product} 
+                    key={p.id}
+                    product={p} 
                     addProductToCart={addProductToCart}/>
-                        )
-                    )}
-                </Col>
-            ))}   
+                )}
+                    
+    
             </Row>
         </Container>
         </>

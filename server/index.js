@@ -31,9 +31,7 @@ const upload = multer({ storage: storage })
 //product - (cost(int), name(string), description(string)), image(blob)
 //order - (contactInfo(object), (items(array))))
 //user    - (username(string), password(string)), role((string))   
-//news    - (title(string), thePost(string), someDescription(string))
-//supplier - (name(string), (fromCountry(String), telephone(string), productsBrand(string))
-//
+
 
 const db = mysql.createConnection({
     user:"root",
@@ -175,14 +173,15 @@ app.post('/login', (req, res)=> {
 });
 
 
-app.post('/checkout', (req, res) => {
+app.post('/checkout', async (req, res) => {
     console.log(req.body);
     const contactInfo = req.body.contactInfo;
     const items = req.body.items;
     
     //array, object tárolás dbben kéne
-    const data = JSON.stringify({contactInfo : contactInfo, items: items});
-    db.query('INSERT INTO orders (contactInfo, items) VALUES (?, ?)', [contactInfo, items], (err, result) => {
+    const data = JSON.stringify({ items: items});
+    const dataa = JSON.stringify({ contactInfo: contactInfo});
+    db.query('INSERT INTO orders (contactInfo, items) VALUES (?, ?)', [dataa,data], (err, result) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
