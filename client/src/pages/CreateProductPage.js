@@ -20,15 +20,15 @@ export const updateFormValue = (key, form, setForm) => (e) => {
     });
 };
 
-
-
-export function CreateProductPage(){
-
-    const DEFAULT_FORM_OBJECT = {
+const DEFAULT_FORM_OBJECT = {
         name:'',
         cost: 0,
         description:''
     };
+
+export function CreateProductPage(){
+
+    
 
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const {user} = useContext(UserContext);

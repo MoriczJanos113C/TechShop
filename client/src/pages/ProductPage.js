@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Form, ToastContainer, Toast } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 import "../style/style.css"
@@ -16,6 +16,9 @@ export function ProductPage(){
 
     const [product, setProduct] = useState([]);
     const [reviews, setReviews] = useState([]);
+    const [reviewByProduct, setReviewByProduct] = useState([]);
+    const { id: reviewID } = useParams()
+    const navigate = useNavigate();
     
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [showToast, setShowToast] = useState(false);
@@ -38,12 +41,13 @@ export function ProductPage(){
         fetchProduct();
     }, []);
 
+    
     useEffect(() => {
         const fetchProduct = async () => {
-            const { data: review } = await axios.get(`http://localhost:8080/product/reviews/${productID}`);
-            setReviews(review);
-            
-        };
+            const { data: review } = await axios.get(`http://localhost:8080/productReviews/${reviewID}`);
+            setReviewByProduct(review);
+        
+            };
         fetchProduct();
     }, []);
 
@@ -56,13 +60,13 @@ export function ProductPage(){
 
     const addReview = async (e) => {
         e.preventDefault();
-        const {data: orders } = await axios.post("http://localhost:8080/review", { 
+        const {data: reviews } = await axios.post("http://localhost:8080/review", { 
         product_id: productID,
         user_id: user.id,
         description: form.description,
         rating: form.rating
         });
-        setReview(orders.id);
+        setReviews(reviews.id);
         navigate("/");
     };
 
@@ -117,7 +121,13 @@ export function ProductPage(){
                     addProductToCart={addProductToCart}/>
                 )}
 
-
+            {reviewByProduct.map(pR =>  
+                <div>
+                    <h2>{pR.rating}</h2>
+                    <p>{pR.description}</p>
+                </div>
+                )}
+    
             
     
             </Row>

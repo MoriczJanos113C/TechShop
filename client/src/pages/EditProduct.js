@@ -6,14 +6,16 @@ import { UserContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateFormFileValue, updateFormValue } from "./CreateProductPage";
 
-export function EditProduct(){
-    
-    
-    const DEFAULT_FORM_OBJECT = {
+const DEFAULT_FORM_OBJECT = {
         name:'',
         cost: 0,
         description:''
     };
+    
+export function EditProduct(){
+    
+    
+    
     
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const {user} = useContext(UserContext);
@@ -96,12 +98,6 @@ export function EditProduct(){
                                             value={form.description} 
                                             type="text" as="textarea" 
                                             rows={3}/>
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Kép</Form.Label>
-                                    <Form.Control 
-                                            onChange={updateFormFileValue("file", form, setForm)}
-                                            type="file"/>
                                 </Form.Group>
                                 <Button variant="success" type="submit">
                                    Mentés

@@ -73,9 +73,8 @@ app.put('/products/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> 
     const cost= req.body.cost;
     const name = req.body.name;
     const description = req.body.description;
-    const image = req.file?.filename;
     //image holding mikor nem valasztunk ki kepet akk maradjon ami vlt kellesz még + az adatok ami adott produktnak van azokat se jeleniti meg a frontend mikro szerkesztesre katt van
-    db.query(`UPDATE product SET cost = ?, name = ?, description = ?, image = ? WHERE id = ${req.params.id}`, [cost, name, description, image], (err, result) => {
+    db.query(`UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, name, description], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
@@ -121,6 +120,35 @@ app.delete('/deleteProduct/:id', /*isAdmin,*/ (req, res) => {
         }
     })
 })
+
+app.post('/review', async (req, res) => {
+    console.log(req.body);
+    
+    const user_id = req.body.user_id;
+    const product_id = req.body.product_id;
+    const description = req.body.description;
+    const rating = req.body.rating;
+
+    db.query('INSERT INTO reviews (user_id, product_id, description, rating) VALUES (?, ?, ?, ?)', [user_id, product_id, description, rating], (err, result) => {
+        if (err) throw err;
+        console.log(req.body);
+        if(result){
+            res.send({result, message: "REVIEW ADDED"});
+        }
+    });
+    
+});
+
+app.get('/productReviews/:id', (req, res)=> {
+    db.query("SELECT * FROM reviews WHERE product_id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any review for this product"})
+        }
+        
+    });
+});
 
 
 //USER OPERATIONS
@@ -193,34 +221,61 @@ app.post('/checkout', async (req, res) => {
 });
 
 
-app.post('/review', async (req, res) => {
-    console.log(req.body);
-    
-    const user_id = req.body.user_id;
-    const product_id = req.body.product_id;
-    const description = req.body.description;
-    const rating = req.body.rating;
 
-    db.query('INSERT INTO reviews (user_id, product_id, description, rating) VALUES (?, ?, ?, ?)', [user_id, product_id, description, rating], (err, result) => {
-        if (err) throw err;
-        console.log(req.body);
-        if(result){
-            res.send({result, message: "REVIEW ADDED"});
-        }
-    });
-    
-});
 
-app.get('/product/reviews/:id', (req, res)=> {
-    db.query("SELECT * FROM reviews WHERE product_id = ?", req.params.id, (err, result) => {
+
+app.get('/users', (req, res)=> {
+    
+    db.query("SELECT * FROM user", (err, result) => {
         if (result){
             res.send(result);
         }else{
-            res.send({message: "Not found any review for this product"})
+            res.send({message: "Not found any user"})
+        }
+    });
+});
+
+app.get('/users/:id', (req, res)=> {
+    db.query("SELECT * FROM user WHERE id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any user"})
         }
         
     });
 });
+
+app.put('/users/:id',/*isAdmin,*/ async (req, res)=> {
+    const username= req.body.username;
+    const password = req.body.password;
+    const role = req.body.role;
+    const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
+
+    db.query(`UPDATE user SET username = ?, password = ?, role = ? WHERE id = ${req.params.id}`, [username, hashedPass, role], (err, result) => {
+        if(err) throw err;
+        if(result){
+            console.log(result);
+            res.send({message: "Saved"})
+        }else{
+            res.send({message: "Not saved"})
+            }
+            
+
+        }
+    );
+});
+
+app.delete('/deleteUser/:id', /*isAdmin,*/ (req, res) => {
+    db.query(`DELETE FROM user WHERE id = ${req.params.id}`,(err, result) => {
+        if(result){
+            console.log(result)
+            res.send(result);
+        }else{
+            res.send({message: "Not deleted any user"})
+        }
+    })
+})
 
 app.listen(8080, () => {
     console.log("running server");
