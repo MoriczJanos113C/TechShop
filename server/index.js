@@ -177,11 +177,12 @@ app.post('/checkout', async (req, res) => {
     console.log(req.body);
     const contactInfo = req.body.contactInfo;
     const items = req.body.items;
+    const user_id = req.body.user_id;
     
     //array, object tárolás dbben kéne
     const data = JSON.stringify({ items: items});
     const dataa = JSON.stringify({ contactInfo: contactInfo});
-    db.query('INSERT INTO orders (contactInfo, items) VALUES (?, ?)', [dataa,data], (err, result) => {
+    db.query('INSERT INTO orders (user_id, contactInfo, items) VALUES (?, ?, ?)', [user_id, dataa,data], (err, result) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
@@ -189,6 +190,36 @@ app.post('/checkout', async (req, res) => {
         }
     });
     
+});
+
+
+app.post('/review', async (req, res) => {
+    console.log(req.body);
+    
+    const user_id = req.body.user_id;
+    const product_id = req.body.product_id;
+    const description = req.body.description;
+    const rating = req.body.rating;
+
+    db.query('INSERT INTO reviews (user_id, product_id, description, rating) VALUES (?, ?, ?, ?)', [user_id, product_id, description, rating], (err, result) => {
+        if (err) throw err;
+        console.log(req.body);
+        if(result){
+            res.send({result, message: "REVIEW ADDED"});
+        }
+    });
+    
+});
+
+app.get('/product/reviews/:id', (req, res)=> {
+    db.query("SELECT * FROM reviews WHERE product_id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any review for this product"})
+        }
+        
+    });
 });
 
 app.listen(8080, () => {

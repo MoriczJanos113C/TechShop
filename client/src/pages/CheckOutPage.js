@@ -1,30 +1,34 @@
 import axios from "axios";
 import { useContext, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { ConfirmationContext, ShoppingCartContext } from "../App";
+import { useNavigate, useParams } from "react-router-dom";
+import { ConfirmationContext, ShoppingCartContext, UserContext } from "../App";
 import { updateFormValue } from "./CreateProductPage";
 
-
-export function CheckOutPage(){
-    const DEFAULT_FORM_OBJECT = {
+const DEFAULT_FORM_OBJECT = {
         address:'',
         firstname:'',
         lastname:'',
         cardNumber:'',
         email:''
     };
+    
+export function CheckOutPage(){   
+    
+    
 
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
-    const [cart, setCart] = useContext(ShoppingCartContext)
+    const [cart, setCart] = useContext(ShoppingCartContext);
     const navigate = useNavigate();
     const [confirmation, setConfirmation] = useContext(ConfirmationContext);
+    const {user} = useContext(UserContext);
 
     const checkOut = async (e) => {
         e.preventDefault();
         const {data: orders } = await axios.post("http://localhost:8080/checkout", { 
         contactInfo: form,
         items: cart.map((item) => item.id),
+        user_id: user.id
         });
         setCart([]);
         setConfirmation(orders.id);
