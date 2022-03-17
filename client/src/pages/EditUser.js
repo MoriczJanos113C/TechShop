@@ -4,7 +4,6 @@ import Axios from "axios";
 import React from "react";
 import { UserContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateFormValue } from "./CreateProductPage";
 
 const DEFAULT_FORM_OBJECT = {
         username:'',
@@ -16,6 +15,7 @@ export function EditUser(){
     
     
     
+    
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const {user} = useContext(UserContext);
     const { id: userID } = useParams();
@@ -23,17 +23,23 @@ export function EditUser(){
 
     useEffect(()=> {
         const getUser = async () => {
-            const { data: user } = await Axios.get(`http://localhost:8080/users/${userID}`);
+            await Axios.get(`http://localhost:8080/users/${userID}`);
             setForm({
-                username: user.username,
-                password: user.password,
-                role: user.role
+                username: form.username,
+                password: form.password,
+                role: form.role,
             });
         };   
         getUser();
     }, [])
 
-
+    /*const updateFormValue = (key, e) => {
+        console.log(key)
+        setForm({
+            ...form,
+            [key]: e.target.value,
+        });
+    };*/
 
     const updateUser = async (e) => {
         e.preventDefault();
@@ -46,26 +52,23 @@ export function EditUser(){
                 Authorization: `Bearer ${user.token}`,
             }
         });
-        console.log(form.username);
-        console.log(form.password);
-        console.log(form.role);
         setForm(DEFAULT_FORM_OBJECT);
-        navigate("/users");
+        navigate("/");
     };
 
     const deleteUser = () => {
-            Axios.delete(`http://localhost:8080/deleteUser/${userID}`, {
+            Axios.delete(`http://localhost:8080/deleteUsers/${userID}`, {
             headers:{
                 'Authorization': `Bearer ${user.token}`
             }
         });
-        navigate("/users")
+        navigate("/")
     }
 
 
     return(
         
-        <div className="">
+        <div className="product">
             
             <Container>
                 <Row>
@@ -75,27 +78,28 @@ export function EditUser(){
                     
                         <Form onSubmit={updateUser}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Felhasználó neve</Form.Label>
+                                    <Form.Label className="textTwo">Un</Form.Label>
                                     <Form.Control 
-                                            onChange={updateFormValue("username", form, setForm)}
+                                            onChange={(e) => updateFormValue("username", e)}
                                             value={form.username} 
-                                            type="text" placeholder="ide írd a felhasználó új nevét" />
+                                            type="text" placeholder="" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Jelszó</Form.Label>
+                                        <Form.Label className="textTwo">P</Form.Label>
                                         <Form.Control 
-                                            onChange={updateFormValue("password", form, setForm)}
+                                            onChange={updateFormValue("password")}
                                             value={form.password} 
-                                            type="password" 
-                                            placeholder="Ide írd a felhasználó számára kívánt új jelszót" />
+                                            type="text" 
+                                            placeholder="" />
                                 </Form.Group>
-                                <Form.Group className="mb-3" >
-                                    <Form.Label className="textTwo">Felhasználó jogosultsági rangja</Form.Label>
+                                <Form.Group className="mb-3">
+                                        <Form.Label className="textTwo">Role</Form.Label>
                                         <Form.Control 
-                                            onChange={updateFormValue("role", form, setForm)}
+                                            onChange={updateFormValue("role")}
                                             value={form.role} 
-                                            type="text"/>
+                                            type="text" 
+                                            placeholder="" />
                                 </Form.Group>
                                 <Button variant="success" type="submit">
                                    Mentés

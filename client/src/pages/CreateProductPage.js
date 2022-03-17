@@ -14,9 +14,10 @@ export const updateFormFileValue = (key, form, setForm) => (e) => {
 };
 
 export const updateFormValue = (key, form, setForm) => (e) => {
+    console.log(key,form,e.target.value)
     setForm({
         ...form,
-        [key]: e.currentTarget.value,
+        [key]: e.target.value,
     });
 };
 

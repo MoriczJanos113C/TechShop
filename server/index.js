@@ -122,7 +122,7 @@ app.delete('/deleteProduct/:id', /*isAdmin,*/ (req, res) => {
 })
 
 app.post('/review', async (req, res) => {
-    console.log(req.body);
+
     
     const user_id = req.body.user_id;
     const product_id = req.body.product_id;
@@ -235,6 +235,7 @@ app.get('/users', (req, res)=> {
     });
 });
 
+
 app.get('/users/:id', (req, res)=> {
     db.query("SELECT * FROM user WHERE id = ?", req.params.id, (err, result) => {
         if (result){
@@ -246,16 +247,20 @@ app.get('/users/:id', (req, res)=> {
     });
 });
 
-app.put('/users/:id',/*isAdmin,*/ async (req, res)=> {
+app.put('/users/:id',/*isAdmin,*/  async (req, res)=> {
     const username= req.body.username;
     const password = req.body.password;
     const role = req.body.role;
+    console.log(username,password,role)
     const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
-
+    
+    
+    //image holding mikor nem valasztunk ki kepet akk maradjon ami vlt kellesz még + az adatok ami adott produktnak van azokat se jeleniti meg a frontend mikro szerkesztesre katt van
     db.query(`UPDATE user SET username = ?, password = ?, role = ? WHERE id = ${req.params.id}`, [username, hashedPass, role], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
+            console.log(err);
             res.send({message: "Saved"})
         }else{
             res.send({message: "Not saved"})

@@ -4,7 +4,7 @@ import Axios from "axios";
 import React from "react";
 import { UserContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateFormFileValue, updateFormValue } from "./CreateProductPage";
+import { updateFormValue } from "./CreateProductPage";
 
 const DEFAULT_FORM_OBJECT = {
         name:'',

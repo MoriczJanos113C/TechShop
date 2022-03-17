@@ -110,6 +110,10 @@ export function ProductPage(){
             <Toast.Body>Termék hozzáadva</Toast.Body>
           </Toast>
         </ToastContainer>
+
+
+
+        
         <Container>
             <Row>
             {product.map(p =>  

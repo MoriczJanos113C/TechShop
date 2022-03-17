@@ -31,7 +31,7 @@ export const AppRouter = () => {
 
 
               {isAdmin && (<Route path="/users" element={<UsersPage/>}/>)}
-              {isAdmin && (<Route path="/edit-user/:id" element={<EditUser/>}/>)}
+              {isAdmin && (<Route path="/users/:id" element={<EditUser/>}/>)}
               
               
               <Route path="/products/product/:id" element={<ProductPage/>}/>
@@ -44,7 +44,7 @@ export const AppRouter = () => {
               {isLoggedIn && (<Route path="/logout" element={<LogoutPage />}/>)}
 
               
-              <Route path="*" element={<NotFoundPage/>} />
+              
         </Routes>
         </Router>
     )
