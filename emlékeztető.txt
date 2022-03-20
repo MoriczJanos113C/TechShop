@@ -1,7 +1,0 @@
-Editproduct/createproductban a kép feltöltés jó már
-checkoutpage, confirmationpage kész
-
-hiba:
-!backendben!
-update productban a ha képet nem akar cserélni akkor fent kéne maradnia a meglévőnek
-admin middleware nem mukodik
