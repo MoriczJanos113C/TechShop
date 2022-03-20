@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button, Form, ToastContainer, Toast } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { Container, Row, Card, Button, Form, ToastContainer, Toast } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
 import { useIsAdmin } from "../hooks/useIsAdmin";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
@@ -20,7 +20,7 @@ export function ProductPage(){
     const [reviewByProduct, setReviewByProduct] = useState([]);
     const { id: reviewID } = useParams()
     
-    const navigate = useNavigate();
+
     
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [showToast, setShowToast] = useState(false);
@@ -39,7 +39,7 @@ export function ProductPage(){
             
         };
         fetchProduct();
-    }, []);
+    }, [productID]);
 
     
     useEffect(() => {
@@ -49,7 +49,7 @@ export function ProductPage(){
         
             };
         fetchProduct();
-    }, []);
+    }, [reviewID]);
 
     
 
@@ -68,7 +68,7 @@ export function ProductPage(){
         rating: form.rating
         });
         setReviews(reviews.id);
-        navigate("/")
+        window.location.reload();
     };
 
     const deleteReview = (e, id) => {
@@ -78,7 +78,7 @@ export function ProductPage(){
             'Authorization': `Bearer ${user.token}`
         }
     });
-    navigate("/")
+    window.location.reload();
 }
 
 

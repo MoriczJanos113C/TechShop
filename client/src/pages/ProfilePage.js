@@ -6,16 +6,17 @@ import { UserContext } from "../App";
 export function ProfilePage(){
 
     const {user} = useContext(UserContext);
-    const {id: ID} = useParams();
+    const {id: ID} = useParams()
     const [userOrders, setUserOrders] = useState([]);
 
     useEffect(() => {
         const fetchOrders = async () => {
             const { data: orders } = await axios.get(`http://localhost:8080/userOrders/${ID}`);
             setUserOrders(orders);
+            console.log(orders)
         };
         fetchOrders();
-    }, []);
+    }, [ID]);
 
 
 
@@ -29,11 +30,7 @@ export function ProfilePage(){
                     <h2>{pR.items}</h2>
                     <h2>{pR.contactInfo}</h2>
                 </div>
-                )}
-                                        
-                                    
-                           
-                        
+                )}         
           </>  
     )
 }

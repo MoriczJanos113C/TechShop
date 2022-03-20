@@ -10,7 +10,6 @@ export function OrdersPage(){
     const [search, setSearch] = useState("");
     const NUMBER_OF_COLUMNS = 2;
     const {user} = useContext(UserContext);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -39,7 +38,7 @@ export function OrdersPage(){
             'Authorization': `Bearer ${user.token}`
         }
     });
-    navigate("/orders")
+    window.location.reload();
 }
 
     return(

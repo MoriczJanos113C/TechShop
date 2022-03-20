@@ -313,11 +313,13 @@ app.delete('/deleteUser/:id', /*isAdmin,*/ (req, res) => {
 })
 
 app.get('/userOrders/:id', (req, res)=> {
-    db.query("SELECT items, contactInfo FROM orders WHERE user_id = ?", req.params.id, (err, result) => {
+    db.query("SELECT * FROM orders WHERE user_id = ?", req.params.id, (err, result) => {     
         if (result){
+            console.log(result);
             res.send(result);
         }else{
-            res.send({message: "Not found any review for this product"})
+            console.log(err)
+            res.send({message: "Not found any order for this user"})
         }
         
     });
