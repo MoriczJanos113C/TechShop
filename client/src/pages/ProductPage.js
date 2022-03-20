@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Form, ToastContainer, Toast } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
+import { useIsAdmin } from "../hooks/useIsAdmin";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 import "../style/style.css"
 import { updateFormValue } from "./CreateProductPage";
@@ -18,6 +19,7 @@ export function ProductPage(){
     const [reviews, setReviews] = useState([]);
     const [reviewByProduct, setReviewByProduct] = useState([]);
     const { id: reviewID } = useParams()
+    
     const navigate = useNavigate();
     
     const [cart, setCart] = useContext(ShoppingCartContext);
@@ -26,9 +28,7 @@ export function ProductPage(){
     const {user} = useContext(UserContext);
     const { id: productID } = useParams()
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
-//adott id-ju itemhez lekérés vélemény táblából
-//uj form 
-
+    const isAdmin = useIsAdmin();
 
 
 
@@ -63,12 +63,24 @@ export function ProductPage(){
         const {data: reviews } = await axios.post("http://localhost:8080/review", { 
         product_id: productID,
         user_id: user.id,
+        username: user.username,
         description: form.description,
         rating: form.rating
         });
         setReviews(reviews.id);
-        navigate("/");
+        navigate("/")
     };
+
+    const deleteReview = (e, id) => {
+        e.preventDefault();
+        axios.delete(`http://localhost:8080/deleteReview/${id}`, {
+        headers:{
+            'Authorization': `Bearer ${user.token}`
+        }
+    });
+    navigate("/")
+}
+
 
  //ide barmit tehetesz, diveket akár ki is cserelheted masra 44-61es sorig, ez jelenik meg majd amit az also returnba be injektálsz (91.sor)
     const Product = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
@@ -91,8 +103,6 @@ export function ProductPage(){
         )
     }
 
-    
-
     return(
         <>
         <ToastContainer 
@@ -112,8 +122,7 @@ export function ProductPage(){
         </ToastContainer>
 
 
-
-        
+    
         <Container>
             <Row>
             {product.map(p =>  
@@ -124,11 +133,18 @@ export function ProductPage(){
                     product={p} 
                     addProductToCart={addProductToCart}/>
                 )}
-
+            <h1>Vélemények</h1>
             {reviewByProduct.map(pR =>  
-                <div>
+                <div key={pR.id}>
+                    {isAdmin && (
+                        
+                        <Button onClick={(e) => deleteReview(e, pR.id)} variant="danger">Törlés</Button>
+                    )}
+                    
+                    <h1>{pR.username}</h1>
                     <h2>{pR.rating}</h2>
                     <p>{pR.description}</p>
+                    
                 </div>
                 )}
     
@@ -136,28 +152,40 @@ export function ProductPage(){
     
             </Row>
         </Container>
-                <Container>
-                <Form onSubmit={addReview}>
-                                <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Rating</Form.Label>
-                                    <Form.Control 
-                                            onChange={updateFormValue("rating", form, setForm)}
-                                            value={form.rating} 
-                                            placeholder="rating" />
-                                </Form.Group>
-
-                                <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Termék vélemény írás</Form.Label>
+                
+                    
+                    
+                    <Container>
+                        {!isAdmin && (
+                            <Form onSubmit={(e) => addReview(e)}>
+                                   <Form.Group className="mb-3">
+                                        <Form.Label className="textTwo">Rating</Form.Label>
                                         <Form.Control 
-                                            onChange={updateFormValue("description", form, setForm)}
-                                            value={form.description} 
-                                            placeholder="Leírás" />
-                                </Form.Group>
-                                <Button variant="success" type="submit">
-                                    Vélemény elküldése
-                                </Button>
-                            </Form>
-                </Container>
+                                                onChange={updateFormValue("rating", form, setForm)}                       
+                                                placeholder="rating"
+                                                type="number"            
+                                                />
+                                    </Form.Group>
+    
+                                    <Form.Group className="mb-3">
+                                            <Form.Label className="textTwo">Termék vélemény írás</Form.Label>
+                                            <Form.Control 
+                                                onChange={updateFormValue("description", form, setForm)}
+                                                value={form.description} 
+                                                placeholder="Leírás" />
+                                    </Form.Group>
+                                    <Button variant="success" type="submit">
+                                        Vélemény elküldése
+                                     </Button>
+                                   
+                                </Form>
+                        )}
+                     
+                                
+                    </Container>
+                    
+                    
+                
         </>
     );
 };

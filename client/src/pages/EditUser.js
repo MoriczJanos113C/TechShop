@@ -4,6 +4,7 @@ import Axios from "axios";
 import React from "react";
 import { UserContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
+import { updateFormValue } from "./CreateProductPage";
 
 const DEFAULT_FORM_OBJECT = {
         username:'',
@@ -23,7 +24,7 @@ export function EditUser(){
 
     useEffect(()=> {
         const getUser = async () => {
-            await Axios.get(`http://localhost:8080/users/${userID}`);
+            const { data: form } = await Axios.get(`http://localhost:8080/users/${userID}`);
             setForm({
                 username: form.username,
                 password: form.password,
@@ -53,16 +54,16 @@ export function EditUser(){
             }
         });
         setForm(DEFAULT_FORM_OBJECT);
-        navigate("/");
+        navigate("/users");
     };
 
     const deleteUser = () => {
-            Axios.delete(`http://localhost:8080/deleteUsers/${userID}`, {
+            Axios.delete(`http://localhost:8080/deleteUser/${userID}`, {
             headers:{
                 'Authorization': `Bearer ${user.token}`
             }
         });
-        navigate("/")
+        navigate("/users")
     }
 
 
@@ -80,26 +81,26 @@ export function EditUser(){
                                 <Form.Group className="mb-3">
                                     <Form.Label className="textTwo">Un</Form.Label>
                                     <Form.Control 
-                                            onChange={(e) => updateFormValue("username", e)}
+                                            onChange={updateFormValue("username", form, setForm)}
                                             value={form.username} 
-                                            type="text" placeholder="" />
+                                            type="text" placeholder="Uj felhasználónév" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
                                         <Form.Label className="textTwo">P</Form.Label>
                                         <Form.Control 
-                                            onChange={updateFormValue("password")}
+                                            onChange={updateFormValue("password", form, setForm)}
                                             value={form.password} 
-                                            type="text" 
-                                            placeholder="" />
+                                            type="password" 
+                                            placeholder="Uj jelszo" />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                         <Form.Label className="textTwo">Role</Form.Label>
                                         <Form.Control 
-                                            onChange={updateFormValue("role")}
+                                            onChange={updateFormValue("role", form, setForm)}
                                             value={form.role} 
                                             type="text" 
-                                            placeholder="" />
+                                            placeholder="Uj role" />
                                 </Form.Group>
                                 <Button variant="success" type="submit">
                                    Mentés

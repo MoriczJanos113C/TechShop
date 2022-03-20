@@ -128,8 +128,9 @@ app.post('/review', async (req, res) => {
     const product_id = req.body.product_id;
     const description = req.body.description;
     const rating = req.body.rating;
+    const username = req.body.username;
 
-    db.query('INSERT INTO reviews (user_id, product_id, description, rating) VALUES (?, ?, ?, ?)', [user_id, product_id, description, rating], (err, result) => {
+    db.query('INSERT INTO reviews (user_id, product_id, description, rating, username) VALUES (?, ?, ?, ?, ?)', [user_id, product_id, description, rating,username], (err, result) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
@@ -150,6 +151,19 @@ app.get('/productReviews/:id', (req, res)=> {
     });
 });
 
+app.delete('/deleteReview/:id', /*isAdmin,*/ (req, res) => {
+    db.query(`DELETE FROM reviews WHERE id = ${req.params.id}`,(err, result) => {
+        if(result){
+            console.log(result)
+            res.send(result);
+        }else{
+            res.send({message: "Not deleted any review"})
+        }
+    })
+})
+
+
+
 
 //USER OPERATIONS
 app.post('/register', (req, res)=> {
@@ -161,7 +175,7 @@ app.post('/register', (req, res)=> {
     db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
         if (err) return err;
             if(result.length === 0){
-                db.query("INSERT INTO user (username, password, role) VALUES (?, ?, '')",[username, hashedPass, role], (err, result) => {
+                db.query("INSERT INTO user (username, password, role) VALUES (?, ?, 'normal')",[username, hashedPass, role], (err, result) => {
                     if (err) {
                         res.send({err: err})
                     }
@@ -206,21 +220,42 @@ app.post('/checkout', async (req, res) => {
     const contactInfo = req.body.contactInfo;
     const items = req.body.items;
     const user_id = req.body.user_id;
+    const username = req.body.username;
     
     //array, object tárolás dbben kéne
-    const data = JSON.stringify({ items: items});
-    const dataa = JSON.stringify({ contactInfo: contactInfo});
-    db.query('INSERT INTO orders (user_id, contactInfo, items) VALUES (?, ?, ?)', [user_id, dataa,data], (err, result) => {
+    const products = JSON.stringify({ products: items});
+    const contactInfos = JSON.stringify({ contactInfos: contactInfo});
+    db.query('INSERT INTO orders (user_id, username, contactInfo, items) VALUES (?, ?, ?, ?)', [user_id, username, contactInfos, products], (err, result) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
-            res.send(JSON.parse(data));
+            res.send(JSON.parse(products));
         }
     });
     
 });
 
+app.get('/orders', (req, res)=> {
+    
+    db.query("SELECT * FROM orders", (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any orders"})
+        }
+    });
+});
 
+app.delete('/deleteOrder/:id', /*isAdmin,*/ (req, res) => {
+    db.query(`DELETE FROM orders WHERE id = ${req.params.id}`,(err, result) => {
+        if(result){
+            console.log(result)
+            res.send(result);
+        }else{
+            res.send({message: "Not deleted any order"})
+        }
+    })
+})
 
 
 
@@ -247,20 +282,16 @@ app.get('/users/:id', (req, res)=> {
     });
 });
 
-app.put('/users/:id',/*isAdmin,*/  async (req, res)=> {
+app.put('/users/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> {
     const username= req.body.username;
     const password = req.body.password;
     const role = req.body.role;
-    console.log(username,password,role)
     const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
-    
-    
-    //image holding mikor nem valasztunk ki kepet akk maradjon ami vlt kellesz még + az adatok ami adott produktnak van azokat se jeleniti meg a frontend mikro szerkesztesre katt van
+
     db.query(`UPDATE user SET username = ?, password = ?, role = ? WHERE id = ${req.params.id}`, [username, hashedPass, role], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
-            console.log(err);
             res.send({message: "Saved"})
         }else{
             res.send({message: "Not saved"})
@@ -270,7 +301,6 @@ app.put('/users/:id',/*isAdmin,*/  async (req, res)=> {
         }
     );
 });
-
 app.delete('/deleteUser/:id', /*isAdmin,*/ (req, res) => {
     db.query(`DELETE FROM user WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
@@ -281,6 +311,17 @@ app.delete('/deleteUser/:id', /*isAdmin,*/ (req, res) => {
         }
     })
 })
+
+app.get('/userOrders/:id', (req, res)=> {
+    db.query("SELECT items, contactInfo FROM orders WHERE user_id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any review for this product"})
+        }
+        
+    });
+});
 
 app.listen(8080, () => {
     console.log("running server");

@@ -11,10 +11,11 @@ import { LogoutPage } from './pages/LogoutPage';
 import { EditProduct} from './pages/EditProduct';
 import { ProductPage } from './pages/ProductPage';
 import { CheckOutPage } from './pages/CheckOutPage';
-import { ConfirmationPage } from './pages/ConfirmationPage';
 import { EditUser } from './pages/EditUser';
 import { UsersPage } from './pages/UsersPage';
 import { useIsLoggedIn } from './hooks/useIsLoggedIn';
+import { OrdersPage } from './pages/OrdersPage';
+import { ProfilePage } from './pages/ProfilePage';
 
 export const AppRouter = () => {
 
@@ -31,18 +32,20 @@ export const AppRouter = () => {
 
 
               {isAdmin && (<Route path="/users" element={<UsersPage/>}/>)}
-              {isAdmin && (<Route path="/users/:id" element={<EditUser/>}/>)}
+              {!isAdmin && isLoggedIn && (<Route path="/users/:id" element={<EditUser/>}/>)}
+
+              {isLoggedIn && (<Route path="/profile" element={<ProfilePage/>}/>)}
               
+              {isAdmin && (<Route path="/orders" element={<OrdersPage/>}/>)}
               
               <Route path="/products/product/:id" element={<ProductPage/>}/>
               <Route path="/" element={<ProductsPage />}/>
               {isLoggedIn && (<Route path="/cart" element={<ShoppingCartPage />}/>)}
               {isLoggedIn && (<Route path="/checkout" element={<CheckOutPage />}/>)}
-              {isLoggedIn && (<Route path="/confirmation" element={<ConfirmationPage />}/>)}
               <Route path="/register" element={<RegisterPage />}/>
               <Route path="/login" element={<LoginPage />}/>
               {isLoggedIn && (<Route path="/logout" element={<LogoutPage />}/>)}
-
+              {isAdmin && (<Route path="/profile" element={<ProfilePage/>}/>)}
               
               
         </Routes>

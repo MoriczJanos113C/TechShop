@@ -21,6 +21,7 @@ export function EditProduct(){
     const {user} = useContext(UserContext);
     const { id: productId } = useParams();
     const navigate = useNavigate();
+    const [product] = useState([]);
 
     useEffect(()=> {
         const getProduct = async () => {
@@ -43,7 +44,6 @@ export function EditProduct(){
         formData.append("name", form.name);
         formData.append("cost", form.cost);
         formData.append("description", form.description);
-        formData.append("file", form.file);
         await Axios.put(`http://localhost:8080/products/${productId}`, formData, {
             headers: {
                 'content-type': 'multipart/form-data',
@@ -79,8 +79,9 @@ export function EditProduct(){
                                     <Form.Label className="textTwo">Név</Form.Label>
                                     <Form.Control 
                                             onChange={updateFormValue("name", form, setForm)}
-                                            value={form.name} 
-                                            type="name" placeholder="ide írd a termék nevét" />
+                                            value={form.name}          
+                                            type="name" placeholder="ide írd a termék nevét"
+                                            />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
@@ -89,7 +90,8 @@ export function EditProduct(){
                                             onChange={updateFormValue("cost", form, setForm)}
                                             value={form.cost} 
                                             type="number" 
-                                            placeholder="Ide írd a termék árát" />
+                                            placeholder="Ide írd a termék árát"
+                                            />
                                 </Form.Group>
                                 <Form.Group className="mb-3" >
                                     <Form.Label className="textTwo">Termék leírása</Form.Label>
@@ -97,7 +99,8 @@ export function EditProduct(){
                                             onChange={updateFormValue("description", form, setForm)}
                                             value={form.description} 
                                             type="text" as="textarea" 
-                                            rows={3}/>
+                                            rows={3}
+                                            placeholder="Ide írd a termék leírását"/>
                                 </Form.Group>
                                 <Button variant="success" type="submit">
                                    Mentés

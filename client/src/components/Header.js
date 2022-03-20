@@ -17,10 +17,14 @@ export function Header(){
         <Navbar className="navbar" expand="lg">
         <Container>
             <Navbar.Brand>
-                <Link className="textOne" to="/">Kezdőlap</Link>
+            {!isAdmin && <Link className="textOne" to="/">Kezdőlap</Link>}
+             
+                
             </Navbar.Brand>
-            {isAdmin && <Link className="textTwo" to="/create-product">Termék létrehozása</Link>}
+            <Link className="textOne" to="/profile">Profil</Link>
             {isAdmin && <Link className="textTwo" to="/users">Felhasználók kezelése</Link>}
+            {isAdmin && <Link className="textTwo" to="/">Termékek kezelése</Link>}
+            {isAdmin && <Link className="textTwo" to="/orders">Rendelések kezelése</Link>}
             {!isLoggedIn && <Link className="textTwo" to="/login">Bejelentkezés</Link>}
             {!isLoggedIn && <Link className="textTwo" to="/register">Regisztráció</Link>}
             {isLoggedIn && <Link className="logOut" to="/logout">Kijelentkezés</Link>}

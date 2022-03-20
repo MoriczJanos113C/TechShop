@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Form, ToastContainer, Toast } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
+import { useIsAdmin } from "../hooks/useIsAdmin";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 import "../style/style.css"
 
@@ -15,6 +16,7 @@ export function ProductsPage(){
     const [showToast, setShowToast] = useState(false);
     const isLoggedIn = useIsLoggedIn();
     const {user} = useContext(UserContext);
+    const isAdmin = useIsAdmin();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -59,11 +61,14 @@ export function ProductsPage(){
                         <Button variant="success" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )} 
                     {isAdmin && (
-                        <Link className="textTwo" to={`/products/${product.id}`}>Szerkesztés</Link>
-                    )} 
+                        <Link className="textTwo" to={`/products/${product.id}`}>Termék Szerkesztés</Link>
+                    )}
                     {!isAdmin && (
                         <Link className="description" to={`/products/product/${product.id}`}>Leírás</Link>   
-                    )}         
+                    )}
+                    {isAdmin && (
+                        <Link className="textTwo" to={`/products/product/${product.id}`}>Vélemények szerkesztése</Link>
+                    )}
                     
                 </Card.Body>
             </Card>
@@ -98,6 +103,7 @@ export function ProductsPage(){
                         placeholder="Termék keresése" 
                         onChange={onSearchChange}
                         />
+                    {isAdmin && <Link className="textTwo" to="/create-product">Termék létrehozása</Link>}
                 </Col>
             </Row>
             <Row>

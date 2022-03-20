@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ConfirmationContext, ShoppingCartContext, UserContext } from "../App";
 import { updateFormValue } from "./CreateProductPage";
 
@@ -9,8 +9,7 @@ const DEFAULT_FORM_OBJECT = {
         address:'',
         firstname:'',
         lastname:'',
-        cardNumber:'',
-        email:''
+        cardNumber:''
     };
     
 export function CheckOutPage(){   
@@ -28,11 +27,12 @@ export function CheckOutPage(){
         const {data: orders } = await axios.post("http://localhost:8080/checkout", { 
         contactInfo: form,
         items: cart.map((item) => item.id),
-        user_id: user.id
+        user_id: user.id,
+        username: user.username
         });
         setCart([]);
         setConfirmation(orders.id);
-        navigate("/confirmation");
+        navigate("/profile");
     };
     
 
@@ -59,11 +59,11 @@ export function CheckOutPage(){
                                             placeholder="Keresztnév" />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">E-mail cím</Form.Label>
+                                        <Form.Label className="textTwo">Email cím</Form.Label>
                                         <Form.Control 
                                             onChange={updateFormValue("email", form, setForm)}
                                             value={form.email} 
-                                            placeholder="E-mail cím" />
+                                            placeholder="Email cím" />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                         <Form.Label className="textTwo">Lakcím</Form.Label>
