@@ -29,8 +29,6 @@ export const AppRouter = () => {
               {isAdmin && (<Route path="/create-product" element={<CreateProductPage/>}/>)}
               {isAdmin && (<Route path="/products/:id" element={<EditProduct/>}/>)}
 
-
-
               {isAdmin && (<Route path="/users" element={<UsersPage/>}/>)}
               {!isAdmin && isLoggedIn && (<Route path="/users/:id" element={<EditUser/>}/>)}
 

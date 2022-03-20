@@ -312,8 +312,8 @@ app.delete('/deleteUser/:id', /*isAdmin,*/ (req, res) => {
     })
 })
 
-app.get('/userOrders/:id', (req, res)=> {
-    db.query("SELECT * FROM orders WHERE user_id = ?", req.params.id, (err, result) => {     
+app.get('/usersOrder/:user_id', (req, res)=> {
+    db.query('SELECT * FROM orders WHERE id = ?', req.params.user_id, (err, result) => {
         if (result){
             console.log(result);
             res.send(result);
@@ -321,7 +321,6 @@ app.get('/userOrders/:id', (req, res)=> {
             console.log(err)
             res.send({message: "Not found any order for this user"})
         }
-        
     });
 });
 

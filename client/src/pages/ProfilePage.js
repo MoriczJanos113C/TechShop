@@ -6,17 +6,17 @@ import { UserContext } from "../App";
 export function ProfilePage(){
 
     const {user} = useContext(UserContext);
-    const {id: ID} = useParams()
+    const {user_ID} = useParams()
     const [userOrders, setUserOrders] = useState([]);
 
     useEffect(() => {
         const fetchOrders = async () => {
-            const { data: orders } = await axios.get(`http://localhost:8080/userOrders/${ID}`);
+            const { data: orders } = await axios.get(`http://localhost:8080/usersOrder/${user_ID}`);
             setUserOrders(orders);
             console.log(orders)
         };
         fetchOrders();
-    }, [ID]);
+    }, [user_ID]);
 
 
 

@@ -60,17 +60,16 @@ export function OrdersPage(){
                         column
                         ).map((order) => ( 
                             <>  
-                                        <p>Rendelés azonosítója: {order.id}</p>
+                                <p>Rendelés azonosítója: {order.id}</p>
                                         <p>Felhasználónév: {order.username}</p>
                                         <p>Felhasználó információi: {order.contactInfo}</p>
                                         <p>Rendelt termékek: {order.items}</p>
-                                        <Button onClick={(e) => deleteReview(e, order.id)} variant="danger">Rendelés törlése</Button>
-                                    
+                                        <Button onClick={(e) => deleteReview(e, order.id)} variant="danger">Rendelés törlése</Button>      
                             </>
                         )
                     )}
                 </Col>
             ))}
-          </>  
+          </> 
     )
 }

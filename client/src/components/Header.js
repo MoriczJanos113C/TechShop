@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Container, Navbar} from "react-bootstrap";
-import NavbarToggle from "react-bootstrap/esm/NavbarToggle";
 import { Link } from "react-router-dom";
 import { ShoppingCartContext } from '../App';
 import { useIsAdmin } from "../hooks/useIsAdmin";
@@ -13,6 +12,7 @@ export function Header(){
     const [cart] = useContext(ShoppingCartContext);
     const isLoggedIn = useIsLoggedIn();
     const isAdmin = useIsAdmin();
+    
     return(
         <Navbar className="navbar" expand="lg">
         <Container>
@@ -21,7 +21,7 @@ export function Header(){
              
                 
             </Navbar.Brand>
-            <Link className="textOne" to="/profile">Profil</Link>
+            {isLoggedIn && !isAdmin && <Link className="textOne" to="/profile">Profil</Link>}           
             {isAdmin && <Link className="textTwo" to="/users">Felhasználók kezelése</Link>}
             {isAdmin && <Link className="textTwo" to="/">Termékek kezelése</Link>}
             {isAdmin && <Link className="textTwo" to="/orders">Rendelések kezelése</Link>}
