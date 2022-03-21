@@ -11,6 +11,7 @@ export function OrdersPage(){
     const NUMBER_OF_COLUMNS = 2;
     const {user} = useContext(UserContext);
 
+    
     useEffect(() => {
         const fetchOrders = async () => {
             const { data: orders } = await axios.get("http://localhost:8080/orders");
@@ -48,12 +49,13 @@ export function OrdersPage(){
                         type="text" 
                         value={search}
                         className="mb-4 mt-4"
-                        placeholder="Rendelés keresése" 
+                        placeholder="Rendelés keresése felhasználónév szerint" 
                         onChange={onSearchChange}
-                        /> 
+                        />
+                        <h1>Rendelések</h1> 
                 {new Array(NUMBER_OF_COLUMNS).fill('').map((value, column) => (
                     <Col>    
-                          <h1>Rendelések</h1>              
+                                       
                     {getUsersInColumn(
                         getFilteredUsers(orders), 
                         NUMBER_OF_COLUMNS, 

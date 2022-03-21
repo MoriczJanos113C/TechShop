@@ -24,12 +24,11 @@ export function ProductPage(){
     
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [showToast, setShowToast] = useState(false);
-    const isLoggedIn = useIsLoggedIn();
     const {user} = useContext(UserContext);
     const { id: productID } = useParams()
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const isAdmin = useIsAdmin();
-
+    const isLoggedIn = useIsLoggedIn();
 
 
     useEffect(() => {
@@ -156,7 +155,7 @@ export function ProductPage(){
                     
                     
                     <Container>
-                        {!isAdmin && (
+                        {!isAdmin && isLoggedIn &&(
                             <Form onSubmit={(e) => addReview(e)}>
                                    <Form.Group className="mb-3">
                                         <Form.Label className="textTwo">Rating</Form.Label>
