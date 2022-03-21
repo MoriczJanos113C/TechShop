@@ -21,7 +21,7 @@ export function Header(){
              
                 
             </Navbar.Brand>
-            {isLoggedIn && !isAdmin && <Link className="textOne" to="/profile">Profil</Link>}           
+            {isLoggedIn && !isAdmin && <Link className="textOne" to="/profile/user_id">Profil</Link>}           
             {isAdmin && <Link className="textTwo" to="/users">Felhasználók kezelése</Link>}
             {isAdmin && <Link className="textTwo" to="/">Termékek kezelése</Link>}
             {isAdmin && <Link className="textTwo" to="/orders">Rendelések kezelése</Link>}

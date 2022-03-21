@@ -32,7 +32,7 @@ export const AppRouter = () => {
               {isAdmin && (<Route path="/users" element={<UsersPage/>}/>)}
               {!isAdmin && isLoggedIn && (<Route path="/users/:id" element={<EditUser/>}/>)}
 
-              {isLoggedIn && (<Route path="/profile" element={<ProfilePage/>}/>)}
+              {isLoggedIn && (<Route path="/profile/:id" element={<ProfilePage/>}/>)}
               
               {isAdmin && (<Route path="/orders" element={<OrdersPage/>}/>)}
               

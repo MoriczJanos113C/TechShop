@@ -6,7 +6,7 @@ import { UserContext } from "../App";
 export function ProfilePage(){
 
     const {user} = useContext(UserContext);
-    const {user_ID} = useParams()
+    const {id: user_ID} = useParams()
     const [userOrders, setUserOrders] = useState([]);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ export function ProfilePage(){
         fetchOrders();
     }, [user_ID]);
 
-
+    
 
 
     return(
@@ -27,8 +27,8 @@ export function ProfilePage(){
                 {userOrders.map(pR =>  
                 <div key={pR.id}>                   
                     <h1>{pR.username}</h1>
-                    <h2>{pR.items}</h2>
-                    <h2>{pR.contactInfo}</h2>
+                    <p>{pR.items}</p>
+                    <p>{pR.contactInfo}</p>
                 </div>
                 )}         
           </>  

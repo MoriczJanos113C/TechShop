@@ -313,7 +313,7 @@ app.delete('/deleteUser/:id', /*isAdmin,*/ (req, res) => {
 })
 
 app.get('/usersOrder/:user_id', (req, res)=> {
-    db.query('SELECT * FROM orders WHERE id = ?', req.params.user_id, (err, result) => {
+    db.query(`SELECT * FROM orders WHERE user_id = ${req.params.user_id}`, (err, result) => {
         if (result){
             console.log(result);
             res.send(result);
