@@ -4,6 +4,8 @@ import Axios from "axios";
 import React from "react";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import "../style/CreateProductPage.css"
+
 
 
 export const updateFormFileValue = (key, form, setForm) => (e) => {
@@ -59,50 +61,48 @@ export function CreateProductPage(){
     return(
         
         <div className="product">
-            <Container>
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1 className="cimsor">Új termék hozzáadása</h1>
+                    <h1 className="headLine">Új termék hozzáadása</h1>
                         <Form onSubmit={createProduct}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Név</Form.Label>
-                                    <Form.Control 
+                                    <Form.Label>Név</Form.Label>
+                                    <Form.Control className="input"
                                             onChange={updateFormValue("name", form, setForm)}
                                             value={form.name} 
                                             type="name" placeholder="ide írd a termék nevét" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Ár</Form.Label>
-                                        <Form.Control 
+                                        <Form.Label>Ár</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("cost", form, setForm)}
-                                            value={form.cost} 
+                                            value={form.cost}
                                             type="number" 
                                             placeholder="Ide írd a termék árát" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" >
-                                    <Form.Label className="textTwo">Termék leírása</Form.Label>
-                                        <Form.Control 
+                                    <Form.Label>Termék leírása</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("description", form, setForm)}
                                             value={form.description} 
                                             type="text" as="textarea" 
                                             rows={3}/>
                                 </Form.Group>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Kép</Form.Label>
-                                    <Form.Control 
+                                    <Form.Label>Kép</Form.Label>
+                                    <Form.Control className="input"
                                             onChange={updateFormFileValue("file", form, setForm)}
-                                            type="file" placeholder="ide írd a termék nevét" />
+                                            type="file" placeholder="Ide írd a termék nevét" />
                                 </Form.Group>
-                                <Button variant="success" type="submit">
+                                <Button className="btn" type="submit">
                                     Új termék felvétele
                                 </Button>
                             </Form>
                         </Col>
                     <Col></Col>
                 </Row>
-            </Container>
         </div>
         
     );

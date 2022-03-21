@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ShoppingCartContext } from '../App';
 import { useIsAdmin } from "../hooks/useIsAdmin";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
-import "../style/style.css"
+import "../style/header.css"
 
 
 export function Header(){
@@ -17,18 +17,18 @@ export function Header(){
         <Navbar className="navbar" expand="lg">
         <Container>
             <Navbar.Brand>
-            {!isAdmin && <Link className="textOne" to="/">Kezdőlap</Link>}
+            {!isAdmin && <Link className="home" to="/">Kezdőlap</Link>}
              
                 
             </Navbar.Brand>
-            {isLoggedIn && !isAdmin && <Link className="textOne" to="/profile/user_id">Profil</Link>}           
-            {isAdmin && <Link className="textTwo" to="/users">Felhasználók kezelése</Link>}
-            {isAdmin && <Link className="textTwo" to="/">Termékek kezelése</Link>}
-            {isAdmin && <Link className="textTwo" to="/orders">Rendelések kezelése</Link>}
-            {!isLoggedIn && <Link className="textTwo" to="/login">Bejelentkezés</Link>}
-            {!isLoggedIn && <Link className="textTwo" to="/register">Regisztráció</Link>}
+            {isLoggedIn && !isAdmin && <Link className="link" to="/profile">Profil</Link>}           
+            {isAdmin && <Link className="link" to="/users">Felhasználók kezelése</Link>}
+            {isAdmin && <Link className="link" to="/">Termékek kezelése</Link>}
+            {isAdmin && <Link className="link" to="/orders">Rendelések kezelése</Link>}
+            {!isLoggedIn && <Link className="link" to="/login">Bejelentkezés</Link>}
+            {!isLoggedIn && <Link className="link" to="/register">Regisztráció</Link>}
             {isLoggedIn && <Link className="logOut" to="/logout">Kijelentkezés</Link>}
-            {!isAdmin && isLoggedIn && <Link className="textTwo" to="/cart">Kosár {cart.length}</Link>}           
+            {!isAdmin && isLoggedIn && <Link className="link" to="/cart">Kosár {cart.length}</Link>}           
                 
   </Container>
 </Navbar>

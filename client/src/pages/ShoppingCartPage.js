@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCartContext } from "../App";
-import "../style/style.css"
+
 
 export function ShoppingCartPage(){
 

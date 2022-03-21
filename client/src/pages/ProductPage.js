@@ -5,8 +5,9 @@ import { useParams } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
 import { useIsAdmin } from "../hooks/useIsAdmin";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
-import "../style/style.css"
 import { updateFormValue } from "./CreateProductPage";
+import "../style/ProductPage.css"
+import "../style/Toast.css"
 
 const DEFAULT_FORM_OBJECT = {
     rating:'',
@@ -84,107 +85,93 @@ export function ProductPage(){
  //ide barmit tehetesz, diveket akár ki is cserelheted masra 44-61es sorig, ez jelenik meg majd amit az also returnba be injektálsz (91.sor)
     const Product = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
-            <Card key={product.id} >
-                <Card.Img style={{ width: '6rem' }} variant="top" src={`http://localhost:8080/${product.image}`} />
-                <Card.Body className="card">
-                    <Card.Title className="textOne">{product.name}</Card.Title>
-                    <Card.Text className="textTwo">
-                        {product.description} 
-                    </Card.Text>
-                    <Card.Text className="textTwo">
-                        {product.cost} HUF
-                    </Card.Text>
-                    {!isAdmin && isLoggedIn && (
-                        <Button variant="success" onClick={() => addProductToCart(product)}>Kosárba</Button>
-                    )}
-                </Card.Body>
-            </Card>
-        )
-    }
-
-    return(
-        <>
-        <ToastContainer 
-        style={{"zIndex": "1"}}
-        className="p-3 position-fixed" 
-        position={"top-center"}>
-          <Toast 
-            onClose={() => setShowToast(false)} 
-            show={showToast} 
-            delay={2000} 
-            autohide>
-            <Toast.Header closeButton={false}>
-              <strong className="me-auto">Sikeresen bekerült a kosárba</strong>
-            </Toast.Header>
-            <Toast.Body>Termék hozzáadva</Toast.Body>
-          </Toast>
-        </ToastContainer>
-
-
-    
-        <Container>
-            <Row>
-            {product.map(p =>  
-                <Product 
-                    isLoggedIn={isLoggedIn}
-                    isAdmin={user?.role==="admin"}
-                    key={p.id}
-                    product={p} 
-                    addProductToCart={addProductToCart}/>
-                )}
-            <h1>Vélemények</h1>
-            {reviewByProduct.map(pR =>  
-                <div key={pR.id}>
-                    {isAdmin && (
-                        
-                        <Button onClick={(e) => deleteReview(e, pR.id)} variant="danger">Törlés</Button>
-                    )}
-                    
-                    <h1>{pR.username}</h1>
-                    <h2>{pR.rating}</h2>
-                    <p>{pR.description}</p>
-                    
+                <div className="cardContainer">
+                <Card className="singleCard" key={product.id} >
+                    <Card.Img className="cardImg" src={`http://localhost:8080/${product.image}`} />
+                    <Card.Body>
+                        <Card.Title className="title">{product.name}</Card.Title>
+                        <Card.Text className="description">
+                            {product.description} 
+                        </Card.Text>
+                        <Card.Text className="cost">
+                            {product.cost} HUF
+                        </Card.Text>
+                        {!isAdmin && isLoggedIn && (
+                            <Button className="toCartBtn" onClick={() => addProductToCart(product)}>Kosárba</Button>
+                        )}
+                    </Card.Body>
+                </Card>
                 </div>
-                )}
+            )
+        }
+    
+        
+    
+        return(
+            <>
+            <ToastContainer 
+            style={{"zIndex": "1"}}
+            className="p-3 position-fixed" 
+            position={"top-center"}>
+              <Toast 
+                onClose={() => setShowToast(false)} 
+                show={showToast} 
+                delay={2000} 
+                autohide>
+                <Toast.Header closeButton={false}>
+                  <strong className="me-auto">Sikeresen bekerült a kosárba</strong>
+                </Toast.Header>
+                <Toast.Body>Termék hozzáadva</Toast.Body>
+              </Toast>
+            </ToastContainer>
+    
+    
     
             
+            <Container className="review">
+                <Row>
+                {product.map(p =>  
+                    <Product 
+                        isLoggedIn={isLoggedIn}
+                        isAdmin={user?.role==="admin"}
+                        key={p.id}
+                        product={p} 
+                        addProductToCart={addProductToCart}/>
+                    )}
     
-            </Row>
-        </Container>
+                {reviewByProduct.map(pR =>  
+                    <div>
+                        <h2>{pR.rating}</h2>
+                        <p>{pR.description}</p>
+                    </div>
+                    )}
+        
                 
-                    
-                    
+        
+                </Row>
+            </Container>
                     <Container>
-                        {!isAdmin && isLoggedIn &&(
-                            <Form onSubmit={(e) => addReview(e)}>
-                                   <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Rating</Form.Label>
-                                        <Form.Control 
-                                                onChange={updateFormValue("rating", form, setForm)}                       
-                                                placeholder="rating"
-                                                type="number"            
-                                                />
+                    <Form onSubmit={addReview}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label >Rating</Form.Label>
+                                        <Form.Control className="input"
+                                                onChange={updateFormValue("rating", form, setForm)}
+                                                value={form.rating} 
+                                                placeholder="rating" />
                                     </Form.Group>
     
                                     <Form.Group className="mb-3">
-                                            <Form.Label className="textTwo">Termék vélemény írás</Form.Label>
-                                            <Form.Control 
+                                            <Form.Label >Termék vélemény írás</Form.Label>
+                                            <Form.Control className="input"
                                                 onChange={updateFormValue("description", form, setForm)}
                                                 value={form.description} 
                                                 placeholder="Leírás" />
                                     </Form.Group>
-                                    <Button variant="success" type="submit">
+                                    <Button className="reviewBtn" type="submit">
                                         Vélemény elküldése
-                                     </Button>
-                                   
+                                    </Button>
                                 </Form>
-                        )}
-                     
-                                
                     </Container>
-                    
-                    
-                
-        </>
+            </>
     );
 };

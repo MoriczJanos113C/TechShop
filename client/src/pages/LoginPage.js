@@ -4,6 +4,7 @@ import Axios from "axios";
 import React from "react";
 import { UserContext } from '../App';
 import { useNavigate  } from "react-router-dom";
+import "../style/LoginPage.css"
 
 export function LoginPage(){
 
@@ -37,37 +38,35 @@ export function LoginPage(){
 
     return(
         
-        <div className="product">
-            <Container>
+        <div className="logIn">
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1 className="cimsor">Bejelentkezés</h1>
+                    <h1 className="headLine">Bejelentkezés</h1>
                         <Form onSubmit={loginUser}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Felhasználónév</Form.Label>
-                                    <Form.Control 
+                                    <Form.Label>Felhasználónév</Form.Label>
+                                    <Form.Control className="input"
                                             onChange={updateFormValue("username")}
                                             value={form.username} 
                                             type="text" placeholder="Felhasználónév" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Jelszó</Form.Label>
-                                        <Form.Control 
+                                        <Form.Label>Jelszó</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("password")}
                                             value={form.password} 
                                             type="password" 
                                             placeholder="Jelszó" />
                                 </Form.Group>
-                                <Button variant="success" type="submit">
+                                <Button className="btn" type="submit">
                                     Bejelentkezés
                                 </Button>
                             </Form>
                         </Col>
                     <Col></Col>
                 </Row>
-            </Container>
         </div>
         
     );

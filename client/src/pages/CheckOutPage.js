@@ -4,6 +4,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ConfirmationContext, ShoppingCartContext, UserContext } from "../App";
 import { updateFormValue } from "./CreateProductPage";
+import "../style/CheckOutPage.css"
 
 const DEFAULT_FORM_OBJECT = {
         address:'',
@@ -38,48 +39,55 @@ export function CheckOutPage(){
     
 
     return(
-        <Container>
+        <div className="main">
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1 className="cimsor">Vásárlás</h1>
+                    <h1 className="headLine">Vásárlás</h1>
                         <Form onSubmit={checkOut}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Vezetéknév</Form.Label>
-                                    <Form.Control 
+                                    <Form.Label>Vezetéknév</Form.Label>
+                                    <Form.Control className="input"
                                             onChange={updateFormValue("firstname", form, setForm)}
                                             value={form.firstname} 
                                             placeholder="Vezetéknév" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Keresztnév</Form.Label>
-                                        <Form.Control 
+                                        <Form.Label>Keresztnév</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("lastname", form, setForm)}
                                             value={form.lastname} 
                                             placeholder="Keresztnév" />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Lakcím</Form.Label>
-                                        <Form.Control 
+                                        <Form.Label>Email cím</Form.Label>
+                                        <Form.Control className="input"
+                                            onChange={updateFormValue("email", form, setForm)}
+                                            value={form.email} 
+                                            placeholder="Email cím" />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                        <Form.Label>Lakcím</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("address", form, setForm)}
                                             value={form.address} 
                                             placeholder="Lakcím" />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Kártya szám</Form.Label>
-                                        <Form.Control 
+                                        <Form.Label>Kártya szám</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("cardNumber", form, setForm)}
                                             value={form.cardNumber} 
                                             placeholder="Kártya szám" />
                                 </Form.Group>
-                                <Button variant="success" type="submit">
+                                <Button className="btn" type="submit">
                                     Rendelés elküldése
                                 </Button>
                             </Form>
                         </Col>
                     <Col></Col>
                 </Row>
-            </Container>
+            </div>
     )
 }

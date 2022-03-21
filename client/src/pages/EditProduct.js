@@ -5,6 +5,7 @@ import React from "react";
 import { UserContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateFormValue } from "./CreateProductPage";
+import "../style/EditProduct.css"
 
 const DEFAULT_FORM_OBJECT = {
         name:'',
@@ -68,49 +69,46 @@ export function EditProduct(){
         
         <div className="product">
             
-            <Container>
+            
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1 className="cimsor">Termék szerkesztése</h1>
+                    <h1 className="headLine">Termék szerkesztése</h1>
                     
                         <Form onSubmit={updateProduct}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Név</Form.Label>
-                                    <Form.Control 
+                                    <Form.Label>Név</Form.Label>
+                                    <Form.Control className="input"
                                             onChange={updateFormValue("name", form, setForm)}
-                                            value={form.name}          
-                                            type="name" placeholder="ide írd a termék nevét"
-                                            />
+                                            value={form.name} 
+                                            type="name" placeholder="ide írd a termék nevét" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Ár</Form.Label>
-                                        <Form.Control 
+                                        <Form.Label>Ár</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("cost", form, setForm)}
                                             value={form.cost} 
                                             type="number" 
-                                            placeholder="Ide írd a termék árát"
-                                            />
+                                            placeholder="Ide írd a termék árát" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" >
-                                    <Form.Label className="textTwo">Termék leírása</Form.Label>
-                                        <Form.Control 
+                                    <Form.Label>Termék leírása</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("description", form, setForm)}
                                             value={form.description} 
                                             type="text" as="textarea" 
-                                            rows={3}
-                                            placeholder="Ide írd a termék leírását"/>
+                                            rows={3}/>
                                 </Form.Group>
-                                <Button variant="success" type="submit">
+                                <Button submitBtn type="submit">
                                    Mentés
                                 </Button><br /><br />
-                                <Button onClick={deleteProduct} variant="danger">Törlés</Button>
+                                <Button className="deleteBtn" onClick={deleteProduct}>Törlés</Button>
                             </Form>
                         </Col>
                     <Col></Col>
                 </Row>
-            </Container>
+            
         </div>
         
     );

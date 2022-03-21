@@ -1,0 +1,60 @@
+.cardContainer{
+    padding-top: 1.5cm;
+    padding-left: 25%;
+    padding-right: 25%;
+    padding-bottom: 1.5cm;
+}
+
+.cardImg{
+    margin-top: 1cm;
+    margin-bottom: 0.5cm;
+    margin-left: 25%;
+    max-width: 50%;
+    max-height: 50%;
+
+}
+
+.singleCard{
+    width: 100%;
+    background-color: yellow !important;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    border-radius: 5px;
+    border-color: black;
+}
+.title{
+    font-size: xx-large;
+}
+.description{
+    font-size: large;
+}
+
+.cost{
+    font-size: larger;
+}
+
+.toCartBtn{
+    margin-top: 0.5cm;
+    margin-bottom: 0.5cm
+}
+
+.review{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+}
+
+.input{
+    background-color: rgb(238, 238, 238) !important;
+    border-color: black !important;
+    color: black;
+
+}
+
+.reviewBtn{
+    color: black !important;
+    background-color: #00FF00 !important;
+    border-style: double !important;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+    margin-bottom: 3cm;
+}
+.reviewBtn:hover{
+    background-color: #FFFF00 !important;
+}

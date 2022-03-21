@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
 import { useIsAdmin } from "../hooks/useIsAdmin";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
-import "../style/style.css"
+import "../style/ProductsPage.css"
+import "../style/Toast.css"
 
 export function ProductsPage(){
 
     const [products, setProducts] = useState([]);
-    const NUMBER_OF_COLUMNS = 2;
+    const NUMBER_OF_COLUMNS = 3;
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [search, setSearch] = useState("");
     const [showToast, setShowToast] = useState(false);
@@ -47,31 +48,30 @@ export function ProductsPage(){
 
     const ProductCard = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
-            <Card key={product.id} >
-                <Card.Img style={{ width: '6rem' }} variant="top" src={`http://localhost:8080/${product.image}`} />
-                <Card.Body className="card">
-                    <Card.Title className="textOne">{product.name}</Card.Title>
-                    <Card.Text className="textTwo">
+            <div className="cardContainer">
+            <Card className="homeCards" key={product.id} >
+                <Card.Img className="cardImg" src={`http://localhost:8080/${product.image}`} />
+                <Card.Body>
+                    <Card.Title className="title">{product.name}</Card.Title>
+                    <Card.Text className="description">
                         {product.description} 
                     </Card.Text>
-                    <Card.Text className="textTwo">
+                    <Card.Text className="cost">
                         {product.cost} HUF
                     </Card.Text>
                     {!isAdmin && isLoggedIn && (
-                        <Button variant="success" onClick={() => addProductToCart(product)}>Kosárba</Button>
+                        <Button className="toCartBtn" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )} 
                     {isAdmin && (
-                        <Link className="textTwo" to={`/products/${product.id}`}>Termék Szerkesztés</Link>
-                    )}
+                        <Link className="editLink" to={`/products/${product.id}`}>Szerkesztés</Link>
+                    )} 
                     {!isAdmin && (
-                        <Link className="description" to={`/products/product/${product.id}`}>Leírás</Link>   
-                    )}
-                    {isAdmin && (
-                        <Link className="textTwo" to={`/products/product/${product.id}`}>Vélemények szerkesztése</Link>
-                    )}
+                        <Link className="descriptionLink" to={`/products/product/${product.id}`}>Leírás</Link>   
+                    )}         
                     
                 </Card.Body>
             </Card>
+            </div>
         )
     }
 
@@ -95,15 +95,13 @@ export function ProductsPage(){
         <Container>
             <Row>
                 <Col>
-                    <Form.Control 
+                    <Form.Control className="input"
                         size="lg" 
                         type="text" 
                         value={search}
-                        className="mb-4 mt-4"
                         placeholder="Termék keresése" 
                         onChange={onSearchChange}
                         />
-                    {isAdmin && <Link className="textTwo" to="/create-product">Termék létrehozása</Link>}
                 </Col>
             </Row>
             <Row>

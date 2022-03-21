@@ -4,6 +4,7 @@ import Axios from "axios";
 import React from "react";
 import { UserContext } from '../App';
 import { useNavigate  } from "react-router-dom";
+import "../style/RegisterPage.css"
 
 
 const DEFAULT_FORM_OBJECT = {
@@ -22,7 +23,7 @@ export function RegisterPage(){
 
     const updateFormValue = (key) => (e) => {
         if(e.username === ""){
-            setError("Felh rossz")
+   //         setError("Felh rossz")
         }
         setForm({
             ...form,
@@ -49,16 +50,16 @@ export function RegisterPage(){
 
     return(
         
-        <div className="product">
+        <div className="register">
             <Container>
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1 className="cimsor">Regisztráció</h1>
+                    <h1 className="headLine">Regisztráció</h1>
                         <Form onSubmit={registerUser}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Felhasználónév</Form.Label>
-                                    <Form.Control 
+                                    <Form.Label>Felhasználónév</Form.Label>
+                                    <Form.Control className="input"
                                             onChange={updateFormValue("username")}
                                             value={form.username} 
                                             type="text" 
@@ -67,23 +68,23 @@ export function RegisterPage(){
                                 </Form.Group>
                                 
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Email</Form.Label>
-                                    <Form.Control 
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control className="input"
                                             onChange={updateFormValue("email")}
                                             value={form.email} 
                                             type="text" placeholder="A kívánt Email megadása" />
                                 </Form.Group>
                                 
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Jelszó</Form.Label>
-                                        <Form.Control 
+                                        <Form.Label>Jelszó</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("password")}
                                             value={form.password} 
                                             type="password" 
                                             placeholder="A kívánt jelszó megadása" />
                                 </Form.Group>
                                 
-                                <Button variant="success" type="submit">
+                                <Button className="btn" type="submit">
                                     Regisztráció
                                 </Button>
                             </Form>
