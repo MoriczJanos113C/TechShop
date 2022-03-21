@@ -28,11 +28,12 @@ export function CheckOutPage(){
         contactInfo: form,
         items: cart.map((item) => item.id),
         user_id: user.id,
-        username: user.username
+        username: user.username,
+        email: user.email
         });
         setCart([]);
         setConfirmation(orders.id);
-        navigate("/profile");
+        navigate("/profile/user_id");
     };
     
 
@@ -57,13 +58,6 @@ export function CheckOutPage(){
                                             onChange={updateFormValue("lastname", form, setForm)}
                                             value={form.lastname} 
                                             placeholder="Keresztnév" />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Email cím</Form.Label>
-                                        <Form.Control 
-                                            onChange={updateFormValue("email", form, setForm)}
-                                            value={form.email} 
-                                            placeholder="Email cím" />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                         <Form.Label className="textTwo">Lakcím</Form.Label>

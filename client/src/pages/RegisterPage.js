@@ -9,7 +9,8 @@ export function RegisterPage(){
 
     const DEFAULT_FORM_OBJECT = {
         username:'',
-        password:''
+        password:'',
+        email:'',
     };
 
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
@@ -51,6 +52,13 @@ export function RegisterPage(){
                                             onChange={updateFormValue("username")}
                                             value={form.username} 
                                             type="text" placeholder="A kívánt felhasználónév megadása" />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label className="textTwo">Email</Form.Label>
+                                    <Form.Control 
+                                            onChange={updateFormValue("email")}
+                                            value={form.email} 
+                                            type="text" placeholder="A kívánt Email megadása" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">

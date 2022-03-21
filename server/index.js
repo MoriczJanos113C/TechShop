@@ -170,12 +170,13 @@ app.post('/register', (req, res)=> {
     const username = req.body.username;
     const password = req.body.password;
     const role = req.body.role;
+    const email = req.body.email;
     const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
 
     db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
         if (err) return err;
             if(result.length === 0){
-                db.query("INSERT INTO user (username, password, role) VALUES (?, ?, 'normal')",[username, hashedPass, role], (err, result) => {
+                db.query("INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, 'normal')",[username, email, hashedPass, role], (err, result) => {
                     if (err) {
                         res.send({err: err})
                     }
@@ -221,11 +222,12 @@ app.post('/checkout', async (req, res) => {
     const items = req.body.items;
     const user_id = req.body.user_id;
     const username = req.body.username;
+    const email = req.body.email;
     
-    //array, object tárolás dbben kéne
+
     const products = JSON.stringify({ products: items});
     const contactInfos = JSON.stringify({ contactInfos: contactInfo});
-    db.query('INSERT INTO orders (user_id, username, contactInfo, items) VALUES (?, ?, ?, ?)', [user_id, username, contactInfos, products], (err, result) => {
+    db.query('INSERT INTO orders (user_id, username, email, contactInfo, items) VALUES (?, ?, ?, ?, ?)', [user_id, username, email, contactInfos, products], (err, result) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
