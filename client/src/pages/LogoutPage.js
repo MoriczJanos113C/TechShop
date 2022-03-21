@@ -7,10 +7,14 @@ export function LogoutPage(){
     const { setUser} = useContext(UserContext);
     console.log(setUser);
     const navigate = useNavigate();
+    const [cart, setCart] = useContext(ShoppingCartContext);
 
-
+    const logOutCart = () => {
+        setCart([]);
+    }
     useEffect(() => {
         setUser({});
+        logOutCart();
         navigate("/");
     }, [])
 
