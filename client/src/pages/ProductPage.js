@@ -158,7 +158,8 @@ export function ProductPage(){
                 </Row>
             </Container>
                     <Container>
-                    <Form onSubmit={addReview}>
+                    {!isAdmin && isLoggedIn && (
+                        <Form onSubmit={addReview}>
                                     <Form.Group className="mb-3">
                                         <Form.Label >Rating</Form.Label>
                                         <Form.Control className="input"
@@ -178,6 +179,7 @@ export function ProductPage(){
                                         Vélemény elküldése
                                     </Button>
                                 </Form>
+                    )}
                     </Container>
             </>
     );

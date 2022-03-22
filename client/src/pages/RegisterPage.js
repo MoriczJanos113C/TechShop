@@ -22,9 +22,6 @@ export function RegisterPage(){
 
 
     const updateFormValue = (key) => (e) => {
-        if(e.username === ""){
-   //         setError("Felh rossz")
-        }
         setForm({
             ...form,
             [key]: e.currentTarget.value,

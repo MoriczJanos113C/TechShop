@@ -62,9 +62,6 @@ export function ProductsPage(){
                         <Button className="toCartBtn" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )} 
                     {!isAdmin && (
-                        <Link className="editLink" to={`/products/${product.id}`}>Szerkesztés</Link>
-                    )} 
-                    {!isAdmin && (
                         <Link className="descriptionLink" to={`/products/product/${product.id}`}>Leírás</Link>   
                     )}         
                     {isAdmin && (
