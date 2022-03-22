@@ -28,6 +28,11 @@ export function RegisterPage(){
         });
     };
 
+//FORM VALIDATION
+//react hook form.com
+//js form validator regexes
+//email/password regex validator
+
 
     const registerUser =  async (e, values) => {
         e.preventDefault();

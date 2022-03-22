@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 
 export function ProfilePage(){
@@ -9,7 +9,12 @@ export function ProfilePage(){
     const {id: user_ID} = useParams()
     const [userOrders, setUserOrders] = useState([]);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
+        if(user_ID != user.id){
+            navigate("/")
+        }
         const fetchOrders = async () => {
             const { data: orders } = await axios.get(`http://localhost:8080/usersOrder/${user_ID}`);
             setUserOrders(orders);

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCartContext } from "../App";
@@ -15,6 +15,11 @@ export function ShoppingCartPage(){
         setCart(cart.filter(productInCart => productInCart !== product))
     }
 
+    useEffect(() => {
+        if(cart.length === 0){
+            navigate("/")
+        }
+    })
 
     const ShoppingCartItem = ({ product, removeProduct }) => {
         return (

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ConfirmationContext, ShoppingCartContext, UserContext } from "../App";
@@ -34,9 +34,14 @@ export function CheckOutPage(){
         });
         setCart([]);
         setConfirmation(orders.id);
-        navigate("/profile/user_id");
+        navigate(`/profile/${user.id}`);
     };
     
+    useEffect(() => {
+        if(cart.length === 0){
+            navigate("/")
+        }
+    })
 
     return(
         <div className="main">
