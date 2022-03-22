@@ -15,6 +15,7 @@ export function ShoppingCartPage(){
         setCart(cart.filter(productInCart => productInCart !== product))
     }
 
+
     const ShoppingCartItem = ({ product, removeProduct }) => {
         return (
             <Row bg="light" expand="lg">

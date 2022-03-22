@@ -21,15 +21,15 @@ export function Header(){
              
                 
             </Navbar.Brand>
-            {isLoggedIn && !isAdmin && <Link className="link" to="/profile">Profil</Link>}           
+            {isLoggedIn && !isAdmin && <Link className="link" to="/profile/user_id">Profil</Link>}           
             {isAdmin && <Link className="link" to="/users">Felhasználók kezelése</Link>}
             {isAdmin && <Link className="link" to="/">Termékek kezelése</Link>}
             {isAdmin && <Link className="link" to="/orders">Rendelések kezelése</Link>}
             {!isLoggedIn && <Link className="link" to="/login">Bejelentkezés</Link>}
             {!isLoggedIn && <Link className="link" to="/register">Regisztráció</Link>}
-            {isLoggedIn && <Link className="logOut" to="/logout">Kijelentkezés</Link>}
+            
             {!isAdmin && isLoggedIn && <Link className="link" to="/cart">Kosár {cart.length}</Link>}           
-                
+            {isLoggedIn && <Link className="logOut" to="/logout">Kijelentkezés</Link>}   
   </Container>
 </Navbar>
     )

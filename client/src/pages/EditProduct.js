@@ -100,7 +100,7 @@ export function EditProduct(){
                                             type="text" as="textarea" 
                                             rows={3}/>
                                 </Form.Group>
-                                <Button submitBtn type="submit">
+                                <Button className="submitBtn" type="submit">
                                    Mentés
                                 </Button><br /><br />
                                 <Button className="deleteBtn" onClick={deleteProduct}>Törlés</Button>

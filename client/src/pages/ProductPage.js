@@ -140,11 +140,18 @@ export function ProductPage(){
                     )}
     
                 {reviewByProduct.map(pR =>  
-                    <div>
-                        <h2>{pR.rating}</h2>
-                        <p>{pR.description}</p>
-                    </div>
+                    <div key={pR.id}>
+                    {isAdmin && (
+                        
+                        <Button onClick={(e) => deleteReview(e, pR.id)} variant="danger">Törlés</Button>
                     )}
+                    
+                    <h1>{pR.username}</h1>
+                    <h2>{pR.rating}</h2>
+                    <p>{pR.description}</p>
+                    
+                </div>
+                )}
         
                 
         

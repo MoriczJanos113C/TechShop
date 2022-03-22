@@ -48,7 +48,6 @@ export function ProductsPage(){
 
     const ProductCard = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
-            <div className="cardContainer">
             <Card className="homeCards" key={product.id} >
                 <Card.Img className="cardImg" src={`http://localhost:8080/${product.image}`} />
                 <Card.Body>
@@ -62,16 +61,21 @@ export function ProductsPage(){
                     {!isAdmin && isLoggedIn && (
                         <Button className="toCartBtn" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )} 
-                    {isAdmin && (
+                    {!isAdmin && (
                         <Link className="editLink" to={`/products/${product.id}`}>Szerkesztés</Link>
                     )} 
                     {!isAdmin && (
                         <Link className="descriptionLink" to={`/products/product/${product.id}`}>Leírás</Link>   
                     )}         
-                    
+                    {isAdmin && (
+                        <Link to={`/products/product/${product.id}`}>Vélemények szerkesztése</Link>
+                    )}
+                    {isAdmin && (
+                        <Link to={`/products/${product.id}`}>Termék Szerkesztés</Link>
+                    )}
                 </Card.Body>
             </Card>
-            </div>
+            
         )
     }
 
@@ -92,7 +96,7 @@ export function ProductsPage(){
             <Toast.Body>Termék hozzáadva</Toast.Body>
           </Toast>
         </ToastContainer>
-        <Container>
+            <Container>
             <Row>
                 <Col>
                     <Form.Control className="input"
@@ -102,7 +106,11 @@ export function ProductsPage(){
                         placeholder="Termék keresése" 
                         onChange={onSearchChange}
                         />
+                    {isAdmin && (
+                    <Link to="/create-product">Termék létrehozása</Link>
+                    )}
                 </Col>
+                
             </Row>
             <Row>
                 {new Array(NUMBER_OF_COLUMNS).fill('').map((value, column) => (
@@ -124,6 +132,8 @@ export function ProductsPage(){
             ))}   
             </Row>
         </Container>
+        
+        
         </>
     );
 };
