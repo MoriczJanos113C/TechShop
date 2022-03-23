@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Már 21. 14:35
+-- Létrehozás ideje: 2022. Már 23. 10:59
 -- Kiszolgáló verziója: 10.4.22-MariaDB
--- PHP verzió: 8.1.2
+-- PHP verzió: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,16 +33,27 @@ CREATE TABLE `orders` (
   `username` varchar(250) COLLATE utf8_hungarian_ci NOT NULL,
   `email` varchar(250) COLLATE utf8_hungarian_ci NOT NULL,
   `contactInfo` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`contactInfo`)),
-  `items` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`items`))
+  `items` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`items`)),
+  `itemName` varchar(250) COLLATE utf8_hungarian_ci NOT NULL,
+  `totalCost` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `username`, `email`, `contactInfo`, `items`) VALUES
-(59, 67, 'normal2', 'normal2@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\"}}', '{\"products\":[93,95,96]}'),
-(60, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\"}}', '{\"products\":[93,95]}');
+INSERT INTO `orders` (`id`, `user_id`, `username`, `email`, `contactInfo`, `items`, `itemName`, `totalCost`) VALUES
+(65, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,95]}', '', 0),
+(66, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,93]}', '', 0),
+(67, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,93]}', '', 0),
+(68, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,95]}', '', 0),
+(69, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,93,95]}', '', 0),
+(70, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,95]}', '', 3254),
+(71, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,93,93]}', '', 96),
+(72, 65, 'normal', 'norm@gmail.com', '{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}', '[93,93]', '', 64),
+(73, 65, 'normal', 'norm@gmail.com', '{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}', '[93,93,93,95,93,93]', '[\"asd\",\"asd\",\"asd\",\"asd\",\"asd\",\"asd\"]', 3382),
+(74, 65, 'normal', 'norm@gmail.com', '{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}', '[96,95]', '[\"uj\",\"asd\"]', 3254),
+(75, 70, 'ujvok', 'asd', '{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}', '[93,93]', '[\"asd\",\"asd\"]', 64);
 
 -- --------------------------------------------------------
 
@@ -65,7 +76,8 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`id`, `cost`, `name`, `description`, `image`) VALUES
 (93, 32, 'asd', 'asd', 'xf5qKJ85uJFCLL4fWUGn5.jpeg'),
 (95, 3222, 'asd', 'asdasd', 'Oc38XA5Q2ymLdcDVrDlnL.jpeg'),
-(96, 32, 'uj', 'dasasd', 'exqeWJYz9u1AB8DzeIhNv.jpeg');
+(96, 32, 'uj', 'dasasd', 'exqeWJYz9u1AB8DzeIhNv.jpeg'),
+(97, 32222222, 'asd', 'dasdasasddasdasdasdasdasdasdas', 'UvhezZcRt-a2K57RJRbUZ.jpeg');
 
 -- --------------------------------------------------------
 
@@ -87,14 +99,11 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `username`, `rating`, `description`) VALUES
-(51, 43, 95, 'admin', 2, 'sda'),
-(53, 43, 95, 'admin', 2, 'sda'),
 (55, 49, 93, 'asd', 4, 'vel'),
-(56, 53, 93, 'rtz', 2, 'ds'),
 (57, 53, 93, 'rtz', 3, 'asd'),
 (58, 53, 93, 'rtz', 4, 'asd'),
-(59, 53, 93, 'rtz', 4, 'asd'),
-(61, 58, 95, 'fgh', 5, 'jó féle');
+(61, 58, 95, 'fgh', 5, 'jó féle'),
+(62, 65, 97, 'normal', -2147483648, 'dasdas');
 
 -- --------------------------------------------------------
 
@@ -117,7 +126,10 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`) VALUES
 (65, 'normal', 'norm@gmail.com', '$2a$10$CIxmefiobBBZQqfyxlvCI.f2.zxCB3te/A89KRNd6ffqH/yrDJ926', 'normal'),
 (66, 'admin', 'admin@gmail.com', '$2a$10$syqz20uAi.BxW554RlvxTeYJ36Jsxe7yUaQcal3pR5bvCgBJRcUxW', 'admin'),
-(67, 'normal2', 'normal2@gmail.com', '$2a$10$2bR1A8PSycghQ1fbtMNsheiK1RsFCxlbUlGLEABxkYmH9mdjdE6cG', 'normal');
+(67, 'normal2', 'normal2@gmail.com', '$2a$10$2bR1A8PSycghQ1fbtMNsheiK1RsFCxlbUlGLEABxkYmH9mdjdE6cG', 'normal'),
+(68, 'Ujora', 'ujOra@gmail.com', '$2a$10$3sQrE1RknuLagM7eW1onCOgCHgLMgWuycvszeIfsj9PJ3CZBH8foi', 'normal'),
+(69, 'ujteszt', 'adasd', '$2a$10$bBRHaXs6kHvuWLii3k59kOtQScTjAc74TToyWy2G3J4lkktRxh4Hy', 'normal'),
+(70, 'ujvok', 'asd', '$2a$10$IOkuzFgjwjdR8rDMtAMZFeIMLk9yCTt4tZjXZpnwdy51UIBZ26KmC', 'normal');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -155,25 +167,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT a táblához `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT a táblához `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT a táblához `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT a táblához `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
