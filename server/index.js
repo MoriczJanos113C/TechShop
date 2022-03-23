@@ -223,11 +223,13 @@ app.post('/checkout', async (req, res) => {
     const user_id = req.body.user_id;
     const username = req.body.username;
     const email = req.body.email;
-    
+    const totalCost = req.body.totalCost;
+    const itemName = req.body.itemName;
 
-    const products = JSON.stringify({ products: items});
-    const contactInfos = JSON.stringify({ contactInfos: contactInfo});
-    db.query('INSERT INTO orders (user_id, username, email, contactInfo, items) VALUES (?, ?, ?, ?, ?)', [user_id, username, email, contactInfos, products], (err, result) => {
+    const products = JSON.stringify(items);
+    const contactInfos = JSON.stringify(contactInfo);
+    const itemsName = JSON.stringify(itemName);
+    db.query('INSERT INTO orders (user_id, username, email, contactInfo, items, itemName, totalCost) VALUES (?, ?, ?, ?, ?, ?, ?)', [user_id, username, email, contactInfos, products, itemsName, totalCost], (err, result) => {
         if (err) throw err;
         console.log(req.body);
         if(result){

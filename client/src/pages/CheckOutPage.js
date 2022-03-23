@@ -28,20 +28,26 @@ export function CheckOutPage(){
         const {data: orders } = await axios.post("http://localhost:8080/checkout", { 
         contactInfo: form,
         items: cart.map((item) => item.id),
+        itemName: cart.map((item) => item.name),
         user_id: user.id,
         username: user.username,
-        email: user.email
+        email: user.email,
+        totalCost: cart.reduce((sum, product) => sum+product.cost, 0)
         });
         setCart([]);
         setConfirmation(orders.id);
         navigate(`/profile/${user.id}`);
     };
     
+
+
     useEffect(() => {
         if(cart.length === 0){
             navigate("/")
         }
     })
+
+
 
     return(
         <div className="main">
