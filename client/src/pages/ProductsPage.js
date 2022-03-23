@@ -11,7 +11,7 @@ import "../style/Toast.css"
 export function ProductsPage(){
 
     const [products, setProducts] = useState([]);
-    const NUMBER_OF_COLUMNS = 3;
+    const NUMBER_OF_COLUMNS = 2;
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [search, setSearch] = useState("");
     const [showToast, setShowToast] = useState(false);
@@ -52,9 +52,6 @@ export function ProductsPage(){
                 <Card.Img className="cardImg" src={`http://localhost:8080/${product.image}`} />
                 <Card.Body>
                     <Card.Title className="title">{product.name}</Card.Title>
-                    <Card.Text className="description">
-                        {product.description} 
-                    </Card.Text>
                     <Card.Text className="cost">
                         {product.cost} HUF
                     </Card.Text>

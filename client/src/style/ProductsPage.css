@@ -1,6 +1,6 @@
 .cardContainer{
+    margin-bottom: 1.5cm;
     padding-top: 1.5cm;
-
     padding-bottom: 1.5cm;
 }
 
@@ -12,7 +12,6 @@
     min-width: 50px;
     max-width: 50px;
     max-height: 100px;
-
 }
 
 .homeCards{

@@ -30,9 +30,10 @@ export function ProfilePage(){
         <><h1>Bejelentkezve: {user.username}</h1>
         <h1>Rendeléseid</h1>
                 {userOrders.map(pR =>  
-                <div key={pR.id}>                   
-                    <h1>{pR.username}</h1>
+                <div key={pR.id}>  
+                <h2>------------------------</h2>                 
                     <p>{pR.items}</p>
+                    <p>{pR.itemName}</p>
                     <p>{pR.contactInfo}</p>
                 </div>
                 )}         

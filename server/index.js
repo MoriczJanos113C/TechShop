@@ -73,6 +73,7 @@ app.put('/products/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> 
     const cost= req.body.cost;
     const name = req.body.name;
     const description = req.body.description;
+
     //image holding mikor nem valasztunk ki kepet akk maradjon ami vlt kellesz még + az adatok ami adott produktnak van azokat se jeleniti meg a frontend mikro szerkesztesre katt van
     db.query(`UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, name, description], (err, result) => {
         if(err) throw err;
