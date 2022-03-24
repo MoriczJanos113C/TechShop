@@ -26,13 +26,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 
-//!!db szerkezet!!
-//tábla                 (oszlopok())
-//product - (cost(int), name(string), description(string)), image(blob)
-//order - (contactInfo(object), (items(array))))
-//user    - (username(string), password(string)), role((string))   
-
-
 const db = mysql.createConnection({
     user:"root",
     host:"localhost",
@@ -74,7 +67,7 @@ app.put('/products/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> 
     const name = req.body.name;
     const description = req.body.description;
 
-    //image holding mikor nem valasztunk ki kepet akk maradjon ami vlt kellesz még + az adatok ami adott produktnak van azokat se jeleniti meg a frontend mikro szerkesztesre katt van
+    
     db.query(`UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, name, description], (err, result) => {
         if(err) throw err;
         if(result){
@@ -301,11 +294,11 @@ app.put('/users/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> {
         }else{
             res.send({message: "Not saved"})
             }
-            
 
         }
     );
 });
+
 app.delete('/deleteUser/:id', /*isAdmin,*/ (req, res) => {
     db.query(`DELETE FROM user WHERE id = ${req.params.id}`,(err, result) => {
         if(result){

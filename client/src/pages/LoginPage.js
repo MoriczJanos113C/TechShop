@@ -5,24 +5,21 @@ import React from "react";
 import { UserContext } from '../App';
 import { useNavigate  } from "react-router-dom";
 import "../style/LoginPage.css"
+import { updateFormValue } from "./CreateProductPage";
 
-export function LoginPage(){
-
-    const DEFAULT_FORM_OBJECT = {
+const DEFAULT_FORM_OBJECT = {
         username:'',
         password:''
     };
+    
+export function LoginPage(){
+
+    
 
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const { setUser} = useContext(UserContext);
     const navigate = useNavigate();
 
-    const updateFormValue = (key) => (e) => {
-        setForm({
-            ...form,
-            [key]: e.currentTarget.value,
-        });
-    };
 
     const loginUser =  async (e) => {
         e.preventDefault();
@@ -47,7 +44,7 @@ export function LoginPage(){
                                 <Form.Group className="mb-3">
                                     <Form.Label>Felhasználónév</Form.Label>
                                     <Form.Control className="input"
-                                            onChange={updateFormValue("username")}
+                                            onChange={updateFormValue("username", form, setForm)}
                                             value={form.username} 
                                             type="text" placeholder="Felhasználónév" />
                                 </Form.Group>
@@ -55,7 +52,7 @@ export function LoginPage(){
                                 <Form.Group className="mb-3">
                                         <Form.Label>Jelszó</Form.Label>
                                         <Form.Control className="input"
-                                            onChange={updateFormValue("password")}
+                                            onChange={updateFormValue("password", form, setForm)}
                                             value={form.password} 
                                             type="password" 
                                             placeholder="Jelszó" />

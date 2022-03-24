@@ -7,33 +7,36 @@ import { useNavigate, useParams } from "react-router-dom";
 import { updateFormValue } from "./CreateProductPage";
 import "../style/EditProduct.css"
 
+
 const DEFAULT_FORM_OBJECT = {
         name:'',
         cost: 0,
         description:''
     };
-    
+
 export function EditProduct(){
     
+    const [product, setProduct] = useState([]);
     
-    
-    
-    const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const {user} = useContext(UserContext);
     const { id: productId } = useParams();
     const navigate = useNavigate();
-    const [product] = useState([]);
+
+
+    const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
 
     useEffect(()=> {
         const getProduct = async () => {
             const { data: product } = await Axios.get(`http://localhost:8080/products/${productId}`);
             setForm({
-                name: product.name, 
-                cost: product.cost, 
-                description: product.description,
-                image: product.image,
+                name: product[0].name, 
+                cost: product[0].cost,
+                description: product[0].description,
+                image: product[0].image,
             });
+            
         };   
+        console.log(product)
         getProduct();
     }, [])
 

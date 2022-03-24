@@ -5,6 +5,7 @@ import React from "react";
 import { UserContext } from '../App';
 import { useNavigate  } from "react-router-dom";
 import "../style/RegisterPage.css"
+import { updateFormValue } from "./CreateProductPage";
 
 
 const DEFAULT_FORM_OBJECT = {
@@ -25,15 +26,7 @@ export function RegisterPage(){
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
-    const updateFormValue = (key) => (e) => {
-        setForm({
-            ...form,
-            [key]: e.currentTarget.value,
-        });
-        setNameError("");
-        setEmailError("");
-        setPasswordError("");
-    };
+
 
 //FORM VALIDATION
 //react hook form.com
@@ -47,19 +40,19 @@ export function RegisterPage(){
         .match(
             /^[a-zA-Z0-9]{6,}$/
         ))
-        setPasswordError( "Nem megfelelo jelszo")
+        setPasswordError("Nem megfelelő jelszó")
 
         if(!String(form.username)
         .match(
             /^[a-zA-Z0-9]{3,}$/
         ))
-        setNameError("Nem megfelelo felh")
+        setNameError("Nem megfelelő felhasználónév")
 
         if(!String(form.email)
         .match(
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         ))
-        setEmailError("Nem megfelelo email")
+        setEmailError("Nem megfelelő email")
         
         
     }
@@ -95,29 +88,32 @@ export function RegisterPage(){
                                 <Form.Group className="mb-3">
                                     <Form.Label>Felhasználónév</Form.Label>
                                     <Form.Control className="input"
-                                            onChange={updateFormValue("username")}
+                                            onChange={updateFormValue("username", form, setForm)}
                                             value={form.username} 
                                             type="text" 
                                             placeholder="A kívánt felhasználónév megadása"
                                             />
                                 </Form.Group>
+
                                 {usernameError && <p>{usernameError}</p>}
                                 <Form.Group className="mb-3">
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control className="input"
-                                            onChange={updateFormValue("email")}
+                                            onChange={updateFormValue("email", form, setForm)}
                                             value={form.email} 
-                                            type="text" placeholder="A kívánt Email megadása" />
+                                            type="text" placeholder="A kívánt email megadása" />
                                 </Form.Group>
+
                                 {emailError && <p>{emailError}</p>}
                                 <Form.Group className="mb-3">
                                         <Form.Label>Jelszó</Form.Label>
                                         <Form.Control className="input"
-                                            onChange={updateFormValue("password")}
+                                            onChange={updateFormValue("password", form, setForm)}
                                             value={form.password} 
                                             type="password" 
                                             placeholder="A kívánt jelszó megadása" />
                                 </Form.Group>
+
                                 {passwordError && <p>{passwordError}</p>}
                                 <Button className="btn" type="submit">
                                     Regisztráció

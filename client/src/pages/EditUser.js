@@ -16,7 +16,6 @@ export function EditUser(){
     
     
     
-    
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const {user} = useContext(UserContext);
     const { id: userID } = useParams();
@@ -26,9 +25,9 @@ export function EditUser(){
         const getUser = async () => {
             const { data: form } = await Axios.get(`http://localhost:8080/users/${userID}`);
             setForm({
-                username: form.username,
-                password: form.password,
-                role: form.role,
+                username: form[0].username,
+                password: form[0].password,
+                role: form[0].role,
             });
         };   
         getUser();
