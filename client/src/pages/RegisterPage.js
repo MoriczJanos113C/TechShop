@@ -1,12 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Col, Form, Button, Container, Row } from "react-bootstrap";
 import Axios from "axios";
 import React from "react";
 import { UserContext } from '../App';
 import { useNavigate  } from "react-router-dom";
 import "../style/RegisterPage.css"
-import { updateFormValue } from "./CreateProductPage";
-
 
 const DEFAULT_FORM_OBJECT = {
         username:'',
@@ -26,7 +24,21 @@ export function RegisterPage(){
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
+    const updateFormValue = (key) => (e) => {
+        
+        setForm({
+            ...form,
+            [key]: e.target.value,
+        });
+        console.log(key,form,e.target.value)
+        
+        
 
+    };
+    
+    useEffect(() => {
+        checkValid();
+    },[form])
 
 //FORM VALIDATION
 //react hook form.com
@@ -39,34 +51,47 @@ export function RegisterPage(){
         if(!String(form.password)
         .match(
             /^[a-zA-Z0-9]{6,}$/
-        ))
+        )&& form.password.trim() != "")
         setPasswordError("Nem megfelelő jelszó")
+        else{
+            setPasswordError("");
+        }
 
         if(!String(form.username)
         .match(
             /^[a-zA-Z0-9]{3,}$/
-        ))
+        )&& form.username.trim() != "")
         setNameError("Nem megfelelő felhasználónév")
+        else{
+            setNameError("");
+        }
 
         if(!String(form.email)
         .match(
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        ))
+        )&& form.email.trim() != "")
         setEmailError("Nem megfelelő email")
+        else{
+            setEmailError("");
+        }
         
         
     }
+    
 
     const registerUser =  async (e, values) => {
         e.preventDefault();
-        checkValid();
-        if(usernameError === "" && passwordError === "" && emailError === ""){
+        if(usernameError === "" && passwordError === "" && emailError === "" && form.email.trim() != "" && form.username.trim() != "" && form.password.trim() != ""){
+
+
             console.log(usernameError, passwordError, emailError)
         await Axios.post("http://localhost:8080/register", form);
+
+
+
         const response = await Axios.post("http://localhost:8080/login", form);
         const {token, user} = response.data;
         console.log("token", token);
-        
         setUser({
             token,
             user,
@@ -88,7 +113,7 @@ export function RegisterPage(){
                                 <Form.Group className="mb-3">
                                     <Form.Label>Felhasználónév</Form.Label>
                                     <Form.Control className="input"
-                                            onChange={updateFormValue("username", form, setForm)}
+                                            onChange={updateFormValue("username")}
                                             value={form.username} 
                                             type="text" 
                                             placeholder="A kívánt felhasználónév megadása"
@@ -99,7 +124,7 @@ export function RegisterPage(){
                                 <Form.Group className="mb-3">
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control className="input"
-                                            onChange={updateFormValue("email", form, setForm)}
+                                            onChange={updateFormValue("email")}
                                             value={form.email} 
                                             type="text" placeholder="A kívánt email megadása" />
                                 </Form.Group>
@@ -108,7 +133,7 @@ export function RegisterPage(){
                                 <Form.Group className="mb-3">
                                         <Form.Label>Jelszó</Form.Label>
                                         <Form.Control className="input"
-                                            onChange={updateFormValue("password", form, setForm)}
+                                            onChange={updateFormValue("password")}
                                             value={form.password} 
                                             type="password" 
                                             placeholder="A kívánt jelszó megadása" />
