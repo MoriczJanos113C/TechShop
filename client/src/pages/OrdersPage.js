@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
+import "../style/OrdersPage.css"
+
 
 export function OrdersPage(){
 
@@ -44,15 +46,14 @@ export function OrdersPage(){
 
     return(
         <>
-            <Form.Control 
+            <Form.Control className="input"
                         size="lg" 
                         type="text" 
                         value={search}
-                        className="mb-4 mt-4"
                         placeholder="Rendelés keresése felhasználónév szerint" 
                         onChange={onSearchChange}
                         />
-                        <h1>Rendelések</h1> 
+                        <h1 className="headLine">Rendelések</h1> 
                 {new Array(NUMBER_OF_COLUMNS).fill('').map((value, column) => (
                     <Col>    
                                        
@@ -62,11 +63,11 @@ export function OrdersPage(){
                         column
                         ).map((order) => ( 
                             <>  
-                                <p>Rendelés azonosítója: {order.id}</p>
-                                        <p>Felhasználónév: {order.username}</p>
-                                        <p>Felhasználó információi: {order.contactInfo}</p>
-                                        <p>Rendelt termékek: {order.items}</p>
-                                        <Button onClick={(e) => deleteReview(e, order.id)} variant="danger">Rendelés törlése</Button>      
+                                <p className="information">Rendelés azonosítója: {order.id}</p>
+                                        <p className="information">Felhasználónév: {order.username}</p>
+                                        <p className="information">Felhasználó információi: {order.contactInfo}</p>
+                                        <p className="information">Rendelt termékek: {order.items}</p>
+                                        <Button onClick={(e) => deleteReview(e, order.id)} className="deleteBtn">Rendelés törlése</Button>      
                             </>
                         )
                     )}

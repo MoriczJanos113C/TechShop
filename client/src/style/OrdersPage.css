@@ -1,0 +1,31 @@
+.input{
+    background-color: rgb(238, 238, 238) !important;
+    border-color: black !important;
+    color: black;
+    margin-top: 30px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.headLine{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+    padding-top: 1.5cm;
+    padding-bottom: 1cm;
+    text-decoration: underline;
+}
+
+.information{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: large;
+}
+
+.deleteBtn {
+    color: black !important;
+    background-color: #EE4B2B !important;
+    border-style: double !important;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+    margin-bottom: 1cm;
+}
+
+.deleteBtn:hover {
+    background-color: red !important;
+}

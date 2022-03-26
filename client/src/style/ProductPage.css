@@ -58,3 +58,14 @@
 .reviewBtn:hover{
     background-color: #FFFF00 !important;
 }
+
+.deleteBtn {
+    color: black !important;
+    background-color: #EE4B2B !important;
+    border-style: double !important;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+}
+
+.deleteBtn:hover {
+    background-color: red !important;
+}

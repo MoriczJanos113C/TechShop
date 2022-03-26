@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
+import "../style/ProfilePage.css"
 
 export function ProfilePage(){
 
@@ -27,14 +28,15 @@ export function ProfilePage(){
 
 
     return(
-        <><h1>Bejelentkezve: {user.username}</h1>
-        <h1>Rendeléseid</h1>
+        <><h1 className="headLine">Bejelentkezve: {user.username}</h1>
+                        <hr></hr>    
+        <h1 className="headLine">Rendeléseid</h1>
                 {userOrders.map(pR =>  
                 <div key={pR.id}>  
-                <h2>------------------------</h2>                 
-                    <p>{pR.items}</p>
-                    <p>{pR.itemName}</p>
-                    <p>{pR.contactInfo}</p>
+        
+                    <p className="info">{pR.items}</p>
+                    <p className="info">{pR.itemName}</p>
+                    <p className="info">{pR.contactInfo}</p>
                 </div>
                 )}         
           </>  

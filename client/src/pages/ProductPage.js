@@ -143,7 +143,7 @@ export function ProductPage(){
                     <div key={pR.id}>
                     {isAdmin && (
                         
-                        <Button onClick={(e) => deleteReview(e, pR.id)} variant="danger">Törlés</Button>
+                        <Button onClick={(e) => deleteReview(e, pR.id)} className="deleteBtn">Törlés</Button>
                     )}
                     
                     <h1>{pR.username}</h1>

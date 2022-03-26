@@ -1,0 +1,45 @@
+.title{
+    font-size: xx-large;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.cost{
+    font-size: larger;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.submitBtn{
+    color: black !important;
+    background-color: #00FF00 !important;
+    border-style: double !important;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+}
+.submitBtn:hover{
+    background-color: #FFFF00 !important;
+}
+
+.deleteBtn {
+    color: black !important;
+    background-color: #EE4B2B !important;
+    border-style: double !important;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+}
+
+.deleteBtn:hover {
+    background-color: red !important;
+}
+
+.headLine1{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+    padding-top: 1.5cm;
+    text-decoration: underline;
+}
+.headLine2{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+    padding-bottom: 1.5cm;
+    text-decoration: underline;
+}
+
+.pruductCards{
+    padding-bottom: 0.5cm;
+}

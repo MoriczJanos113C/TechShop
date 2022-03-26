@@ -5,6 +5,7 @@ import React from "react";
 import { UserContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateFormValue } from "./CreateProductPage";
+import "../style/EditUser.css"
 
 const DEFAULT_FORM_OBJECT = {
         username:'',
@@ -68,43 +69,43 @@ export function EditUser(){
 
     return(
         
-        <div className="product">
+        <div className="users">
             
             <Container>
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1 className="cimsor">Felhasználó szerkesztése</h1>
+                    <h1 className="headLine">Felhasználó szerkesztése</h1>
                     
                         <Form onSubmit={updateUser}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label className="textTwo">Un</Form.Label>
-                                    <Form.Control 
+                                    <Form.Label>Felhasználónév</Form.Label>
+                                    <Form.Control className="input"
                                             onChange={updateFormValue("username", form, setForm)}
                                             value={form.username} 
                                             type="text" placeholder="Uj felhasználónév" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">P</Form.Label>
-                                        <Form.Control 
+                                        <Form.Label>Jelszó</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("password", form, setForm)}
                                             value={form.password} 
                                             type="password" 
                                             placeholder="Uj jelszo" />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
-                                        <Form.Label className="textTwo">Role</Form.Label>
-                                        <Form.Control 
+                                        <Form.Label>Jogosúltság</Form.Label>
+                                        <Form.Control className="input"
                                             onChange={updateFormValue("role", form, setForm)}
                                             value={form.role} 
                                             type="text" 
                                             placeholder="Uj role" />
                                 </Form.Group>
-                                <Button variant="success" type="submit">
+                                <Button className="submitBtn" type="submit">
                                    Mentés
                                 </Button><br /><br />
-                                <Button onClick={deleteUser} variant="danger">Törlés</Button>
+                                <Button className="deleteBtn" onClick={deleteUser}>Törlés</Button>
                             </Form>
                         </Col>
                     <Col></Col>

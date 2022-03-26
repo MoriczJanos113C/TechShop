@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Col, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "../style/UsersPage.css"
 
 export function UsersPage(){
 
@@ -31,14 +32,15 @@ export function UsersPage(){
 
     return(
         <div className="App">
-            <Form.Control 
+            <Col>
+                    <Form.Control className="input"
                         size="lg" 
                         type="text" 
                         value={search}
-                        className="mb-4 mt-4"
-                        placeholder="Felhasználó keresése" 
+                        placeholder="Felhasználók keresése" 
                         onChange={onSearchChange}
                         />
+                </Col>
                 {new Array(NUMBER_OF_COLUMNS).fill('').map((value, column) => (
                     <Col>
                     {getUsersInColumn(
@@ -47,8 +49,8 @@ export function UsersPage(){
                         column
                         ).map((user) => ( 
                             <>
-                            <p>{user.username}</p>
-                            <Link className="textTwo" to={`/users/${user.id}`}>Szerkesztés</Link>
+                            <p className="information">{user.username}</p>
+                            <Link className="editLink" to={`/users/${user.id}`}>Szerkesztés</Link>
                             </>
                         )
                     )}

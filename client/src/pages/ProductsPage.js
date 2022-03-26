@@ -62,10 +62,10 @@ export function ProductsPage(){
                         <Link className="descriptionLink" to={`/products/product/${product.id}`}>Leírás</Link>   
                     )}         
                     {isAdmin && (
-                        <Link to={`/products/product/${product.id}`}>Vélemények szerkesztése</Link>
+                        <Link className="editLink" to={`/products/product/${product.id}`}>Vélemények szerkesztése<br></br></Link>
                     )}
                     {isAdmin && (
-                        <Link to={`/products/${product.id}`}>Termék Szerkesztés</Link>
+                        <Link className="editLink" to={`/products/${product.id}`}>Termék Szerkesztés</Link>
                     )}
                 </Card.Body>
             </Card>
@@ -101,7 +101,7 @@ export function ProductsPage(){
                         onChange={onSearchChange}
                         />
                     {isAdmin && (
-                    <Link to="/create-product">Termék létrehozása</Link>
+                    <Link className="createLink" to="/create-product">Termék létrehozása</Link>
                     )}
                 </Col>
                 
@@ -114,7 +114,7 @@ export function ProductsPage(){
                         NUMBER_OF_COLUMNS, 
                         column
                         ).map((product) => ( 
-                    <ProductCard 
+                    <ProductCard
                     isLoggedIn={isLoggedIn}
                     isAdmin={user?.role==="admin"}
                     key={product.id}
