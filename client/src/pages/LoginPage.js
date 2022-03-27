@@ -5,7 +5,6 @@ import React from "react";
 import { UserContext } from '../App';
 import { useNavigate  } from "react-router-dom";
 import "../style/LoginPage.css"
-import { updateFormValue } from "./CreateProductPage";
 
 const DEFAULT_FORM_OBJECT = {
         username:'',
@@ -20,6 +19,14 @@ export function LoginPage(){
     const { setUser} = useContext(UserContext);
     const navigate = useNavigate();
 
+    const updateFormValue = (key) => (e) => {
+        
+        setForm({
+            ...form,
+            [key]: e.target.value,
+        });
+        console.log(key,form,e.target.value)
+    };
 
     const loginUser =  async (e) => {
         e.preventDefault();
@@ -44,7 +51,7 @@ export function LoginPage(){
                                 <Form.Group className="mb-3">
                                     <Form.Label>Felhasználónév</Form.Label>
                                     <Form.Control className="input"
-                                            onChange={updateFormValue("username", form, setForm)}
+                                            onChange={updateFormValue("username")}
                                             value={form.username} 
                                             type="text" placeholder="Felhasználónév" />
                                 </Form.Group>
@@ -52,7 +59,7 @@ export function LoginPage(){
                                 <Form.Group className="mb-3">
                                         <Form.Label>Jelszó</Form.Label>
                                         <Form.Control className="input"
-                                            onChange={updateFormValue("password", form, setForm)}
+                                            onChange={updateFormValue("password")}
                                             value={form.password} 
                                             type="password" 
                                             placeholder="Jelszó" />

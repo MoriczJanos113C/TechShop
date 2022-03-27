@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ConfirmationContext, ShoppingCartContext, UserContext } from "../App";
-import { updateFormValue } from "./CreateProductPage";
 import "../style/CheckOutPage.css"
 
 const DEFAULT_FORM_OBJECT = {
@@ -22,9 +21,72 @@ export function CheckOutPage(){
     const navigate = useNavigate();
     const [confirmation, setConfirmation] = useContext(ConfirmationContext);
     const {user} = useContext(UserContext);
+    const [addressError, setAddressError] = useState("");
+    const [firstnameError, setFirstnameError] = useState("");
+    const [lastnameError, setLastnameError] = useState("");
+    const [cardNumberError, setCardnumberError] = useState("");
+
+
+    const updateFormValue = (key) => (e) => {
+        
+        setForm({
+            ...form,
+            [key]: e.target.value,
+        });
+        console.log(key,form,e.target.value)
+    };
+
+    useEffect(() => {
+        checkValid();
+    },[form])
+
+
+    const checkValid = () => {
+
+            
+        if(!String(form.address)
+        .match(
+            /^[a-zA-Z0-9]{6,}$/
+        )&& form.address.trim() != "")
+        setAddressError("Nem megfelelő lakcím")
+        else{
+            setAddressError("");
+        }
+
+        if(!String(form.firstname)
+        .match(
+            /^[a-zA-Z]{3,}$/
+        )&& form.firstname.trim() != "")
+        setFirstnameError("Nem megfelelő vezetéknév")
+        else{
+            setFirstnameError("");
+        }
+
+        if(!String(form.lastname)
+        .match(
+            /^[a-zA-Z]{3,}$/
+        )&& form.lastname.trim() != "")
+        setLastnameError("Nem megfelelő keresztnév")
+        else{
+            setLastnameError("");
+        }
+
+        if(!String(form.cardNumber)
+        .match(
+            /^[a-zA-Z0-9]{3,}$/
+        )&& form.cardNumber.trim() != "")
+        setCardnumberError("Nem megfelelő bankszámlaszám")
+        else{
+            setCardnumberError("");
+        }
+        
+        
+    }
+
 
     const checkOut = async (e) => {
         e.preventDefault();
+        if(firstnameError === "" && lastnameError === "" && addressError === "" && cardNumberError === "" && form.firstname.trim() != "" && form.lastname.trim() != "" && form.address.trim() != "" && form.cardNumber.trim() != ""){
         const {data: orders } = await axios.post("http://localhost:8080/checkout", { 
         contactInfo: form,
         items: cart.map((item) => item.id),
@@ -37,6 +99,7 @@ export function CheckOutPage(){
         setCart([]);
         setConfirmation(orders.id);
         navigate(`/profile/${user.id}`);
+        }
     };
     
 
@@ -59,39 +122,36 @@ export function CheckOutPage(){
                                 <Form.Group className="mb-3">
                                     <Form.Label>Vezetéknév</Form.Label>
                                     <Form.Control className="input"
-                                            onChange={updateFormValue("firstname", form, setForm)}
+                                            onChange={updateFormValue("firstname")}
                                             value={form.firstname} 
                                             placeholder="Vezetéknév" />
                                 </Form.Group>
-
+                                {firstnameError && <p>{firstnameError}</p>}
                                 <Form.Group className="mb-3">
                                         <Form.Label>Keresztnév</Form.Label>
                                         <Form.Control className="input"
-                                            onChange={updateFormValue("lastname", form, setForm)}
+                                            onChange={updateFormValue("lastname")}
                                             value={form.lastname} 
                                             placeholder="Keresztnév" />
                                 </Form.Group>
-                                <Form.Group className="mb-3">
-                                        <Form.Label>Email cím</Form.Label>
-                                        <Form.Control className="input"
-                                            onChange={updateFormValue("email", form, setForm)}
-                                            value={form.email} 
-                                            placeholder="Email cím" />
-                                </Form.Group>
+                                {lastnameError && <p>{lastnameError}</p>}
+
                                 <Form.Group className="mb-3">
                                         <Form.Label>Lakcím</Form.Label>
                                         <Form.Control className="input"
-                                            onChange={updateFormValue("address", form, setForm)}
+                                            onChange={updateFormValue("address")}
                                             value={form.address} 
                                             placeholder="Lakcím" />
                                 </Form.Group>
+                                {addressError && <p>{addressError}</p>}
                                 <Form.Group className="mb-3">
                                         <Form.Label>Kártya szám</Form.Label>
                                         <Form.Control className="input"
-                                            onChange={updateFormValue("cardNumber", form, setForm)}
+                                            onChange={updateFormValue("cardNumber")}
                                             value={form.cardNumber} 
                                             placeholder="Kártya szám" />
                                 </Form.Group>
+                                {cardNumberError && <p>{cardNumberError}</p>}
                                 <Button className="btn" type="submit">
                                     Rendelés elküldése
                                 </Button>

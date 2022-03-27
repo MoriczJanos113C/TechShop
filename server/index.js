@@ -7,7 +7,6 @@ const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const {nanoid} = require('nanoid');
 const mime = require('mime-types');
-const { isAdmin } = require('./middlewares/isAdmin');
 app.use(express.json());
 app.use(cors());
 
@@ -35,7 +34,7 @@ const db = mysql.createConnection({
 
 
 //PRODUCT operations
-app.post('/products', /*isAdmin,*/  upload.single('file'), (req, res)=> {
+app.post('/products', upload.single('file'), (req, res)=> {
 
     const cost = req.body.cost;
     const name = req.body.name;
@@ -62,13 +61,14 @@ app.get('/products', (req, res)=> {
     });
 });
 
-app.put('/products/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> {
+app.put('/products/:id', upload.single('file'), async (req, res)=> {
     const cost= req.body.cost;
     const name = req.body.name;
     const description = req.body.description;
+    const image = req.file.filename;
 
     
-    db.query(`UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, name, description], (err, result) => {
+    db.query(`UPDATE product SET cost = ?, name = ?, description = ?, image = ? WHERE id = ${req.params.id}`, [cost, name, description, image], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
@@ -82,17 +82,6 @@ app.put('/products/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> 
     );
 });
 
-app.get('/products/:id', (req, res)=> {
-    db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any product"})
-        }
-        
-    });
-});
-
 app.get('/products/product/:id', (req, res)=> {
     db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
         if (result){
@@ -104,7 +93,7 @@ app.get('/products/product/:id', (req, res)=> {
     });
 });
 
-app.delete('/deleteProduct/:id', /*isAdmin,*/ (req, res) => {
+app.delete('/deleteProduct/:id', (req, res) => {
     db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)
@@ -145,7 +134,7 @@ app.get('/productReviews/:id', (req, res)=> {
     });
 });
 
-app.delete('/deleteReview/:id', /*isAdmin,*/ (req, res) => {
+app.delete('/deleteReview/:id', (req, res) => {
     db.query(`DELETE FROM reviews WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)
@@ -157,6 +146,77 @@ app.delete('/deleteReview/:id', /*isAdmin,*/ (req, res) => {
 })
 
 
+//ENTRIES OPERATIONS
+app.post('/entries', (req, res)=> {
+    const user_id = req.body.user_id;
+    const username = req.body.username;
+    const title = req.body.title;
+    const description = req.body.description;
+
+    db.query(`INSERT INTO entries (user_id, username, title, description)  VALUES (?, ?, ?, ?)`, [user_id, username, title, description], (err, result) => {
+        if (err) throw err;
+        console.log(req.body);
+        if(result){
+        res.send(result);
+        }
+    });
+});
+
+app.put('/entries/:id', upload.single("file"), async (req, res)=> {
+    const title = req.body.title;
+    const description = req.body.description;
+
+
+    
+    db.query(`UPDATE entries SET title = ?, description = ? WHERE id = ${req.params.id}`, [title, description], (err, result) => {
+        if(err) throw err;
+        if(result){
+            console.log(result);
+            res.send({message: "Saved"})
+        }else{
+            res.send({message: "Not saved"})
+            }
+            
+
+        }
+    );
+});
+
+app.get('/entries', (req, res)=> {
+    db.query("SELECT * FROM entries", (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any entries"})
+        }
+    });
+});
+
+app.get('/entries/:id', (req, res)=> {
+    db.query("SELECT * FROM entries WHERE id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any entries"})
+        }
+        
+    });
+});
+
+
+
+
+
+app.delete('/deleteEntries/:id', (req, res) => {
+    db.query(`DELETE FROM entries WHERE id = ${req.params.id}`,(err, result) => {
+        if(result){
+            console.log(result)
+            res.send(result);
+        }else{
+            res.send({message: "Not deleted any entries"})
+        }
+    })
+})
 
 
 //USER OPERATIONS
@@ -167,7 +227,7 @@ app.post('/register', (req, res)=> {
     const email = req.body.email;
     const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
 
-    db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
+    db.query("SELECT * FROM user WHERE username = ?", [username, email], (err, result)=>{
         if (err) return err;
             if(result.length === 0){
                 db.query("INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, 'normal')",[username, email, hashedPass, role], (err, result) => {
@@ -244,7 +304,7 @@ app.get('/orders', (req, res)=> {
     });
 });
 
-app.delete('/deleteOrder/:id', /*isAdmin,*/ (req, res) => {
+app.delete('/deleteOrder/:id', (req, res) => {
     db.query(`DELETE FROM orders WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)
@@ -280,7 +340,7 @@ app.get('/users/:id', (req, res)=> {
     });
 });
 
-app.put('/users/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> {
+app.put('/users/:id', upload.single('file'), async (req, res)=> {
     const username= req.body.username;
     const password = req.body.password;
     const role = req.body.role;
@@ -299,7 +359,7 @@ app.put('/users/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> {
     );
 });
 
-app.delete('/deleteUser/:id', /*isAdmin,*/ (req, res) => {
+app.delete('/deleteUser/:id', (req, res) => {
     db.query(`DELETE FROM user WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)

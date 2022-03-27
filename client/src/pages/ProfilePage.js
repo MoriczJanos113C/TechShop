@@ -34,7 +34,6 @@ export function ProfilePage(){
                 {userOrders.map(pR =>  
                 <div key={pR.id}>  
         
-                    <p className="info">{pR.items}</p>
                     <p className="info">{pR.itemName}</p>
                     <p className="info">{pR.contactInfo}</p>
                 </div>

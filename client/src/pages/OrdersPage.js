@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import "../style/OrdersPage.css"
 

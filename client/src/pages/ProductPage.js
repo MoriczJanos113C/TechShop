@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
 import { useIsAdmin } from "../hooks/useIsAdmin";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
-import { updateFormValue } from "./CreateProductPage";
 import "../style/ProductPage.css"
 import "../style/Toast.css"
 
@@ -30,6 +29,48 @@ export function ProductPage(){
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const isAdmin = useIsAdmin();
     const isLoggedIn = useIsLoggedIn();
+
+    const [ratingError, setRatingError] = useState("");
+    const [descriptionError, setDescriptionError] = useState("");
+
+
+    const updateFormValue = (key) => (e) => {
+        
+        setForm({
+            ...form,
+            [key]: e.target.value,
+        });
+        console.log(key,form,e.target.value)
+    };
+
+    useEffect(() => {
+        checkValid();
+    },[form])
+
+
+    const checkValid = () => {
+
+            
+        if(!String(form.rating)
+        .match(
+            /^[1-5]{1,}$/
+        )&& form.rating.trim() != "")
+        setRatingError("Nem megfelelő értékelés")
+        else{
+            setRatingError("");
+        }
+
+        if(!String(form.description)
+        .match(
+            /^[a-zA-Z0-9]{3,}$/
+        )&& form.description.trim() != "")
+        setDescriptionError("Nem megfelelő vélemény")
+        else{
+            setDescriptionError("");
+        }
+        
+    }
+
 
 
     useEffect(() => {
@@ -60,6 +101,7 @@ export function ProductPage(){
 
     const addReview = async (e) => {
         e.preventDefault();
+        if(ratingError === "" && descriptionError === "" && form.rating.trim() != "" && form.description.trim() != ""){
         const {data: reviews } = await axios.post("http://localhost:8080/review", { 
         product_id: productID,
         user_id: user.id,
@@ -69,6 +111,7 @@ export function ProductPage(){
         });
         setReviews(reviews.id);
         window.location.reload();
+        }
     };
 
     const deleteReview = (e, id) => {
@@ -141,8 +184,7 @@ export function ProductPage(){
     
                 {reviewByProduct.map(pR =>  
                     <div key={pR.id}>
-                    {isAdmin && (
-                        
+                    {isAdmin && (   
                         <Button onClick={(e) => deleteReview(e, pR.id)} className="deleteBtn">Törlés</Button>
                     )}
                     
@@ -161,20 +203,21 @@ export function ProductPage(){
                     {!isAdmin && isLoggedIn && (
                         <Form onSubmit={addReview}>
                                     <Form.Group className="mb-3">
-                                        <Form.Label >Rating</Form.Label>
+                                        <Form.Label >Értékelés</Form.Label>
                                         <Form.Control className="input"
-                                                onChange={updateFormValue("rating", form, setForm)}
+                                                onChange={updateFormValue("rating")}
                                                 value={form.rating} 
                                                 placeholder="rating" />
                                     </Form.Group>
-    
+                                    {ratingError && <p>{ratingError}</p>}
                                     <Form.Group className="mb-3">
                                             <Form.Label >Termék vélemény írás</Form.Label>
                                             <Form.Control className="input"
-                                                onChange={updateFormValue("description", form, setForm)}
+                                                onChange={updateFormValue("description")}
                                                 value={form.description} 
                                                 placeholder="Leírás" />
                                     </Form.Group>
+                                    {descriptionError && <p>{descriptionError}</p>}
                                     <Button className="reviewBtn" type="submit">
                                         Vélemény elküldése
                                     </Button>

@@ -11,7 +11,7 @@ import "../style/Toast.css"
 export function ProductsPage(){
 
     const [products, setProducts] = useState([]);
-    const NUMBER_OF_COLUMNS = 2;
+    const NUMBER_OF_COLUMNS = 4;
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [search, setSearch] = useState("");
     const [showToast, setShowToast] = useState(false);

@@ -31,9 +31,6 @@ export function RegisterPage(){
             [key]: e.target.value,
         });
         console.log(key,form,e.target.value)
-        
-        
-
     };
     
     useEffect(() => {
@@ -79,7 +76,7 @@ export function RegisterPage(){
     }
     
 
-    const registerUser =  async (e, values) => {
+    const registerUser =  async (e) => {
         e.preventDefault();
         if(usernameError === "" && passwordError === "" && emailError === "" && form.email.trim() != "" && form.username.trim() != "" && form.password.trim() != ""){
 
