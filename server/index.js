@@ -34,7 +34,7 @@ const db = mysql.createConnection({
 
 
 //PRODUCT operations
-app.post('/products', upload.single('file'), (req, res)=> {
+app.post('/products', /*isAdmin,*/  upload.single('file'), (req, res)=> {
 
     const cost = req.body.cost;
     const name = req.body.name;
@@ -61,14 +61,13 @@ app.get('/products', (req, res)=> {
     });
 });
 
-app.put('/products/:id', upload.single('file'), async (req, res)=> {
+app.put('/products/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> {
     const cost= req.body.cost;
     const name = req.body.name;
     const description = req.body.description;
-    const image = req.file.filename;
 
     
-    db.query(`UPDATE product SET cost = ?, name = ?, description = ?, image = ? WHERE id = ${req.params.id}`, [cost, name, description, image], (err, result) => {
+    db.query(`UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, name, description], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
@@ -82,6 +81,17 @@ app.put('/products/:id', upload.single('file'), async (req, res)=> {
     );
 });
 
+app.get('/products/:id', (req, res)=> {
+    db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
+        if (result){
+            res.send(result);
+        }else{
+            res.send({message: "Not found any product"})
+        }
+        
+    });
+});
+
 app.get('/products/product/:id', (req, res)=> {
     db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
         if (result){
@@ -93,7 +103,7 @@ app.get('/products/product/:id', (req, res)=> {
     });
 });
 
-app.delete('/deleteProduct/:id', (req, res) => {
+app.delete('/deleteProduct/:id', /*isAdmin,*/ (req, res) => {
     db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)

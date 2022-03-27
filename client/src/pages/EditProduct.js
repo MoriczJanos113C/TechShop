@@ -9,13 +9,13 @@ import "../style/EditProduct.css"
 
 const DEFAULT_FORM_OBJECT = {
         name:'',
-        cost: '',
+        cost: 0,
         description:''
     };
 
+export function EditProduct(){
     
 
-export function EditProduct(){
     
     const {user} = useContext(UserContext);
     const { id: productId } = useParams();
@@ -28,7 +28,51 @@ export function EditProduct(){
     const [costError, setCostError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
 
+    useEffect(()=> {
+        const getProduct = async () => {
+            const { data: product } = await Axios.get(`http://localhost:8080/products/${productId}`);
+            setForm({
+                name: product[0].name, 
+                cost: product[0].cost,
+                description: product[0].description,
+            });
+            
+        };   
+  
+        getProduct();
+    }, [])
+
+
+
+    const updateProduct = async (e) => {
+        e.preventDefault();
+        if(nameError === "" && descriptionError === "" && costError === "" && form.name.trim() != "" && form.description.trim() != ""){
+        const formData = new FormData();
+        formData.append("name", form.name);
+        formData.append("cost", form.cost);
+        formData.append("description", form.description);
+        await Axios.put(`http://localhost:8080/products/${productId}`, formData, {
+            headers: {
+                'content-type': 'multipart/form-data',
+                Authorization: `Bearer ${user.token}`,
+            }
+        });
+        setForm(DEFAULT_FORM_OBJECT);
+        navigate("/");
+        }
+    };
+
+    const deleteProduct = () => {
+            Axios.delete(`http://localhost:8080/deleteProduct/${productId}`, {
+            headers:{
+                Authorization: `Bearer ${user.token}`
+            }
+        });
+        navigate("/")
+    }
+
     const updateFormValue = (key) => (e) => {
+        
         setForm({
             ...form,
             [key]: e.target.value,
@@ -43,11 +87,12 @@ export function EditProduct(){
         });
     };
 
+
+    
     useEffect(() => {
         checkValid();
     },[form])
-
-
+    
     const checkValid = () => {
 
             
@@ -62,7 +107,7 @@ export function EditProduct(){
 
         if(!String(form.cost)
         .match(
-            /^[1-9]{1,}$/
+            /^[0-9]{1,}$/
         )&& form.cost.trim() != "")
         setCostError("Nem megfelelő ár")
         else{
@@ -78,63 +123,6 @@ export function EditProduct(){
             setDescriptionError("");
         }
     }
-    
-
-    useEffect(()=> {
-        const getProduct = async () => {
-            const { data: product } = await Axios.get(`http://localhost:8080/products/${productId}`);
-            setForm({
-                name: product[0].name, 
-                cost: product[0].cost,
-                description: product[0].description,
-                image: product[0].image,
-            });
-            
-        };   
-        getProduct();
-    }, [])
-
-    
-
-
-
-    const updateProduct = async (e) => {
-        e.preventDefault();
-        if(nameError === "" && 
-        descriptionError === "" && 
-        costError === "" 
-        &&
-        form.name.trim() != "" &&
-        form.description.trim() != "" &&
-        form.cost.trim() != ""){
-        const formData = new FormData();
-        formData.append("name", form.name);
-        formData.append("cost", form.cost);
-        formData.append("description", form.description);
-        formData.append("file", form.file);
-        await Axios.put(`http://localhost:8080/products/${productId}`, formData, {
-            headers: {
-                'content-type': 'multipart/form-data',
-                Authorization: `Bearer ${user.token}`,
-            }
-        });
-        setForm(DEFAULT_FORM_OBJECT);
-        navigate("/");
-        }
-    };
-
-    const deleteProduct = () => {
-            Axios.delete(`http://localhost:8080/deleteProduct/${productId}`, {
-            headers:{
-                'Authorization': `Bearer ${user.token}`
-            }
-        });
-        navigate("/")
-    }
-
-    
-
-
 
     return(
         
@@ -144,7 +132,7 @@ export function EditProduct(){
                 <Row>
                     <Col></Col>
                     <Col xs={6}>
-                    <h1 className="headLine">{form.name} termék szerkesztése</h1>
+                    <h1 className="headLine">Termék szerkesztése</h1>
                     
                         <Form onSubmit={updateProduct}>
                                 <Form.Group className="mb-3">
@@ -170,7 +158,7 @@ export function EditProduct(){
                                             onChange={updateFormValue("description")}
                                             value={form.description} 
                                             type="text" as="textarea" 
-                                            rows={10}/>
+                                            rows={3}/>
                                 </Form.Group>
                                 {descriptionError && <p>{descriptionError}</p>}
                                 <Form.Group className="mb-3">
