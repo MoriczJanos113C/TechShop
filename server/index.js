@@ -162,14 +162,15 @@ app.post('/entries', (req, res)=> {
     });
 });
 
-app.put('/entries/:id', upload.single("file"), async (req, res)=> {
+
+app.put('/entries/:id', upload.single('file'), async (req, res)=> {
     const title = req.body.title;
     const description = req.body.description;
-
-
+    console.log(title)
     
     db.query(`UPDATE entries SET title = ?, description = ? WHERE id = ${req.params.id}`, [title, description], (err, result) => {
         if(err) throw err;
+        
         if(result){
             console.log(result);
             res.send({message: "Saved"})
