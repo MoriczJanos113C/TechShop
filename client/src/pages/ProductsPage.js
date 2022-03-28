@@ -46,6 +46,8 @@ export function ProductsPage(){
         return products.filter((product) => product.name.includes(search))
     }
 
+    
+
     const ProductCard = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
             <Card className="homeCards" key={product.id} >

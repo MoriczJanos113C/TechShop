@@ -10,6 +10,7 @@ import "../style/CreateProductPage.css"
 const DEFAULT_FORM_OBJECT = {
         name:'',
         cost: '',
+        category: '',
         description:''
     };
 
@@ -24,6 +25,7 @@ export function CreateProductPage(){
     const [nameError, setNameError] = useState("");
     const [costError, setCostError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
+    const [categoryError, setCategoryError] = useState("");
 
     
     const checkValid = () => {
@@ -31,11 +33,20 @@ export function CreateProductPage(){
             
         if(!String(form.name)
         .match(
-            /^[a-zA-z0-9]{4,}$/
+            /^[a-zA-z\u00C0-\u024F0-9]{4,}$/
         )&& form.name.trim() != "")
         setNameError("Nem megfelelő termék név")
         else{
             setNameError("");
+        }
+
+        if(!String(form.category)
+        .match(
+            /^[a-zA-z\u00C0-\u024F0-9]{4,}$/
+        )&& form.category.trim() != "")
+        setCategoryError("Nem megfelelő termék kategória")
+        else{
+            setCategoryError("");
         }
 
         if(!String(form.cost)
@@ -49,7 +60,7 @@ export function CreateProductPage(){
         
         if(!String(form.description)
         .match(
-            /^[a-zA-Z0-9]{10,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9]{10,}$/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő vélemény")
         else{
@@ -63,12 +74,13 @@ export function CreateProductPage(){
 
     const createProduct =  async (e) => {
         e.preventDefault();
-        if(nameError === "" && descriptionError === "" && costError === "" &&
-        form.name.trim() != "" && form.description.trim() != "" &&
+        if(nameError === "" && categoryError === "" && descriptionError === "" && costError === "" &&
+        form.name.trim() != "" && form.category.trim() != "" && form.description.trim() != "" &&
         form.cost.trim() != ""){
         const formData = new FormData();
         formData.append("name", form.name);
         formData.append("cost", form.cost);
+        formData.append("category", form.category);
         formData.append("description", form.description);
         formData.append("file", form.file);
         await Axios.post("http://localhost:8080/products", formData, {
@@ -114,6 +126,14 @@ export function CreateProductPage(){
                                             type="name" placeholder="ide írd a termék nevét" />
                                 </Form.Group>
                                 {nameError && <p>{nameError}</p>}
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Kategória</Form.Label>
+                                    <Form.Control className="input"
+                                            onChange={updateFormValue("category")}
+                                            value={form.category} 
+                                            type="text" placeholder="ide írd a termék kategóriáját" />
+                                </Form.Group>
+                                {categoryError && <p>{categoryError}</p>}
                                 <Form.Group className="mb-3">
                                         <Form.Label>Ár</Form.Label>
                                         <Form.Control className="input"

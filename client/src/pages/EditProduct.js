@@ -10,6 +10,7 @@ import "../style/EditProduct.css"
 const DEFAULT_FORM_OBJECT = {
         name:'',
         cost: 0,
+        category:'',
         description:''
     };
 
@@ -27,6 +28,7 @@ export function EditProduct(){
     const [nameError, setNameError] = useState("");
     const [costError, setCostError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
+    const [categoryError, setCategoryError] = useState("");
 
     useEffect(()=> {
         const getProduct = async () => {
@@ -34,6 +36,7 @@ export function EditProduct(){
             setForm({
                 name: product[0].name, 
                 cost: product[0].cost,
+                category: product[0].category,
                 description: product[0].description,
             });
             
@@ -46,10 +49,11 @@ export function EditProduct(){
 
     const updateProduct = async (e) => {
         e.preventDefault();
-        if(nameError === "" && descriptionError === "" && costError === "" && form.name.trim() != "" && form.description.trim() != ""){
+        if(nameError === "" && categoryError === "" && descriptionError === "" && costError === "" && form.name.trim() != "" && form.category.trim() != "" && form.description.trim() != ""){
         const formData = new FormData();
         formData.append("name", form.name);
         formData.append("cost", form.cost);
+        formData.append("category", form.category);
         formData.append("description", form.description);
         await Axios.put(`http://localhost:8080/products/${productId}`, formData, {
             headers: {
@@ -98,11 +102,20 @@ export function EditProduct(){
             
         if(!String(form.name)
         .match(
-            /^[a-zA-z0-9]{4,}$/
+            /^[a-zA-z\u00C0-\u024F0-9]{4,}$/
         )&& form.name.trim() != "")
         setNameError("Nem megfelelő termék név")
         else{
             setNameError("");
+        }
+
+        if(!String(form.category)
+        .match(
+            /^[a-zA-z\u00C0-\u024F0-9]{4,}$/
+        )&& form.category.trim() != "")
+        setCategoryError("Nem megfelelő termék kategória")
+        else{
+            setCategoryError("");
         }
 
         if(!String(form.cost)
@@ -116,7 +129,7 @@ export function EditProduct(){
         
         if(!String(form.description)
         .match(
-            /^[a-zA-Z0-9]{10,}$/
+            /^[a-zA-z\u00C0-\u024F0-9]{10,}$/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő vélemény")
         else{
@@ -143,6 +156,14 @@ export function EditProduct(){
                                             type="name" placeholder="ide írd a termék nevét" />
                                 </Form.Group>
                                 {nameError && <p>{nameError}</p>}
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Kategória</Form.Label>
+                                    <Form.Control className="input"
+                                            onChange={updateFormValue("category")}
+                                            value={form.category} 
+                                            type="text" placeholder="ide írd a termék kategóriáját" />
+                                </Form.Group>
+                                {categoryError && <p>{categoryError}</p>}
                                 <Form.Group className="mb-3">
                                         <Form.Label>Ár</Form.Label>
                                         <Form.Control className="input"

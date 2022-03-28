@@ -37,11 +37,12 @@ const db = mysql.createConnection({
 app.post('/products', upload.single('file'), (req, res)=> {
 
     const cost = req.body.cost;
+    const category = req.body.category;
     const name = req.body.name;
     const description = req.body.description;
     const image = req.file.filename;
 
-    db.query(`INSERT INTO product (cost, name, description, image)  VALUES (?, ?, ?, ?)`, [cost, name, description, image], (err, result) => {
+    db.query(`INSERT INTO product (cost, category, name, description, image)  VALUES (?, ?, ?, ?, ?)`, [cost, category, name, description, image], (err, result) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
@@ -63,11 +64,12 @@ app.get('/products', (req, res)=> {
 
 app.put('/products/:id',  upload.single('file'), async (req, res)=> {
     const cost= req.body.cost;
+    const category= req.body.category;
     const name = req.body.name;
     const description = req.body.description;
 
     
-    db.query(`UPDATE product SET cost = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, name, description], (err, result) => {
+    db.query(`UPDATE product SET cost = ?, category = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, category, name, description], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
