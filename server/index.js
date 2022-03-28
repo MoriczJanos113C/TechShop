@@ -34,7 +34,7 @@ const db = mysql.createConnection({
 
 
 //PRODUCT operations
-app.post('/products', /*isAdmin,*/  upload.single('file'), (req, res)=> {
+app.post('/products', upload.single('file'), (req, res)=> {
 
     const cost = req.body.cost;
     const name = req.body.name;
@@ -61,7 +61,7 @@ app.get('/products', (req, res)=> {
     });
 });
 
-app.put('/products/:id',/*isAdmin,*/  upload.single('file'), async (req, res)=> {
+app.put('/products/:id',  upload.single('file'), async (req, res)=> {
     const cost= req.body.cost;
     const name = req.body.name;
     const description = req.body.description;
@@ -103,7 +103,7 @@ app.get('/products/product/:id', (req, res)=> {
     });
 });
 
-app.delete('/deleteProduct/:id', /*isAdmin,*/ (req, res) => {
+app.delete('/deleteProduct/:id', (req, res) => {
     db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)
@@ -173,7 +173,7 @@ app.post('/entries', (req, res)=> {
 });
 
 
-app.put('/entries/:id', upload.single('file'), async (req, res)=> {
+app.put('/entries/:id', async (req, res)=> {
     const title = req.body.title;
     const description = req.body.description;
     console.log(title)
@@ -351,7 +351,7 @@ app.get('/users/:id', (req, res)=> {
     });
 });
 
-app.put('/users/:id', upload.single('file'), async (req, res)=> {
+app.put('/users/:id', async (req, res)=> {
     const username= req.body.username;
     const password = req.body.password;
     const role = req.body.role;

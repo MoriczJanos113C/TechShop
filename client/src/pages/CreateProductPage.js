@@ -40,7 +40,7 @@ export function CreateProductPage(){
 
         if(!String(form.cost)
         .match(
-            /^[1-9]{1,}$/
+            /^[0-9]{1,}$/
         )&& form.cost.trim() != "")
         setCostError("Nem megfelelő ár")
         else{

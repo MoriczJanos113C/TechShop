@@ -88,12 +88,8 @@ export function EditEntries(){
         && 
         form.title.trim() != "" &&
         form.description.trim() != ""){
-        const formData = new FormData();
-        formData.append("title", form.title);
-        formData.append("description", form.description);
-        await Axios.put(`http://localhost:8080/entries/${entriesID}`, formData, {
+        await Axios.put(`http://localhost:8080/entries/${entriesID}`, form, {
             headers: {
-                'content-type': 'multipart/form-data',
                 Authorization: `Bearer ${user.token}`,
             }
         });

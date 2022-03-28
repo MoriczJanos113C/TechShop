@@ -40,7 +40,7 @@ export function EditUser(){
             const { data: form } = await Axios.get(`http://localhost:8080/users/${userID}`);
             setForm({
                 username: form[0].username,
-                password: form.password,
+                password: form[0].password,
                 role: form[0].role,
                 email: form[0].email,
             });
@@ -100,12 +100,7 @@ export function EditUser(){
         form.username.trim() != "" && form.password.trim() != "" &&
         form.role.trim() != "" &&
         form.email.trim() != ""){
-        const formData = new FormData();
-        formData.append("username", form.username);
-        formData.append("password", form.password);
-        formData.append("role", form.role);
-        formData.append("email", form.email);
-        await Axios.put(`http://localhost:8080/users/${userID}`, formData, {
+        await Axios.put(`http://localhost:8080/users/${userID}`, form, {
             headers: {
                 Authorization: `Bearer ${user.token}`,
             }
