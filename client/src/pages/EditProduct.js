@@ -11,7 +11,7 @@ const DEFAULT_FORM_OBJECT = {
         name:'',
         cost: 0,
         category:'',
-        description:''
+        description:'',
     };
 
 export function EditProduct(){
@@ -56,7 +56,7 @@ export function EditProduct(){
         formData.append("cost", form.cost);
         formData.append("category", form.category);
         formData.append("description", form.description);
-        formData.append("image", form.image);
+        formData.append("file", form.file);
         await Axios.put(`http://localhost:8080/products/${productId}`, formData, {
             headers: {
                 'content-type': 'multipart/form-data',
@@ -187,7 +187,8 @@ export function EditProduct(){
                                 <Form.Group className="mb-3">
                                     <Form.Label>Kép</Form.Label>
                                     <Form.Control className="input"
-                                            onChange={updateFormFileValue("image")}
+                                            onChange={updateFormFileValue("file")} 
+                                            value={form.file}
                                             type="file" />
                                 </Form.Group>
                                 <Button className="submitBtn" type="submit">

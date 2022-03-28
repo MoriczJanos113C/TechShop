@@ -24,7 +24,6 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 
-
 const db = mysql.createConnection({
     user:"root",
     host:"localhost",
@@ -67,10 +66,14 @@ app.put('/products/:id',  upload.single('file'), async (req, res)=> {
     const category= req.body.category;
     const name = req.body.name;
     const description = req.body.description;
+    const image = req.file.filename;
+    
 
     
-    db.query(`UPDATE product SET cost = ?, category = ?, name = ?, description = ?, image = ${req.body.file.filename} WHERE id = ${req.params.id}`, [cost, category, name, description], (err, result) => {
+    db.query(`UPDATE product SET cost = ?, category = ?, name = ?, description = ?, image = ? WHERE id = ${req.params.id}`, [cost, category, name, description, image], (err, result) => {
+         console.log(req.file)
         if(err) throw err;
+       
         if(result){
             console.log(result);
             res.send({message: "Saved"})
@@ -240,20 +243,23 @@ app.post('/register', (req, res)=> {
     const email = req.body.email;
     const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
 
-    db.query("SELECT * FROM user WHERE username = ?", [username, email], (err, result)=>{
+    db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
         if (err) return err;
+        db.query("SELECT * FROM user WHERE email = ?", [email], (err, result)=>{
+            if (err) return err;
             if(result.length === 0){
-                db.query("INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, 'normal')",[username, email, hashedPass, role], (err, result) => {
+                db.query("INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, 'normal')",[username, email, hashedPass, role], (err, Rresult) => {
                     if (err) {
                         res.send({err: err})
                     }
-                        res.send({result, message: "REGISTERED"});
+                        res.send({Rresult, message: "REGISTERED"});
                     }
                 );
             }else{
                     res.send({message: "username is exist"});
                     }    
     })
+})
 });
 
 app.post('/login', (req, res)=> {
