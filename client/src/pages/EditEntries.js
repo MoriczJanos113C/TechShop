@@ -46,7 +46,7 @@ export function EditEntries(){
             
         if(!String(form.title)
         .match(
-            /^[a-zA-Z0-9]{3,}$/
+            /^[a-zA-z\u00C0-\u024F\u1E00-\u1EFF0-9]{3,}$/
         )&& form.title.trim() != "")
         setTitleError("Nem megfelelő bejegyzés cím")
         else{
@@ -55,7 +55,7 @@ export function EditEntries(){
 
         if(!String(form.description)
         .match(
-            /^[a-zA-Z0-9]{3,}$/
+            /^[a-zA-z\u00C0-\u024F0-9]{3,}$/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő bejegyzés leírás")
         else{
@@ -84,12 +84,12 @@ export function EditEntries(){
     const updateProduct = async (e) => {
         e.preventDefault();
         if(titleError === "" && 
-        descriptionError === "" 
-        && 
+        descriptionError === "" && 
         form.title.trim() != "" &&
         form.description.trim() != ""){
         await Axios.put(`http://localhost:8080/entries/${entriesID}`, form, {
             headers: {
+                
                 Authorization: `Bearer ${user.token}`,
             }
         });
@@ -118,7 +118,7 @@ export function EditEntries(){
                                     <Form.Control className="input"
                                             onChange={updateFormValue("title")}
                                             value={form.title} 
-                                            type="name" placeholder="ide írd a beejegyzés új címét" />
+                                            type="text" placeholder="ide írd a beejegyzés új címét" />
                                 </Form.Group>
                                 {titleError && <p>{titleError}</p>}
                                 <Form.Group className="mb-3" >

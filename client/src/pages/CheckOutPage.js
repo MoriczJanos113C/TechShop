@@ -55,7 +55,7 @@ export function CheckOutPage(){
 
         if(!String(form.firstname)
         .match(
-            /^[a-zA-Z\u00C0-\u024F]{3,}$/
+            /^[a-zA-z\u00C0-\u024F0-9]{4,}$/
         )&& form.firstname.trim() != "")
         setFirstnameError("Nem megfelelő vezetéknév")
         else{
@@ -123,7 +123,8 @@ export function CheckOutPage(){
                                     <Form.Label>Vezetéknév</Form.Label>
                                     <Form.Control className="input"
                                             onChange={updateFormValue("firstname")}
-                                            value={form.firstname} 
+                                            value={form.firstname}
+                                            type="text" 
                                             placeholder="Vezetéknév" />
                                 </Form.Group>
                                 {firstnameError && <p>{firstnameError}</p>}
@@ -131,7 +132,8 @@ export function CheckOutPage(){
                                         <Form.Label>Keresztnév</Form.Label>
                                         <Form.Control className="input"
                                             onChange={updateFormValue("lastname")}
-                                            value={form.lastname} 
+                                            value={form.lastname}
+                                            type="text"  
                                             placeholder="Keresztnév" />
                                 </Form.Group>
                                 {lastnameError && <p>{lastnameError}</p>}
@@ -141,6 +143,7 @@ export function CheckOutPage(){
                                         <Form.Control className="input"
                                             onChange={updateFormValue("address")}
                                             value={form.address} 
+                                            type="text" 
                                             placeholder="Lakcím" />
                                 </Form.Group>
                                 {addressError && <p>{addressError}</p>}
@@ -149,6 +152,7 @@ export function CheckOutPage(){
                                         <Form.Control className="input"
                                             onChange={updateFormValue("cardNumber")}
                                             value={form.cardNumber} 
+                                            type="text" 
                                             placeholder="Kártya szám" />
                                 </Form.Group>
                                 {cardNumberError && <p>{cardNumberError}</p>}

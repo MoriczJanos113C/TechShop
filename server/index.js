@@ -300,7 +300,7 @@ app.post('/checkout', async (req, res) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
-            res.send(JSON.parse(products));
+            res.send(result);
         }
     });
     

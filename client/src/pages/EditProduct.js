@@ -111,7 +111,7 @@ export function EditProduct(){
 
         if(!String(form.category)
         .match(
-            /^[a-zA-z\u00C0-\u024F0-9]{4,}$/
+            /^[a-zA-z\u00C0-\u024F]{4,}$/
         )&& form.category.trim() != "")
         setCategoryError("Nem megfelelő termék kategória")
         else{
