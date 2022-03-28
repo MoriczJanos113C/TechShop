@@ -244,21 +244,20 @@ app.post('/register',async (req, res)=> {
     const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
 
     db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
-        if (err) return err;
+        if (err) throw err;
         db.query("SELECT * FROM user WHERE email = ?", [email], (err, result)=>{
-            if (err) return err;
+            if (err) throw err;
+                if (err) throw err;
             if(result.length === 0){
                 db.query("INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, 'normal')",[username, email, hashedPass, role], (err, Rresult) => {
-                    if (err) {
-                        res.send({err: err})
-                    }
-                        res.send({Rresult, message: "REGISTERED"});
-                    }
+                    if (err) throw err
+                }
                 );
             }else{
                     res.send({message: "Felhasználónév vagy email foglalt"});
                     }    
-    })
+    
+})
 })
 });
 
@@ -266,9 +265,10 @@ app.post('/login', (req, res)=> {
     const {username, password, role} = req.body;
 
     db.query("SELECT * FROM user WHERE username = ?",
-    [username, password], 
+    [username], 
     (err, result) => {
         if (err) throw err;
+        
         
         if (result.length > 0) {
             const token = jwt.sign(username, "secret-password");
@@ -278,10 +278,10 @@ app.post('/login', (req, res)=> {
             else{
                 res.send({message: "Rossz jelszo"})
                 }       
+            }else{
+                res.send({message: "Rossz felhasználó"});
             }
-        else{
-            res.send({message: "Rossz felhasználó"});
-        }
+        
     }
     );
 });

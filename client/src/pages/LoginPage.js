@@ -29,20 +29,25 @@ export function LoginPage(){
         console.log(key,form,e.target.value)
     };
 
+    
+    
     const loginUser =  async (e) => {
         e.preventDefault();
         const response = await Axios.post("http://localhost:8080/login", form);
         const {token, user} = response.data;
+        setUser({
+            token,
+            user,
+        });
         if(response.data[0]){
-                setUser({
-                    token,
-                    user,
-                });
-                navigate("/");
-            }
-            else{
-                setLoginStatus(response.data.message)
-            }         
+            navigate("/")
+            
+        
+        }else{
+            setLoginStatus(response.data.message)
+        }
+        console.log(response.data);
+               
     };
 
     return(
