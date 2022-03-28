@@ -23,6 +23,7 @@ export function RegisterPage(){
     const [usernameError, setNameError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [loginStatus, setLoginStatus] = useState("");
 
     const updateFormValue = (key) => (e) => {
         
@@ -79,23 +80,21 @@ export function RegisterPage(){
     const registerUser =  async (e) => {
         e.preventDefault();
         if(usernameError === "" && passwordError === "" && emailError === "" && form.email.trim() != "" && form.username.trim() != "" && form.password.trim() != ""){
-
-
-            console.log(usernameError, passwordError, emailError)
         await Axios.post("http://localhost:8080/register", form);
-
-
-
         const response = await Axios.post("http://localhost:8080/login", form);
         const {token, user} = response.data;
-        console.log("token", token);
-        setUser({
-            token,
+     
+             setUser({
+                token,
             user,
         });
+        navigate("/");   
+
+        
     
-        navigate("/");
+        
         }
+        
     };
 
     return(
@@ -140,6 +139,7 @@ export function RegisterPage(){
                                 <Button className="btn" type="submit">
                                     Regisztráció
                                 </Button>
+                                {loginStatus && <p>{loginStatus}</p>}
                             </Form>
                         </Col>
                     <Col></Col>

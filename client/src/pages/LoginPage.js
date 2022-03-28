@@ -18,6 +18,7 @@ export function LoginPage(){
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const { setUser} = useContext(UserContext);
     const navigate = useNavigate();
+    const [loginStatus, setLoginStatus] = useState("");
 
     const updateFormValue = (key) => (e) => {
         
@@ -32,12 +33,19 @@ export function LoginPage(){
         e.preventDefault();
         const response = await Axios.post("http://localhost:8080/login", form);
         const {token, user} = response.data;
+        if(response.data[0]){
+                setUser({
+                    token,
+                    user,
+                });
+                navigate("/");
+            }
+            else{
+                setLoginStatus(response.data.message)
+            }
         console.log(response.data);
-        setUser({
-            token,
-            user,
-        });
-        navigate("/");
+        
+        
     };
 
     return(
@@ -67,6 +75,7 @@ export function LoginPage(){
                                 <Button className="btn" type="submit">
                                     Bejelentkezés
                                 </Button>
+                                {loginStatus && <p>{loginStatus}</p>}
                             </Form>
                         </Col>
                     <Col></Col>

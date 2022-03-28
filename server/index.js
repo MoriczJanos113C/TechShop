@@ -256,7 +256,7 @@ app.post('/register', (req, res)=> {
                     }
                 );
             }else{
-                    res.send({message: "username is exist"});
+                    res.send({message: "Felhasználónév vagy email foglalt"});
                     }    
     })
 })
@@ -266,11 +266,9 @@ app.post('/login', (req, res)=> {
     const {username, password, role} = req.body;
 
     db.query("SELECT * FROM user WHERE username = ?",
-    [username], 
+    [username, password], 
     (err, result) => {
-        if(err){
-            res.send({err: err});
-        }
+        if (err) throw err;
         
         if (result.length > 0) {
             const token = jwt.sign(username, "secret-password");
@@ -278,11 +276,11 @@ app.post('/login', (req, res)=> {
                 res.send(JSON.stringify({token : token, user: result[0]}))
             }
             else{
-                res.send("hiba")
+                res.send({message: "Rossz jelszo"})
                 }       
             }
         else{
-            res.send({message: "Not good username"});
+            res.send({message: "Rossz felhasználó"});
         }
     }
     );
