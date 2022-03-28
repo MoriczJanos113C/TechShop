@@ -80,19 +80,20 @@ export function RegisterPage(){
     const registerUser =  async (e) => {
         e.preventDefault();
         if(usernameError === "" && passwordError === "" && emailError === "" && form.email.trim() != "" && form.username.trim() != "" && form.password.trim() != ""){
-        await Axios.post("http://localhost:8080/register", form);
+        const Rresponse = await Axios.post("http://localhost:8080/register", form); 
         const response = await Axios.post("http://localhost:8080/login", form);
         const {token, user} = response.data;
-     
-             setUser({
-                token,
-            user,
-        });
-        navigate("/");   
-
-        
+        if(Rresponse.data[0] || response.data[0]){
+                setUser({
+                    token,
+                    user,
+                });
+                navigate("/");
+            }  
+        else{
+            setLoginStatus(Rresponse.data.message)
+        }
     
-        
         }
         
     };

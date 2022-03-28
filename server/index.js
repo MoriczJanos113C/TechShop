@@ -236,7 +236,7 @@ app.delete('/deleteEntries/:id', (req, res) => {
 
 
 //USER OPERATIONS
-app.post('/register', (req, res)=> {
+app.post('/register',async (req, res)=> {
     const username = req.body.username;
     const password = req.body.password;
     const role = req.body.role;

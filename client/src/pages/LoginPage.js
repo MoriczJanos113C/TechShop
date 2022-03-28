@@ -42,10 +42,7 @@ export function LoginPage(){
             }
             else{
                 setLoginStatus(response.data.message)
-            }
-        console.log(response.data);
-        
-        
+            }         
     };
 
     return(

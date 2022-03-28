@@ -101,6 +101,9 @@ export function ProductPage(){
 
     const addReview = async (e) => {
         e.preventDefault();
+        if(user_ID != user.id){
+            navigate("/")
+        }
         if(ratingError === "" && descriptionError === "" && form.rating.trim() != "" && form.description.trim() != ""){
         const {data: reviews } = await axios.post("http://localhost:8080/review", { 
         product_id: productID,
