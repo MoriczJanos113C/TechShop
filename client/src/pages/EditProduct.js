@@ -38,6 +38,7 @@ export function EditProduct(){
                 cost: product[0].cost,
                 category: product[0].category,
                 description: product[0].description,
+                image: product[0].image,
             });
             
         };   
@@ -55,6 +56,7 @@ export function EditProduct(){
         formData.append("cost", form.cost);
         formData.append("category", form.category);
         formData.append("description", form.description);
+        formData.append("image", form.image);
         await Axios.put(`http://localhost:8080/products/${productId}`, formData, {
             headers: {
                 'content-type': 'multipart/form-data',
@@ -185,7 +187,7 @@ export function EditProduct(){
                                 <Form.Group className="mb-3">
                                     <Form.Label>Kép</Form.Label>
                                     <Form.Control className="input"
-                                            onChange={updateFormFileValue("file")}
+                                            onChange={updateFormFileValue("image")}
                                             type="file" />
                                 </Form.Group>
                                 <Button className="submitBtn" type="submit">

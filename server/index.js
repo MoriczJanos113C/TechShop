@@ -69,7 +69,7 @@ app.put('/products/:id',  upload.single('file'), async (req, res)=> {
     const description = req.body.description;
 
     
-    db.query(`UPDATE product SET cost = ?, category = ?, name = ?, description = ? WHERE id = ${req.params.id}`, [cost, category, name, description], (err, result) => {
+    db.query(`UPDATE product SET cost = ?, category = ?, name = ?, description = ?, image = ${req.body.file.filename} WHERE id = ${req.params.id}`, [cost, category, name, description], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
