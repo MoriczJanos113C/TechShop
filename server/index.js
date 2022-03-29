@@ -41,6 +41,7 @@ app.post('/products', upload.single('file'), (req, res)=> {
     const description = req.body.description;
     const image = req.file.filename;
 
+    
     db.query(`INSERT INTO product (cost, category, name, description, image)  VALUES (?, ?, ?, ?, ?)`, [cost, category, name, description, image], (err, result) => {
         if (err) throw err;
         console.log(req.body);
