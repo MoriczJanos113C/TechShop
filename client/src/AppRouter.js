@@ -31,7 +31,7 @@ export const AppRouter = () => {
               {isAdmin && (<Route path="/create-product" element={<CreateProductPage/>}/>)}
               {isAdmin && (<Route path="/products/:id" element={<EditProduct/>}/>)}
               <Route path="/products/product/:id" element={<ProductPage/>}/>
-              <Route path="/" element={<ProductsPage />}/>
+              <Route path="/products" element={<ProductsPage />}/>
               {isAdmin && (<Route path="/create-product" element={<CreateProductPage/>}/>)}
 
               {isAdmin && (<Route path="/users" element={<UsersPage/>}/>)}
@@ -48,8 +48,8 @@ export const AppRouter = () => {
               {isLoggedIn && (<Route path="/checkout" element={<CheckOutPage />}/>)}
 
 
-              <Route path="/register" element={<RegisterPage />}/>
-              <Route path="/login" element={<LoginPage />}/>
+              {!isLoggedIn && (<Route path="/register" element={<RegisterPage />}/>)}
+              {!isLoggedIn && (<Route path="/" element={<LoginPage />}/>)}
               {isLoggedIn && (<Route path="/logout" element={<LogoutPage />}/>)}
 
 

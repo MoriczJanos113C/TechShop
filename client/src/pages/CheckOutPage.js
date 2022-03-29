@@ -98,15 +98,17 @@ export function CheckOutPage(){
         });
         setCart([]);
         setConfirmation(orders.id);
+        
         navigate(`/profile/${user.id}`);
         }
     };
     
+   
 
 
     useEffect(() => {
         if(cart.length === 0){
-            navigate("/")
+            navigate("/products")
         }
     })
 

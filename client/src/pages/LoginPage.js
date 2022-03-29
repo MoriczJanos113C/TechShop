@@ -43,11 +43,15 @@ export function LoginPage(){
             setLoginStatus(response.data.message)
         } else{
             setLoginStatus(response.data[0])
-            navigate("/")
+            navigate("/products")
         }
         console.log(response.data);
                
     };
+
+    const navigateToProducts = () => {
+        navigate("/products")
+    }
 
     return(
         
@@ -77,7 +81,11 @@ export function LoginPage(){
                                     Bejelentkezés
                                 </Button>
                                 {loginStatus && <p>{loginStatus}</p>}
+                                <Button onClick={navigateToProducts} className="btn" type="submit">
+                                    Folytatás bejelentkezés nélkül
+                                </Button>
                             </Form>
+
                         </Col>
                     <Col></Col>
                 </Row>

@@ -66,7 +66,7 @@ export function EditProduct(){
             }
         });
         setForm(DEFAULT_FORM_OBJECT);
-        navigate("/");
+        navigate("/products");
         }
     };
 
@@ -76,7 +76,7 @@ export function EditProduct(){
                 Authorization: `Bearer ${user.token}`
             }
         });
-        navigate("/")
+        navigate("/products")
     }
 
     const updateFormValue = (key) => (e) => {

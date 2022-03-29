@@ -62,6 +62,7 @@ app.get('/products', (req, res)=> {
     });
 });
 
+
 app.put('/products/:id', upload.single('file'), async (req, res)=> {
     const cost= req.body.cost;
     const category= req.body.category;

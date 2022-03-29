@@ -90,7 +90,7 @@ export function CreateProductPage(){
             }
         });
         setForm(DEFAULT_FORM_OBJECT);
-        navigate("/");
+        navigate("/products");
         }
     };
 

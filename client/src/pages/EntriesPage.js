@@ -20,6 +20,7 @@ export function EntriesPage(){
 
     const [titleError, setTitleError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
+    
 
     
 
@@ -98,13 +99,14 @@ export function EntriesPage(){
     return(
         <>
         <Container>
-                 <Form onSubmit={addEntries}>
+                 {isAdmin && (
+                     <Form onSubmit={addEntries}>
                                     <Form.Group className="mb-3">
                                         <Form.Label >Bejegyzés címe</Form.Label>
                                         <Form.Control className="input"
                                                 onChange={updateFormValue("title")}
                                                 value={form.title} 
-                                                placeholder="rating" />
+                                                placeholder="Bejegyzés címe" />
                                     </Form.Group>
                                     {titleError && <p>{titleError}</p>}
                                     <Form.Group className="mb-3">
@@ -119,6 +121,7 @@ export function EntriesPage(){
                                         Bejegyzés elküldése
                                     </Button>
                                 </Form>
+                 )}
             </Container>
                        
                    

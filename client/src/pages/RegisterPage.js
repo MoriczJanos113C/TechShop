@@ -76,6 +76,10 @@ export function RegisterPage() {
 
     }
 
+    const navigateToLogin = () => {
+        navigate("/")
+    }
+
 
     const registerUser = async (e) => {
         e.preventDefault();
@@ -93,7 +97,7 @@ export function RegisterPage() {
             }
             else {
                 
-                navigate("/");
+                navigate("/products");
             }
             console.log(rResponse.data);
 
@@ -144,6 +148,9 @@ export function RegisterPage() {
                                 Regisztráció
                             </Button>
                             {loginStatus && <p>{loginStatus}</p>}
+                            <Button onClick={navigateToLogin} className="btn" type="submit">
+                                Már van felhasználód? Kattintsd ide!
+                            </Button>
                         </Form>
                     </Col>
                     <Col></Col>

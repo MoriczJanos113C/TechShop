@@ -18,7 +18,7 @@ export function ShoppingCartPage(){
 
     useEffect(() => {
         if(cart.length === 0){
-            navigate("/")
+            navigate("/products")
         }
     })
 
