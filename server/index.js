@@ -61,12 +61,13 @@ app.get('/products', (req, res)=> {
     });
 });
 
-app.put('/products/:id',  upload.single('file'), async (req, res)=> {
+app.put('/products/:id', upload.single('file'), async (req, res)=> {
     const cost= req.body.cost;
     const category= req.body.category;
     const name = req.body.name;
     const description = req.body.description;
-    const image = req.file.filename;
+    console.log(req)
+    const image = req.body.file ? req.body.file : req.file.filename;
     
 
     
@@ -243,22 +244,19 @@ app.post('/register',async (req, res)=> {
     const email = req.body.email;
     const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
 
-    db.query("SELECT * FROM user WHERE username = ?", [username], (err, result)=>{
+    db.query("SELECT * FROM user WHERE username = ? OR email = ?", [username, email], (err, result)=>{
         if (err) throw err;
-        db.query("SELECT * FROM user WHERE email = ?", [email], (err, result)=>{
-            if (err) throw err;
-                if (err) throw err;
-            if(result.length === 0){
-                db.query("INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, 'normal')",[username, email, hashedPass, role], (err, Rresult) => {
-                    if (err) throw err
-                }
-                );
-            }else{
-                    res.send({message: "Felhasználónév vagy email foglalt"});
-                    }    
-    
-})
-})
+               
+        if(result.length === 0){
+            db.query("INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, 'normal')",[username, email, hashedPass, role], (err, Rresult) => {
+                if (err) throw err
+                res.status(201).send();
+            });
+            
+        }else{
+            res.send({message: "Felhasználónév vagy email foglalt"});
+        }    
+    })
 });
 
 app.post('/login', (req, res)=> {

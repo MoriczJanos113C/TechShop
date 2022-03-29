@@ -48,8 +48,8 @@ export const AppRouter = () => {
               {isLoggedIn && (<Route path="/checkout" element={<CheckOutPage />}/>)}
 
 
-              {!isLoggedIn && (<Route path="/register" element={<RegisterPage />}/>)}
-              {!isLoggedIn && (<Route path="/login" element={<LoginPage />}/>)}
+              <Route path="/register" element={<RegisterPage />}/>
+              <Route path="/login" element={<LoginPage />}/>
               {isLoggedIn && (<Route path="/logout" element={<LogoutPage />}/>)}
 
 

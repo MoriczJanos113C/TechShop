@@ -24,7 +24,7 @@ export function RegisterPage() {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [loginStatus, setLoginStatus] = useState("");
-
+    
     const updateFormValue = (key) => (e) => {
 
         setForm({
@@ -81,20 +81,19 @@ export function RegisterPage() {
         e.preventDefault();
         if (usernameError === "" && passwordError === "" && emailError === "" && form.email.trim() != "" && form.username.trim() != "" && form.password.trim() != "") {
             const rResponse = await Axios.post("http://localhost:8080/register", form);
-
             const response = await Axios.post("http://localhost:8080/login", form);
             const { token, user } = response.data
             setUser({
                 token,
                 user,
             });
-            if (response.data[0]) {
+            if (rResponse.data.message) {
+                setLoginStatus(rResponse.data.message)
                 
-
-                navigate("/");
             }
             else {
-                setLoginStatus(rResponse.data.message)
+                
+                navigate("/");
             }
             console.log(rResponse.data);
 

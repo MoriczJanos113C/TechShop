@@ -33,12 +33,13 @@ export function EditProduct(){
     useEffect(()=> {
         const getProduct = async () => {
             const { data: product } = await Axios.get(`http://localhost:8080/products/${productId}`);
+            console.log(product)
             setForm({
                 name: product[0].name, 
                 cost: product[0].cost,
                 category: product[0].category,
                 description: product[0].description,
-                image: product[0].image,
+                file: product[0].image,
             });
             
         };   
@@ -57,6 +58,7 @@ export function EditProduct(){
         formData.append("category", form.category);
         formData.append("description", form.description);
         formData.append("file", form.file);
+    
         await Axios.put(`http://localhost:8080/products/${productId}`, formData, {
             headers: {
                 'content-type': 'multipart/form-data',
@@ -87,6 +89,7 @@ export function EditProduct(){
     };
 
     const updateFormFileValue = (key) => (e) => {
+        console.log(key)
         setForm({
             ...form,
             [key]: e.target.files[0],
@@ -138,8 +141,9 @@ export function EditProduct(){
             setDescriptionError("");
         }
     }
-
+console.log(form.file)
     return(
+
         
         <div className="product">
             
@@ -188,7 +192,8 @@ export function EditProduct(){
                                     <Form.Label>Kép</Form.Label>
                                     <Form.Control className="input"
                                             onChange={updateFormFileValue("file")} 
-                                            value={form.file}
+                                            value={form.image}
+                                            name="image"
                                             type="file" />
                                 </Form.Group>
                                 <Button className="submitBtn" type="submit">

@@ -39,12 +39,11 @@ export function LoginPage(){
             token,
             user,
         });
-        if(response.data[0]){
-            navigate("/")
-            
-        
-        }else{
+        if(response.data.message){
             setLoginStatus(response.data.message)
+        } else{
+            setLoginStatus(response.data[0])
+            navigate("/")
         }
         console.log(response.data);
                
