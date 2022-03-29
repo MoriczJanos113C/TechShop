@@ -148,9 +148,7 @@ export function RegisterPage() {
                                 Regisztráció
                             </Button>
                             {loginStatus && <p>{loginStatus}</p>}
-                            <Button onClick={navigateToLogin} className="btn" type="submit">
-                                Már van felhasználód? Kattintsd ide!
-                            </Button>
+                            
                         </Form>
                     </Col>
                     <Col></Col>

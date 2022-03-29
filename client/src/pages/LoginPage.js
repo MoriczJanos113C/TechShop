@@ -84,6 +84,7 @@ export function LoginPage(){
                                 <Button onClick={navigateToProducts} className="btn" type="submit">
                                     Folytatás bejelentkezés nélkül
                                 </Button>
+                                
                             </Form>
 
                         </Col>
