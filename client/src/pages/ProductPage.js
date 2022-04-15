@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Card, Button, Form, ToastContainer, Toast } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
 import { useIsAdmin } from "../hooks/useIsAdmin";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
@@ -53,7 +53,7 @@ export function ProductPage(){
             
         if(!String(form.rating)
         .match(
-            /^[1-5]{1,}$/
+            /^[1-5]{1,1}$/
         )&& form.rating.trim() != "")
         setRatingError("Nem megfelelő értékelés")
         else{
@@ -62,7 +62,7 @@ export function ProductPage(){
 
         if(!String(form.description)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9]{3,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 .!?,"']{3,}$/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő vélemény")
         else{
@@ -187,6 +187,7 @@ export function ProductPage(){
                     {isAdmin && (   
                         <Button onClick={(e) => deleteReview(e, pR.id)} className="deleteBtn">Törlés</Button>
                     )}
+                   
                     
                     <h1>{pR.username}</h1>
                     <h2>{pR.rating}</h2>
@@ -207,7 +208,7 @@ export function ProductPage(){
                                         <Form.Control className="input"
                                                 onChange={updateFormValue("rating")}
                                                 value={form.rating} 
-                                                placeholder="rating" />
+                                                placeholder="Értékelés pontszám szerint" />
                                     </Form.Group>
                                     {ratingError && <p>{ratingError}</p>}
                                     <Form.Group className="mb-3">

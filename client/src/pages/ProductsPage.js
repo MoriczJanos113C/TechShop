@@ -60,9 +60,11 @@ export function ProductsPage() {
                 <Card.Img className="cardImg" src={`http://localhost:8080/${product.image}`} />
                 <Card.Body>
                     <Card.Title className="title">{product.name}</Card.Title>
+                    {!isAdmin && (
                     <Card.Text className="cost">
                         {product.cost} HUF
                     </Card.Text>
+                    )}
                     {!isAdmin && isLoggedIn && (
                         <Button className="toCartBtn" onClick={() => addProductToCart(product)}>Kosárba</Button>
                     )}
@@ -70,7 +72,7 @@ export function ProductsPage() {
                         <Link className="descriptionLink" to={`/products/product/${product.id}`}>Leírás</Link>
                     )}
                     {isAdmin && (
-                        <Link className="editLink" to={`/products/product/${product.id}`}>Vélemények szerkesztése<br></br></Link>
+                        <Link className="editLink" to={`/products/product/${product.id}`}>Vélemények kezelése<br></br></Link>
                     )}
                     {isAdmin && (
                         <Link className="editLink" to={`/products/${product.id}`}>Termék Szerkesztés</Link>

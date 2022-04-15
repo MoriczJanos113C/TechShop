@@ -150,12 +150,12 @@ export function CheckOutPage(){
                                 </Form.Group>
                                 {addressError && <p>{addressError}</p>}
                                 <Form.Group className="mb-3">
-                                        <Form.Label>Kártya szám</Form.Label>
+                                        <Form.Label>Bankkártya szám</Form.Label>
                                         <Form.Control className="input"
                                             onChange={updateFormValue("cardNumber")}
                                             value={form.cardNumber} 
                                             type="text" 
-                                            placeholder="Kártya szám" />
+                                            placeholder="Bankkártya szám" />
                                 </Form.Group>
                                 {cardNumberError && <p>{cardNumberError}</p>}
                                 <Button className="btn" type="submit">

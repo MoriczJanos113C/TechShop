@@ -32,7 +32,7 @@ export function EntriesPage(){
             
         if(!String(form.title)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9]{3,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 .!?,"']{3,}$/
         )&& form.title.trim() != "")
         setTitleError("Nem megfelelő bejegyzés cím")
         else{
@@ -41,7 +41,7 @@ export function EntriesPage(){
 
         if(!String(form.description)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9]{3,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 .!?,"']{3,}$/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő bejegyzés leírás")
         else{

@@ -76,10 +76,6 @@ export function RegisterPage() {
 
     }
 
-    const navigateToLogin = () => {
-        navigate("/")
-    }
-
 
     const registerUser = async (e) => {
         e.preventDefault();
