@@ -2,6 +2,8 @@ import React from 'react'
 import RegisterPage from '../pages/RegisterPage'
 import {render, fireEvent, getByText, getByLabelText} from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
+import { ShoppingCartContext, UserContext } from '../App'
+import { AppRouter } from '../AppRouter'
 /*
 test('rednders form properly', () => {
     const {getByTestId, getByLabelText} = render(<RegisterPage/>);
@@ -31,7 +33,10 @@ describe("RegisterPage", () => {
     describe("Valid inputs", () => {
         it('calls the onSubmit function', async () => {
             const mockOnSubmit = jest.fn()
-            const {getByLabelText, getByRole} = render(<RegisterPage onSubmit={mockOnSubmit}/>)
+            const providerTestUser = []
+            const providerTestCart = []
+            const { getByLabelText, getByRole } = render( < UserContext.Provider value = { providerTestUser } >< ShoppingCartContext.Provider value = { providerTestCart } >< AppRouter > < RegisterPage onSubmit = { mockOnSubmit }
+                /></AppRouter ></ShoppingCartContext.Provider ></UserContext.Provider> )
 
             await act(async () => {
 
@@ -49,7 +54,11 @@ describe("RegisterPage", () => {
 })
     describe("Invalid email", () => {
         it('renders the email validation error', async () => {
-            const {getByLableText, container} = render(<RegisterPage/>)
+            const mockOnSubmit = jest.fn()
+            const providerTestUser = []
+            const providerTestCart = []
+            const { getByLabelText, getByRole } = render( < UserContext.Provider value = { providerTestUser } >< ShoppingCartContext.Provider value = { providerTestCart } >< AppRouter > < RegisterPage onSubmit = { mockOnSubmit }
+                /></AppRouter ></ShoppingCartContext.Provider ></UserContext.Provider> )
 
             await act(async () => {
                 const emailInput = getByLabelText("Email *")
@@ -64,7 +73,11 @@ describe("RegisterPage", () => {
 
     describe("Invalid username", () => {
         it('renders the username validation error', async () => {
-            const {getByLableText, container} = render(<RegisterPage/>)
+            const mockOnSubmit = jest.fn()
+            const providerTestUser = []
+            const providerTestCart = []
+            const { getByLabelText, getByRole } = render( < UserContext.Provider value = { providerTestUser } >< ShoppingCartContext.Provider value = { providerTestCart } >< AppRouter > < RegisterPage onSubmit = { mockOnSubmit }
+                /></AppRouter ></ShoppingCartContext.Provider ></UserContext.Provider> )
 
             await act(async () => {
                 const usernameInput = getByLabelText("Felhasználónév *")
@@ -78,7 +91,11 @@ describe("RegisterPage", () => {
 
     describe("Invalid password", () => {
         it('renders the password validation error', async () => {
-            const {getByLableText, container} = render(<RegisterPage/>)
+            const mockOnSubmit = jest.fn()
+            const providerTestUser = []
+            const providerTestCart = []
+            const { getByLabelText, getByRole } = render( < UserContext.Provider value = { providerTestUser } >< ShoppingCartContext.Provider value = { providerTestCart } >< AppRouter > < RegisterPage onSubmit = { mockOnSubmit }
+                /></AppRouter ></ShoppingCartContext.Provider ></UserContext.Provider> )
 
             await act(async () => {
                 const passwordInput = getByLabelText("Jelszó *")

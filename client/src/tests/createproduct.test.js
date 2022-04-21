@@ -12,7 +12,7 @@ describe("CreateProductPage", () => {
             const providerTestUser = []
             const providerTestCart = []
             const { getByLabelText, getByRole } = render( < UserContext.Provider value = { providerTestUser } > < ShoppingCartContext.Provider value = { providerTestCart } > < AppRouter > < CreateProductPage onSubmit = { mockOnSubmit }
-                /></AppRouter > < /ShoppingCartContext.Provider ></UserContext.Provider > )
+                /></AppRouter > </ShoppingCartContext.Provider ></UserContext.Provider > )
 
             await act(async() => {
 
