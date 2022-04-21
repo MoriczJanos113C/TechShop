@@ -3,13 +3,17 @@ import {CheckOutPage} from '../pages/CheckOutPage'
 import {AppRouter} from '../AppRouter'
 import {render, fireEvent, getByText, getByLabelText} from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
+import { ShoppingCartContext, UserContext } from '../App'
+
 
 describe("CheckOutPage", () => {
     describe("Valid inputs", () => {
         it('calls the onSubmit function', async () => {
             const mockOnSubmit = jest.fn()
-            render(<CheckOutPage onSubmit={mockOnSubmit}/>);
-
+            const providerTestCart = []
+            const providerTestUser = []
+             render (<UserContext.Provider value={providerTestUser}><ShoppingCartContext.Provider value={providerTestCart}><AppRouter><CheckOutPage onSubmit={mockOnSubmit}/></AppRouter></ShoppingCartContext.Provider></UserContext.Provider>)
+             
             await act(async () => {
 
             
@@ -28,7 +32,7 @@ describe("CheckOutPage", () => {
 
 describe("Hibás vezetéknév", () => {
     it('Ki írja ha hibás a vetéknév', async () => {
-        const {getByLabelText, container} = render(<CheckOutPage/>)
+        render(<CheckOutPage/>)
 
         await act(async () => {
             const firstnameInput = getByLabelText("Vezetéknév *")
@@ -81,4 +85,4 @@ describe("Hibás kártya szám", () => {
         expect(container.innerHTML).toMatch("A kártya számnak érvényesnek kell lennie")
 })
 })
-})
+}) 
