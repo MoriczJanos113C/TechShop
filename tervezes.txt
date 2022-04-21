@@ -1,0 +1,40 @@
+!!!adminlog is kell irni a fejlesztoibol kiírni nev szerint h ki mitcsinált!!!
+
+1. szereplok és igények fejlesztoibe
+	miknek kell megfelelnie, miket kell tudjon
+	fel kene sorolni h tudjon csinalni pl termékeket felvinni
+	admin (ki tudja listazni a termékeket, rendeléseket pl látja)
+	felhazsnalo(regisztrálás, bejelentkezés és társai amit tesz)
+	igények: mit tudjon cisnálni felhazsnaloi oldalrol és admin oldalról
+latogato
+2. use case funkciók fejlesztoibe
+	hogyan fogjak hasznalni
+	hogyan es mire
+	ha pl be jon egy uj termek akk admin fogja felvinni, amiutan a flehazsnalo latja
+3. magas szintu rendszerterv fejlesztoibe
+	
+	db-hez milyen dbn van
+	webszerver nodejs
+	frontend react
+	böngésző milyen böngészőn megy el
+4. screenek
+	screenshotok az oldalról, oda írni h 11es pontban található a bővebb leírása
+5. modellek 
+	adatmodell milyen kimeneti es bemeneti adatok mehetnek, mi ez a funkcio ami altal bekerul a db-be
+	adatbázis modell adatokat h taroljuk milyen kapcoslatokat, mezok es milyen kapcsolatokon keresztul vannak osszekapcsolva	
+	mely oldalakrol van input és output
+6. alkalmazások kiválasztása
+	pár mondat roluk h melyik alkalmazás miért azt és miért jó
+	
+7. routing (adat ping-pong, adatmodell)
+	milyen uton jut el oda, mely részei funkcioi ezeket kezeli le
+8. middlewarek
+9. implementáció
+	forráskód mellékelve írás ide
+10. tesztelés
+	konkrét teszt eseteket kéne leírni
+	
+11. végfelhasználó dokumentáció, felhasznaloiba megy
+	oda screenek a 4es pont és annak leírása, ide irunk is hozzá h melyiknek melyik képernyője
+	mi kell h fusson
+	
