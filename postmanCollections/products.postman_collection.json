@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "a9788fcd-915c-41db-bd5a-9b6c94d86df4",
+		"name": "products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "all the products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "one product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/product/110",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"product",
+						"110"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product creating, will write an error, because there is no filename in a postman request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"cost\": 100,\r\n        \"category\": \"telefon\",\r\n        \"name\": \"postmantestProduct\",\r\n        \"description\": \"testPostman\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product update, will write an error, because there is no filename in a postman request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cost\":1000099,\r\n    \"category\":\"tablagép\",\r\n    \"name\":\"postManPutTest\",\r\n    \"description\":\"postManPutTest\",\r\n    \"image\":\"wHfCqauuJE94LuqZd.jpeg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/110",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"110"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/deleteProduct/110",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"deleteProduct",
+						"110"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

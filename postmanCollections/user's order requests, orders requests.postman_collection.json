@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "67d05719-b870-4517-8dd2-987089f19118",
+		"name": "user's order requests, orders requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "buying the products what the user choosed",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"contactInfo\":\r\n        {\r\n            \"firstname\":\"postmantest\",\r\n            \"lastname\":\"postmantest\",\r\n            \"address\":\"postmantest\",\r\n            \"cardNumber\":\"postmantest\"\r\n        },\r\n    \"items\":[10,10],\r\n    \"user_id\":2,\r\n    \"username\":\"postmantest\",\r\n    \"email\":\"postmantest@postmantest.com\",\r\n    \"totalCost\":999,\r\n    \"itemName\":[\"postmantest\", \"postmantest\"]\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/checkout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"checkout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all the orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "order deleting",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/deleteOrder/87",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"deleteOrder",
+						"87"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user's order what is in the profile page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/usersOrder/65",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usersOrder",
+						"65"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
