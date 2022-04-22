@@ -4,7 +4,7 @@ import { render, fireEvent, getByText, getByLabelText } from '@testing-library/r
 import { act } from 'react-dom/test-utils'
 import { ShoppingCartContext, UserContext } from '../App'
 
-describe("EditUser", () => {
+/*describe("EditUser", () => {
     describe("Valid inputs", () => {
         it('calls the onSubmit function', async() => {
             const mockOnSubmit = jest.fn()
@@ -28,4 +28,4 @@ describe("EditUser", () => {
             expect(mockOnSubmit).toHaveBeencalled()
         })
     })
-})
+})*/

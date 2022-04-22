@@ -27,7 +27,7 @@ test('rednders form properly', () => {
     const passwordInput = getByLabelText(/Pawwsord:/i);
     expect(passwordInput).toHaveAttribute('type', 'password');
 })
-*/
+
 
 describe("RegisterPage", () => {
     describe("Valid inputs", () => {
@@ -106,4 +106,4 @@ describe("RegisterPage", () => {
             expect(container.innerHTML).toMatch("A jelszónak többnek kell lennie mint 5 karakter")
     })
 })
-})
+})*/

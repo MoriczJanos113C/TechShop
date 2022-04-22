@@ -12,9 +12,10 @@ const DEFAULT_FORM_OBJECT = {
         cardNumber:''
     };
     
+
+
 export function CheckOutPage(){   
-    
-    
+
 
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const [cart, setCart] = useContext(ShoppingCartContext);
@@ -41,12 +42,17 @@ export function CheckOutPage(){
     },[form])
 
 
+
+
+
+
+
     const checkValid = () => {
 
             
         if(!String(form.address)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9]{6,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9  .!?,"-']{6,}$/
         )&& form.address.trim() != "")
         setAddressError("Nem megfelelő lakcím")
         else{
@@ -73,7 +79,7 @@ export function CheckOutPage(){
 
         if(!String(form.cardNumber)
         .match(
-            /^[a-zA-Z0-9]{16,}$/
+            /^[a-zA-Z0-9]{16,16}$/
         )&& form.cardNumber.trim() != "")
         setCardnumberError("Nem megfelelő bankszámlaszám")
         else{

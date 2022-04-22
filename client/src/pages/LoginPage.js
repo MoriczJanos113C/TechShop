@@ -11,6 +11,7 @@ const DEFAULT_FORM_OBJECT = {
         password:''
     };
     
+    
 export function LoginPage(){
 
     
@@ -94,3 +95,5 @@ export function LoginPage(){
         
     );
 };
+
+export default LoginPage;
