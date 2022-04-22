@@ -46,10 +46,10 @@ app.post('/products', upload.single('file'), (req, res)=> {
         if (err) throw err;
         console.log(req.body);
         if(result){
-            res.send(result, {message: "Added a product"});
+            res.send({ message: "Added a product", result});
         }
         else{
-            res.send({result, message: "product not added"});
+            res.send({message: "product not added"});
         }
     });
 });
@@ -58,7 +58,7 @@ app.get('/products', (req, res)=> {
     
     db.query("SELECT * FROM product", (err, result) => {
         if (result){
-            res.send(result, {message: "Found all the products"});
+            res.send({message: "Found the products", result});
         }else{
             res.send({message: "Not found any product"})
         }
@@ -82,7 +82,7 @@ app.put('/products/:id', upload.single('file'), async (req, res)=> {
        
         if(result){
             console.log(result);
-            res.send(result, {message: "Saved"})
+            res.send({message: "Updated the product", result})
         }else{
             res.send({message: "Not saved"})
             }
@@ -96,7 +96,7 @@ app.put('/products/:id', upload.single('file'), async (req, res)=> {
 app.get('/products/product/:id', (req, res)=> {
     db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
         if (result){
-            res.send(result, {message: "Found a product"});
+            res.send({ message: "Found a product", result});
         }else{
             res.send({message: "Not found any product"})
         }
@@ -108,7 +108,7 @@ app.delete('/deleteProduct/:id', (req, res) => {
     db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)
-            res.send(result, {message: "Deleted a product"});
+            res.send({message: "Deleted a product"});
         }else{
             res.send({message: "Not deleted any product"})
         }
@@ -128,10 +128,10 @@ app.post('/review', async (req, res) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
-            res.send(result, {result, message: "Review added"});
+            res.send({message: "Review added", result});
         }
         else{
-            res.send({result, message: "Review not added"});
+            res.send({message: "Review not added"});
         }
     });
     
@@ -140,7 +140,7 @@ app.post('/review', async (req, res) => {
 app.get('/productReviews/:id', (req, res)=> {
     db.query("SELECT * FROM reviews WHERE product_id = ?", req.params.id, (err, result) => {
         if (result){
-            res.send(result, {message: "Found a review for the product"});
+            res.send({message: "Found a review for the product", result});
         }else{
             res.send({message: "Not found any review for this product"})
         }
@@ -152,7 +152,7 @@ app.delete('/deleteReview/:id', (req, res) => {
     db.query(`DELETE FROM reviews WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)
-            res.send(result, {message: "Deleted a review"});
+            res.send({message: "Deleted a review"});
         }else{
             res.send({message: "Not deleted any review"})
         }
@@ -171,7 +171,7 @@ app.post('/entries', (req, res)=> {
         if (err) throw err;
         console.log(req.body);
         if(result){
-        res.send(result, {message: "Entry added"});
+        res.send({message: "Entry added", result});
         }
         else{
             res.send({result, message: "Entry not added"});
@@ -190,7 +190,7 @@ app.put('/entries/:id', async (req, res)=> {
         
         if(result){
             console.log(result);
-            res.send(result, {message: "Entry saved"})
+            res.send({message: "Entry saved", result})
         }else{
             res.send({message: "Entry not saved"})
             }
@@ -203,7 +203,7 @@ app.put('/entries/:id', async (req, res)=> {
 app.get('/entries', (req, res)=> {
     db.query("SELECT * FROM entries", (err, result) => {
         if (result){
-            res.send(result, {message: "Found all the entry"});
+            res.send({message: "Found all the entry", result});
         }else{
             res.send({message: "Not found any entries"})
         }
@@ -213,7 +213,7 @@ app.get('/entries', (req, res)=> {
 app.get('/entries/:id', (req, res)=> {
     db.query("SELECT * FROM entries WHERE id = ?", req.params.id, (err, result) => {
         if (result){
-            res.send(result, {message: "Found an entry"});
+            res.send({message: "Found an entry", result});
         }else{
             res.send({message: "Not found any entries"})
         }
@@ -251,7 +251,9 @@ app.post('/register',async (req, res)=> {
         if(result.length === 0){
             db.query("INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, 'normal')",[username, email, hashedPass, role], (err, Rresult) => {
                 if (err) throw err
-                res.status(201).send();
+                if(Rresult){
+                    res.send({message:"Registered"})
+                }
             });
             
         }else{
@@ -270,10 +272,12 @@ app.post('/login', (req, res)=> {
         
         
         if (result.length > 0) {
+            
             const token = jwt.sign(username, "secret-password");
             if(bcrypt.compareSync(password, result[0].password)){
                 res.send(JSON.stringify({token : token, user: result[0]}))
             }
+        
             else{
                 res.send({message: "Rossz jelszo"})
                 }       
@@ -303,10 +307,10 @@ app.post('/checkout', async (req, res) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
-            res.send(result, {message: "Checkout confirmed"});
+            res.send({message: "Checkout confirmed", result});
         }
         else{
-            res.send({result, message: "Checkout failed"});
+            res.send({message: "Checkout failed"});
         }
     });
     
@@ -316,7 +320,7 @@ app.get('/orders', (req, res)=> {
     
     db.query("SELECT * FROM orders", (err, result) => {
         if (result){
-            res.send(result, {message: "Orders found"});
+            res.send({message: "Orders found", result});
         }else{
             res.send({message: "Not found any order"})
         }
@@ -327,9 +331,9 @@ app.delete('/deleteOrder/:id', (req, res) => {
     db.query(`DELETE FROM orders WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)
-            res.send(result, {message: "Deleted an order"});
+            res.send({message: "Deleted an order"});
         }else{
-            res.send(result, {message: "Not deleted any order"})
+            res.send({message: "Not deleted any order"})
         }
     })
 })
@@ -340,7 +344,7 @@ app.get('/users', (req, res)=> {
     
     db.query("SELECT * FROM user", (err, result) => {
         if (result){
-            res.send(result, {message: "Users found"});
+            res.send({message: "Users found", result});
         }else{
             res.send({message: "Not found any user"})
         }
@@ -351,7 +355,7 @@ app.get('/users', (req, res)=> {
 app.get('/users/:id', (req, res)=> {
     db.query("SELECT * FROM user WHERE id = ?", req.params.id, (err, result) => {
         if (result){
-            res.send(result, {message: "User found"});
+            res.send({message: "User found", result});
         }else{
             res.send({message: "Not found the user"})
         }
@@ -366,11 +370,11 @@ app.put('/users/:id', async (req, res)=> {
     const email = req.body.email;
     const hashedPass = bcrypt.hashSync(password,bcrypt.genSaltSync(10))
 
-    db.query(`UPDATE user SET username = ?, password = ?, role = ? email = ? WHERE id = ${req.params.id}`, [username, hashedPass, role, email], (err, result) => {
+    db.query(`UPDATE user SET username = ?, password = ?,email = ?, role = ?  WHERE id = ${req.params.id}`, [username, hashedPass, role, email], (err, result) => {
         if(err) throw err;
         if(result){
             console.log(result);
-            res.send({message: "User updated"})
+            res.send({message: "User updated", result})
         }else{
             res.send({message: "User not updated"})
             }
@@ -394,7 +398,7 @@ app.get('/usersOrder/:id', (req, res)=> {
     db.query(`SELECT * FROM orders WHERE user_id = ${req.params.id}`, (err, result) => {
         if (result){
             console.log(result);
-            res.send(result, {message: "Found an order for the user"});
+            res.send({message: "Found an order for the user", result});
         }else{
             console.log(err)
             res.send({message: "Not found any order for this user"})
