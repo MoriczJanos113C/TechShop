@@ -32,7 +32,7 @@ export function EditProduct(){
 
     useEffect(()=> {
         const getProduct = async () => {
-            const { data: product } = await Axios.get(`http://localhost:8080/products/${productId}`);
+            const { data: product } = await Axios.get(`http://localhost:8080/products/product/${productId}`);
             console.log(product)
             setForm({
                 name: product[0].name, 

@@ -32,7 +32,7 @@ const db = mysql.createConnection({
 });
 
 
-//PRODUCT operations
+
 app.post('/products', upload.single('file'), (req, res)=> {
 
     const cost = req.body.cost;
@@ -44,12 +44,10 @@ app.post('/products', upload.single('file'), (req, res)=> {
     
     db.query(`INSERT INTO product (cost, category, name, description, image)  VALUES (?, ?, ?, ?, ?)`, [cost, category, name, description, image], (err, result) => {
         if (err) throw err;
-        console.log(req.body);
         if(result){
-            console.log(result);
-            res.send({message: "Saved"})
+            res.send(result)
         }else{
-            res.send({message: "Not saved"})
+            res.send({message: "Not added a product"})
             }
     });
 });
@@ -77,14 +75,12 @@ app.put('/products/:id', upload.single('file'), async (req, res)=> {
 
     
     db.query(`UPDATE product SET cost = ?, category = ?, name = ?, description = ?, image = ? WHERE id = ${req.params.id}`, [cost, category, name, description, image], (err, result) => {
-         console.log(req.file)
         if(err) throw err;
        
         if(result){
-            console.log(result);
-            res.send({message: "Saved"})
+            res.send({message: "Product updated"})
         }else{
-            res.send({message: "Not saved"})
+            res.send({message: "Product not updated"})
             }
             
 
@@ -92,16 +88,6 @@ app.put('/products/:id', upload.single('file'), async (req, res)=> {
     );
 });
 
-app.get('/products/:id', (req, res)=> {
-    db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
-        if (result){
-            res.send(result);
-        }else{
-            res.send({message: "Not found any product"})
-        }
-        
-    });
-});
 
 app.get('/products/product/:id', (req, res)=> {
     db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
@@ -118,7 +104,7 @@ app.delete('/deleteProduct/:id', (req, res) => {
     db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
             console.log(result)
-            res.send(result);
+            res.send({message: "Deleted a product"});
         }else{
             res.send({message: "Not deleted any product"})
         }
@@ -138,7 +124,7 @@ app.post('/review', async (req, res) => {
         if (err) throw err;
         console.log(req.body);
         if(result){
-            res.send(result);
+            res.send({message: "Review added"});
         }
         else{
             res.send({message: "Review not added"});
@@ -166,11 +152,10 @@ app.delete('/deleteReview/:id', (req, res) => {
         }else{
             res.send({message: "Not deleted any review"})
         }
-    })
-})
+    });
+});
 
 
-//ENTRIES OPERATIONS
 app.post('/entries', (req, res)=> {
     const user_id = req.body.user_id;
     const username = req.body.username;
@@ -181,10 +166,10 @@ app.post('/entries', (req, res)=> {
         if (err) throw err;
         console.log(req.body);
         if(result){
-        res.send(result);
+        res.send({message: "Entry added"});
         }
         else{
-            res.send({result, message: "Entry not added"});
+            res.send({message: "Entry not added"});
         }
     });
 });
@@ -200,9 +185,9 @@ app.put('/entries/:id', async (req, res)=> {
         
         if(result){
             console.log(result);
-            res.send(result)
+            res.send({message: "Entry updated"})
         }else{
-            res.send({message: "Entry not saved"})
+            res.send({message: "Entry not updated"})
             }
             
 
@@ -241,7 +226,7 @@ app.delete('/deleteEntries/:id', (req, res) => {
             console.log(result)
             res.send({message: "Deleted an entry"});
         }else{
-            res.send({message: "Not deleted any entries"})
+            res.send({message: "Not deleted any entry"})
         }
     })
 })
@@ -271,7 +256,7 @@ app.post('/register',async (req, res)=> {
 });
 
 app.post('/login', (req, res)=> {
-    const {username, password, role} = req.body;
+    const {username, password} = req.body;
 
     db.query("SELECT * FROM user WHERE username = ?",
     [username], 
@@ -285,10 +270,10 @@ app.post('/login', (req, res)=> {
                 res.send(JSON.stringify({token : token, user: result[0]}))
             }
             else{
-                res.send({message: "Rossz jelszo"})
+                res.send({message: "Rossz jelszó"})
                 }       
             }else{
-                res.send({message: "Rossz felhasználó"});
+                res.send({message: "Rossz felhasználónév"});
             }
         
     }
@@ -299,7 +284,7 @@ app.post('/login', (req, res)=> {
 
 
 app.post('/checkout', async (req, res) => {
-    console.log(req.body);
+    
     const contactInfo = req.body.contactInfo;
     const items = req.body.items;
     const user_id = req.body.user_id;
@@ -313,9 +298,9 @@ app.post('/checkout', async (req, res) => {
     const itemsName = JSON.stringify(itemName);
     db.query('INSERT INTO orders (user_id, username, email, contactInfo, items, itemName, totalCost) VALUES (?, ?, ?, ?, ?, ?, ?)', [user_id, username, email, contactInfos, products, itemsName, totalCost], (err, result) => {
         if (err) throw err;
-        console.log(req.body);
+        
         if(result){
-            res.send(result);
+            res.send({message: "Checkout confirmed"});
         }
         else{
             res.send({message: "Checkout failed"});
@@ -338,13 +323,13 @@ app.get('/orders', (req, res)=> {
 app.delete('/deleteOrder/:id', (req, res) => {
     db.query(`DELETE FROM orders WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
-            console.log(result)
+            
             res.send({message: "Deleted an order"});
         }else{
             res.send({message: "Not deleted any order"})
         }
-    })
-})
+    });
+});
 
 
 
@@ -381,8 +366,8 @@ app.put('/users/:id', async (req, res)=> {
     db.query(`UPDATE user SET username = ?, password = ?,email = ?, role = ?  WHERE id = ${req.params.id}`, [username, hashedPass,email, role ], (err, result) => {
         if(err) throw err;
         if(result){
-            console.log(result);
-            res.send(result)
+            
+            res.send({message: "User updated"})
         }else{
             res.send({message: "User not updated"})
             }
@@ -394,21 +379,19 @@ app.put('/users/:id', async (req, res)=> {
 app.delete('/deleteUser/:id', (req, res) => {
     db.query(`DELETE FROM user WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
-            console.log(result)
+            
             res.send({message: "Deleted a user"});
         }else{
             res.send({message: "Not deleted any user"})
         }
-    })
-})
+    });
+});
 
 app.get('/usersOrder/:id', (req, res)=> {
     db.query(`SELECT * FROM orders WHERE user_id = ${req.params.id}`, (err, result) => {
         if (result){
-            console.log(result);
             res.send(result);
         }else{
-            console.log(err)
             res.send({message: "Not found any order for this user"})
         }
     });
