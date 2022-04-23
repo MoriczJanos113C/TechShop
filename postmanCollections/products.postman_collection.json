@@ -46,18 +46,55 @@
 			"response": []
 		},
 		{
-			"name": "product creating, will write an error, because there is no filename in a postman request",
+			"name": "creating a product, will need a bearer token when you login with an account from the devtools(from the network space) Copy",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.dGVzdGVsZWsxMjM.otfsqJ0VtileE6HdqgEjnLavhdI9g19clCxTyqiAXGY",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"cost\": 100,\r\n        \"category\": \"telefon\",\r\n        \"name\": \"postmantestProduct\",\r\n        \"description\": \"testPostman\"\r\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "cost",
+							"value": "1000099",
+							"type": "text"
+						},
+						{
+							"key": "category",
+							"value": "tablagép",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "postManPostTest123",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "postManPostTest123",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/moric/Desktop/kepek/69240529_380377642912694_1382069060799299584_n.jpg"
+						},
+						{
+							"key": "image",
+							"value": "wHfCqauuJE94LuqZd.jpeg",
+							"type": "text",
+							"disabled": true
 						}
-					}
+					]
 				},
 				"url": {
 					"raw": "http://localhost:8080/products",
@@ -74,21 +111,57 @@
 			"response": []
 		},
 		{
-			"name": "product update, will write an error, because there is no filename in a postman request",
+			"name": "product update, will need a bearer token when you login with an account from the devtools(from the network space)",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.ZGFzZGFzYWRzZGFzYWRzYXNhcw.ERqxLk7uCoAg-zbHINTyy-GG0vnEbDrgk4wKBH6WrI",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"cost\":1000099,\r\n    \"category\":\"tablagép\",\r\n    \"name\":\"postManPutTest\",\r\n    \"description\":\"postManPutTest\",\r\n    \"image\":\"wHfCqauuJE94LuqZd.jpeg\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/moric/Desktop/kepek/steamuserimages-a.akamaihd.jpg"
+						},
+						{
+							"key": "cost",
+							"value": "1000099",
+							"type": "text"
+						},
+						{
+							"key": "category",
+							"value": "tablagép",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "postManPutTest123",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "postManPutTest",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"value": "wHfCqauuJE94LuqZd.jpeg",
+							"type": "text"
 						}
-					}
+					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/products/110",
+					"raw": "http://localhost:8080/products/111",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -96,7 +169,7 @@
 					"port": "8080",
 					"path": [
 						"products",
-						"110"
+						"111"
 					]
 				}
 			},

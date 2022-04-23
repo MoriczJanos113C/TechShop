@@ -46,8 +46,11 @@ app.post('/products', upload.single('file'), (req, res)=> {
         if (err) throw err;
         console.log(req.body);
         if(result){
-        res.send(result);
-        }
+            console.log(result);
+            res.send({message: "Saved"})
+        }else{
+            res.send({message: "Not saved"})
+            }
     });
 });
 
