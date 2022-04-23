@@ -62,7 +62,7 @@ export function ProductPage(){
 
         if(!String(form.description)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 .!?,"']{3,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9  $()_+\-=\[\]{};':"\\|,.<>\/?!]{3,}$/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő vélemény")
         else{

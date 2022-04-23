@@ -33,9 +33,12 @@ export function ProfilePage(){
         <h1 className="headLine">Rendeléseid</h1>
                 {userOrders.map(pR =>  
                 <div key={pR.id}>  
-        
+                    <p className="info">Rendelt termékek</p>
                     <p className="info">{pR.itemName}</p>
+                    <p className="info">Rendelési személyes információi</p>
                     <p className="info">{pR.contactInfo}</p>
+                    <p className="info">Rendelési személyes információi</p>
+                    <p className="info">{pR.totalCost} HUF</p>
                 </div>
                 )}         
           </>  

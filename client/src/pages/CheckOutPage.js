@@ -52,7 +52,7 @@ export function CheckOutPage(){
             
         if(!String(form.address)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9  .!?,"-']{6,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 .,/]{6,}$/
         )&& form.address.trim() != "")
         setAddressError("Nem megfelelő lakcím")
         else{
@@ -79,7 +79,7 @@ export function CheckOutPage(){
 
         if(!String(form.cardNumber)
         .match(
-            /^[a-zA-Z0-9]{16,16}$/
+            /^[a-zA-Z0-9 -]{16,16}$/
         )&& form.cardNumber.trim() != "")
         setCardnumberError("Nem megfelelő bankszámlaszám")
         else{

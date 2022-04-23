@@ -38,11 +38,6 @@ export function RegisterPage() {
         checkValid();
     }, [form])
 
-    //FORM VALIDATION
-    //react hook form.com
-    //js form validator regexes
-    //email/password regex validator
-
     const checkValid = () => {
 
 

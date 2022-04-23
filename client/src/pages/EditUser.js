@@ -67,7 +67,7 @@ export function EditUser(){
 
         if(!String(form.password)
         .match(
-            /^[a-zA-z0-9]{6,}$/
+            /^[a-zA-Z0-9$()_+\-=\[\]{};':"\\|,.<>\/?!]{6,}$/
         )&& form.password.trim() != "")
         setPasswordError("Nem megfelelő jelszó")
         else{
