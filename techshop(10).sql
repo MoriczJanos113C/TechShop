@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Ápr 24. 15:23
+-- Létrehozás ideje: 2022. Ápr 24. 21:43
 -- Kiszolgáló verziója: 10.4.17-MariaDB
 -- PHP verzió: 7.3.27
 
@@ -34,7 +34,7 @@ CREATE TABLE `entries` (
   `user_id` int(11) NOT NULL,
   `username` varchar(250) COLLATE utf8_hungarian_ci NOT NULL,
   `title` varchar(250) COLLATE utf8_hungarian_ci NOT NULL,
-  `description` varchar(400) COLLATE utf8_hungarian_ci NOT NULL,
+  `description` mediumtext COLLATE utf8_hungarian_ci NOT NULL,
   `image` mediumtext COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
@@ -43,8 +43,9 @@ CREATE TABLE `entries` (
 --
 
 INSERT INTO `entries` (`id`, `user_id`, `username`, `title`, `description`, `image`) VALUES
-(52, 2, 'postmantest', 'postmantest', 'postmantest', ''),
-(55, 2, 'postmantest', 'postmantest', 'postmantest', '');
+(58, 154, 'Admin1', 'Csökken a videókártyák ára!', 'Az elmúlt években a videókártyák ára az egekbe nőtt. Az elmúlt hetekben viszont megfigyelhető egy stabil ár zuhanás a videókártyák piacán.', ''),
+(59, 154, 'Admin1', 'Ezek a 2022 májusi videojáték megjelenések', 'Warhammer 40,000: Chaos Gate - Daemonhunters - május 5. - PC\r\n\r\nTrek to Yomi - május 5. - PC, PS4, PS5, Xbox One, Xbox Series X|S\r\n\r\nCrows and Pawns: Kingdom of Deceit - május 6. - PC\r\n\r\nSalt and Sacrifice - május 10. - PC, PS5\r\n\r\nEvil Dead: The Game - május 13. - PC, PS4, PS5, Xbox One, Xbox Series X|S\r\n\r\nVampire: The Masquerade - Swansong - május 19. - PC, PS4, PS5, Xbox One, Xbox Series X|S, Switch\r\n\r\nDolmen - május 20. - PC, PS4, PS5, Xbox One, Xbox Series X|S\r\n\r\nStreets of Rage 4 - május 24. - iOS, Android\r\n\r\nMX vs. ATV Legends - május 24. - PC, PS4, PS5, Xbox One, Xbox Series X|S\r\n\r\nSniper Elite 5 - május 26. - PC, PS4, PS5, Xbox One, Xbox Series X|S\r\n\r\nKao the Kangaroo - május 27. - PC, PS4, PS5, Xbox One, Xbox Series X|S, Switch\r\n\r\nPac-Man Museum+ - május 27. - PC, PS4, Xbox One, Switch\r\n\r\nLapin - május 31. - PC', ''),
+(61, 155, 'Admin2', 'Az Oscar-díjtól az akciós kosárig, és talán vissza a csúcsra - így alakult Nicolas Cage karrierje eddig.', 'Az éveken át tartó kritikai ekézést viszont az egyik legnagyobb elismerés követte. Az 1995-ös Las Vegas, végállomás című dráma elkészítésekor megint visszanyúlt a method acting módszeréhez és annak érdekében, hogy még élethűbben formálhassa meg alkoholista karakterét, egy ténylegesen az italtól függő színésszel töltött együtt sok időt. Az alakítás meghozta Cage-nek az egyetlen Oscar-díját, amit egy újabb jelölés követett, a 2003-as Adaptáció főszerepéért. Ebben Charlie Kaufman tudatának két teljesen ellentétes felét kellett megformálnia, ennek érdekében Cage összegörnyedve, merev háttal játszotta el a szorongó, depressziós Charlie-t, és egyenes háttal, lazán a magabiztos ikertestvérét, Donaldot (aki persze a valóságban csak Kaufman személyiségének egy másik aspektusa). Cage máskor is hajlamos volt rá, hogy teljesen elmerüljön szerepeiben, a Corelli kapitány mandolinja címszerepre kedvéért a nulláról tanult meg játszani mandolinon, az A szellemlovas spirituális aspektusát pedig úgy ragadta meg, hogy sok sámánhoz hasonlóan fehér-feketére festette az arcát.\n\nA két Oscar-jelölés közötti időszak viszont sokat lendített az ismertségén akciósztárként is, A Szikla, a Con Air - A fegyencjárat, illetve az Ál/Arc pedig pénzügyileg is jövedelmezőnek bizonyultak. Ezt a sort pedig folytatni is tudta, a 2006-os World Trade Center mellett jól teljesített a 2004-es A nemzet aranya, és három évvel később, Titkok könyve alcímmel megjelent folytatása is, és ugyan alapvetően nem akciófilmről van szó, de a Fegyvernepperben is elsüvít néhány lövedék, szintén sikeres fejezetet írva a korszakhoz, ami Cage mainstream sikerének talán a csúcsát jelentette. És ugyan a 2000-es Tolvajtempó sokak magyar tévénéző számára hiányozhat a fenti listából, az autólopásról szóló akciófilm pénzügyileg és kritikailag is bukásnak számított a korában.', '');
 
 -- --------------------------------------------------------
 
@@ -68,31 +69,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `username`, `email`, `contactInfo`, `items`, `itemName`, `totalCost`) VALUES
-(67, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,93]}', '', 0),
-(68, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,95]}', '', 0),
-(69, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,93,95]}', '', 0),
-(70, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,95]}', '', 3254),
-(71, 65, 'normal', 'norm@gmail.com', '{\"contactInfos\":{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}}', '{\"products\":[93,93,93]}', '', 96),
-(72, 65, 'normal', 'norm@gmail.com', '{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}', '[93,93]', '', 64),
-(73, 65, 'normal', 'norm@gmail.com', '{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}', '[93,93,93,95,93,93]', '[\"asd\",\"asd\",\"asd\",\"asd\",\"asd\",\"asd\"]', 3382),
-(74, 65, 'normal', 'norm@gmail.com', '{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}', '[96,95]', '[\"uj\",\"asd\"]', 3254),
-(75, 70, 'ujvok', 'asd', '{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}', '[93,93]', '[\"asd\",\"asd\"]', 64),
-(76, 73, 'ujfelh', 'ujemail@gmail.com', '{\"address\":\"f\",\"firstname\":\"f\",\"lastname\":\"f\",\"cardNumber\":\"f\",\"email\":\"f\"}', '[93,93]', '[\"uj93\",\"uj93\"]', 64),
-(77, 73, 'ujfelh', 'ujemail@gmail.com', '{\"address\":\"asdddd\",\"firstname\":\"fas\",\"lastname\":\"asd\",\"cardNumber\":\"asd1234123\"}', '[93,93]', '[\"uj93\",\"uj93\"]', 64),
-(78, 84, 'ujfelhasznalo', 'asd@gmail.com', '{\"address\":\"asd123asd\",\"firstname\":\"asd\",\"lastname\":\"asd\",\"cardNumber\":\"asdsasda123\"}', '[100,100]', '[\"sadasdsadads\",\"sadasdsadads\"]', 2147483647),
-(79, 84, 'ujfelhasznalo', 'asd@gmail.com', '{\"address\":\"asdasdasdasdasd\",\"firstname\":\"asdasda\",\"lastname\":\"asdasdasdasd\",\"cardNumber\":\"asdasdasdads\"}', '[99,99,99,99,99]', '[\"asdsd\",\"asdsd\",\"asdsd\",\"asdsd\",\"asdsd\"]', 116160),
-(80, 87, 'normalfelhasznalo', 'a@gmail.com', '{\"address\":\"asdddd\",\"firstname\":\"asd\",\"lastname\":\"asd\",\"cardNumber\":\"asdasd21321\"}', '[108,108,107]', '[\"ujtermek2\",\"ujtermek2\",\"ujas\"]', 325332312),
-(81, 87, 'normalfelhasznalo', 'a@gmail.com', '{\"address\":\"asadsasdáááá\",\"firstname\":\"dasdasáááá\",\"lastname\":\"adssdáá\",\"cardNumber\":\"asdasd213123123112asd\"}', '[107,107,107]', '[\"ujas\",\"ujas\",\"ujas\"]', 963996936),
-(82, 125, 'asddad23321', 'asdasd32123@g.com', '{\"address\":\"asdadsadsasdads\",\"firstname\":\"daasdsdasdasd\",\"lastname\":\"sdaasdasdasdads\",\"cardNumber\":\"asdasdasdadsadsasd231\"}', '[110,110,110]', '[\"kategoriastermek\",\"kategoriastermek\",\"kategoriastermek\"]', 2147483647),
-(83, 126, 'tesztelek', 'teszt@gmail.com', '{\"address\":\"asdasdasdasdasd\",\"firstname\":\"dsaasdasdasd\",\"lastname\":\"asdasdasdads\",\"cardNumber\":\"sadsdaasdadsadsasdasd\"}', '[110,110]', '[\"kategoriastermekas\",\"kategoriastermekas\"]', 2147483647),
-(84, 126, 'tesztelek', 'teszt@gmail.com', '{\"address\":\"asdasdadsasd\",\"firstname\":\"dasdasadsasd\",\"lastname\":\"asdadsadsads\",\"cardNumber\":\"dasadsadsadsdasasad\"}', '[110,110,111]', '[\"kategoriastermekas\",\"kategoriastermekas\",\"ujkatsercss\"]', 2147483647),
-(85, 126, 'tesztelek', 'teszt@gmail.com', '{\"address\":\"asdasdasdads\",\"firstname\":\"sdadasasd\",\"lastname\":\"dasadsads\",\"cardNumber\":\"adsadsadsadsadsasd\"}', '[110,110,110]', '[\"kategoriastermekas\",\"kategoriastermekas\",\"kategoriastermekas\"]', 2147483647),
-(86, 136, 'dsasdaasd', 'dasadsasdsd@g.com', '{\"address\":\"asdasdasdasd\",\"firstname\":\"dassdaasdasd\",\"lastname\":\"dasasdasdasd\",\"cardNumber\":\"asdasdasdasdasda\"}', '[111,111]', '[\"ujnecv\",\"ujnecv\"]', 40000),
-(88, 2, 'postmantest', 'postmantest@postmantest.com', '{\"firstname\":\"postmantest\",\"lastname\":\"postmantest\",\"address\":\"postmantest\",\"cardNumber\":\"postmantest\"}', '[10,10]', '[\"postmantest\",\"postmantest\"]', 999),
-(89, 146, 'dwasdsadasddasd', 'dasasdadsads@g.com', '{\"address\":\"asddasasd sdaasdasd312313.,\",\"firstname\":\"asddasasdasd\",\"lastname\":\"asdasdasdasd\",\"cardNumber\":\"sdadasdasasdda -\"}', '[112,112]', '[\"test\",\"test\"]', 246),
-(90, 2, 'postmantest', 'postmantest@postmantest.com', '{\"firstname\":\"postmantest\",\"lastname\":\"postmantest\",\"address\":\"postmantest\",\"cardNumber\":\"postmantest\"}', '[10,10]', '[\"postmantest\",\"postmantest\"]', 999),
-(91, 2, 'postmantest', 'postmantest@postmantest.com', '{\"firstname\":\"postmantest\",\"lastname\":\"postmantest\",\"address\":\"postmantest\",\"cardNumber\":\"postmantest\"}', '[10,10]', '[\"postmantest\",\"postmantest\"]', 999),
-(92, 151, 'Levialap', 'levlev333@gmail.com', '{\"address\":\"4400, Nyíregyháza tulipán-köz 7.\",\"firstname\":\"Lévai\",\"lastname\":\"Levente\",\"cardNumber\":\"1111222233334444\"}', '[131,136,141]', '[\"SAMSUNG UE 55 TU7022KXXH Crystal UHD 4K Smart TV\",\"HP 250 G8 27K19EA laptop (15,6\\\" FHD/Celeron/4GB/256 GB SSD/Win10H)\",\"APPLE iPhone 13 Pro Max Grafit 128 GB Kártyafüggetlen Okostelefon\"]', 740997);
+(93, 152, 'Jani', 'Jani@gmail.com', '{\"address\":\"4400, Nyíregyháza Nagy u. 7/14.\",\"firstname\":\"Móricz\",\"lastname\":\"János\",\"cardNumber\":\"1547125617852485\"}', '[141]', '[\"APPLE iPhone 13 Pro Max Grafit 128 GB Kártyafüggetlen Okostelefon\"]', 449999),
+(94, 153, 'Levi', 'levi@gmail.com', '{\"address\":\"4400, Nyíregyháza Kiss u. 69\",\"firstname\":\"Lévai\",\"lastname\":\"Levente\",\"cardNumber\":\"1452768525367958\"}', '[131,138,142]', '[\"SAMSUNG UE 55 TU7022KXXH Crystal UHD 4K Smart TV\",\"MSI Katana GF66 11UE 9S7-158112-411 Gamer laptop (15,6\\\" FHD/Core i5/16GB/512 GB SSD/RTX3060 6GB/NoOS)\",\"XIAOMI REDMI NOTE 10 PRO 6/128 GB DualSIM Kék Kártyafüggetlen Okostelefon\"]', 699987),
+(95, 153, 'Levi', 'levi@gmail.com', '{\"address\":\"4400, Nyíregyháza Kiss u. 69.\",\"firstname\":\"Lévai\",\"lastname\":\"Levente\",\"cardNumber\":\"1452768525367958\"}', '[136,140]', '[\"HP 250 G8 27K19EA laptop (15,6\\\" FHD/Celeron/4GB/256 GB SSD/Win10H)\",\"XIAOMI REDMI NOTE 10 5G 4/128 GB DualSIM Kék Kártyafüggetlen Okostelefon\"]', 208998);
 
 -- --------------------------------------------------------
 
@@ -147,28 +126,12 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `username`, `rating`, `description`) VALUES
-(55, 49, 93, 'asd', 4, 'vel'),
-(57, 53, 93, 'rtz', 3, 'asd'),
-(58, 53, 93, 'rtz', 4, 'asd'),
-(61, 58, 95, 'fgh', 5, 'jó féle'),
-(62, 65, 97, 'normal', -2147483648, 'dasdas'),
-(63, 73, 93, 'ujfelh', 3, 'asd'),
-(64, 73, 93, 'ujfelh', 0, ''),
-(65, 73, 93, 'ujfelh', 1, 'asd'),
-(67, 84, 99, 'ujfelhasznalo', 1, 'asd'),
-(68, 87, 108, 'normalfelhasznalo', 2, 'asd'),
-(70, 136, 110, 'dsasdaasd', 2, 'asddasdasasd'),
-(71, 2, 2, 'normal', 2, 'postmantest'),
-(73, 2, 2, 'normal', 2, 'postmantest'),
-(74, 2, 2, 'normal', 2, 'postmantest'),
-(75, 146, 112, 'dwasdsadasddasd', 1, 'asddasads- dasadsads++!'),
-(76, 2, 2, 'normal', 2, 'postmantest'),
-(77, 2, 2, 'normal', 2, 'postmantest'),
-(78, 2, 2, 'normal', 2, 'postmantest'),
-(79, 2, 2, 'normal', 2, 'postmantest'),
-(80, 2, 2, 'normal', 2, 'postmantest'),
-(81, 2, 2, 'normal', 2, 'postmantest'),
-(82, 151, 131, 'Levialap', 4, 'Jó a képminősége. Hiányolom a falraszerelhetőség lehetőségét.');
+(83, 152, 141, 'Jani', 5, 'Nagyon jó telefon. Jó a fényképek felbontása.'),
+(84, 152, 134, 'Jani', 3, 'Nem a legjobb TV de az árához képest elfogadható.'),
+(85, 152, 131, 'Jani', 4, 'Az egyetlen hibája, hogy nem túl gyakran nézek TV-t.'),
+(86, 153, 131, 'Levi', 5, 'Minden funkciója kiválóan működik.'),
+(87, 153, 138, 'Levi', 5, 'Minden játék kiválóan fut FPS vesztész nélkül.'),
+(88, 153, 142, 'Levi', 4, 'Árkategóriában egy nagyon jó telefon.');
 
 -- --------------------------------------------------------
 
@@ -189,25 +152,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`) VALUES
-(132, 'testtest', 't@g.com', '$2a$10$kJByi0IaYfkANpE4SjEEC.f0HBQB0miexF8U9jZ7wkTbDNzTkO6ya', 'normal'),
-(133, 'tessztelek', 'ts@g.com', '$2a$10$0yZJxjaM2GZ3ZEAl39X6neTz/ZGbsl1EYAm2gyUMtJTTSdgYZTxKi', 'normal'),
-(134, 'normal123', 'asdasd@gmail.com', '$2a$10$h6Ie8cRw90SOVdr4kJje3utjomarubfrXoc7VDqwLH3BDixPZsqgu', 'normal'),
-(135, 'zertzu', 'asd@g.com', '$2a$10$JJWhWgf2PIWK5HvfEIHO1u00qL4yTUGMRdETqV9b4iZhBiDf7jn7S', 'normal'),
-(136, 'dsasdaasd', 'dasadsasdsd@g.com', '$2a$10$fQLWGlEvKAl9Resg7j1.Behda8El/rIIX.Zib1AIIzOYTcJN8smVy', 'normal'),
-(137, 'postmantest', 'postmantest@postmantest.com', '$2a$10$H4nUmh6ksLnq1XBqBIqeh.W84gpYd4cea83rztKcdcfBoD/SG0CjK', 'normal'),
-(139, 'postmantest123', 'postmantest123@postmantest.com', '$2a$10$E0Oi3ry8RfyDmsj8PmHsZuZNmx95P/Q/dzfwONvHWwXKcCj9yGn5i', 'normal'),
-(140, 'asdasdasasdas', 'asddasasdasdasdasd@g.com', '$2a$10$y84FehNnAciO/iEgzEco4uVueI/3Fg82LA9PartbyAZz8fbwoL7kW', 'normal'),
-(141, 'ujtest', 'asdasdasd@g.com', '$2a$10$1.tFKFjY6rHptlfD2GDPPO4hQeXQC.CzLJTbe25dvQoYcn9Q14./W', 'normal'),
-(142, 'dasasdasddas', 'asdasdadsasd@g.com', '$2a$10$B04bdlGEB/loFMKeqBZhY.F7MeufttAMuy6H/bgG0DeaP2ZdfmUVq', 'normal'),
-(143, 'admin123', 'adm@g.com', '$2a$10$q5tY95dfUO4Nk0FLtewbhuX.lTi8W4QGthC5tfiWN/ZTUGUFFvl6C', 'admin'),
-(144, 'testelek123', 'te@g.com', '$2a$10$nnIWGljOR00ggX5c8inhJutW6ersx915n.YT38qu4BeleHSi9vOLm', 'admin'),
-(145, 'asddasads', 'asdasdasddasasd@g.vom', '$2a$10$c/DTQPk9KRpSHU.x0nTj2uHo9uvrFJgi8oolz2Je8JlXJbeCetLk.', 'normal'),
-(146, 'dwasdsadasddasd', 'dasasdadsads@g.com', '$2a$10$4XUesiPqJpp6Gbti0oITjuH7j5hD7OsDoGzEOPKpN1.bdxidUBZ6a', 'normal'),
-(147, 'dasasdasd', 'asdadsadsads@g.com', '$2a$10$ls0FGIO0a/1iwOKic08YjuOPEH2rlMctoVxRQEewKIMRD4.o3AaWq', 'normal'),
-(148, 'asdsaads', 'asdasdads@g.com', '$2a$10$ZizkA8RlA1i3ilZc87kTzOnwWCY9c6b4FgTA7pHYg1LzOeZGn8rdS', 'normal'),
-(149, 'dasdasadsdasadsasas', 'dasasddasasd@g.com', '$2a$10$fOum4iGHt9B5C8IBKzb7u./TNDNBtQx/4hTX8PBcPy1RvGKk88TpC', 'normal'),
-(150, 'Adminlevi', 'levlev324@gmail.com', '$2a$10$YxKN5dw56P7Dyw/c8kDAk.by9sM.AfZno5TTuL5QEYS2ij1JK03ii', 'admin'),
-(151, 'Levialap', 'levlev333@gmail.com', '$2a$10$dTEU5AIYZeltW9Ka8QoolubXq0H8CboH5XA0cU57MQ49AdXNRtheC', 'normal');
+(152, 'Jani', 'Jani@gmail.com', '$2a$10$BC9sDuZK4S93kRppWv7tDOWJotq2aUlo6HvbCMYcssoFJhkOMeMQq', 'normal'),
+(153, 'Levi', 'levi@gmail.com', '$2a$10$6bZxlRlnPUsGjhHwq3gJcutiv34nB5Y5aOAE8Rs0dvCIFiswZ8g2m', 'normal'),
+(154, 'Admin1', 'admin1@techshop.hu', '$2a$10$VB83ncawpLH6vv8PgQ4PSeKuMKMBTOVtA7r9Ixic8zOOnLMYCbmhC', 'admin'),
+(155, 'Admin2', 'admin2@techshop.hu', '$2a$10$kBjpAwza5tUebeQU1OpPdu1NwPp8/0PAY8iJnuUmg8AS3fVz/fY6e', 'admin');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -255,13 +203,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT a táblához `entries`
 --
 ALTER TABLE `entries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT a táblához `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT a táblához `product`
@@ -273,13 +221,13 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT a táblához `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT a táblához `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

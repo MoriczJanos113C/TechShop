@@ -32,7 +32,7 @@ export function EntriesPage(){
             
         if(!String(form.title)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!]{3,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
         )&& form.title.trim() != "")
         setTitleError("Nem megfelelő bejegyzés cím")
         else{
@@ -41,7 +41,7 @@ export function EntriesPage(){
 
         if(!String(form.description)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!]{5,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő bejegyzés leírás")
         else{
@@ -114,7 +114,9 @@ export function EntriesPage(){
                                             <Form.Control className="input"
                                                 onChange={updateFormValue("description")}
                                                 value={form.description} 
-                                                placeholder="Leírás" />
+                                                placeholder="Leírás"
+                                                type="text" as="textarea" 
+                                            rows={10}/>
                                     </Form.Group>
                                     {descriptionError && <p>{descriptionError}</p>}
                                     <Button className="reviewBtn" type="submit">
