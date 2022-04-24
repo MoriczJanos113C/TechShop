@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2022. Ápr 23. 16:50
--- Kiszolgáló verziója: 10.4.22-MariaDB
--- PHP verzió: 8.1.2
+-- Létrehozás ideje: 2022. Ápr 24. 15:23
+-- Kiszolgáló verziója: 10.4.17-MariaDB
+-- PHP verzió: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,8 +44,6 @@ CREATE TABLE `entries` (
 
 INSERT INTO `entries` (`id`, `user_id`, `username`, `title`, `description`, `image`) VALUES
 (52, 2, 'postmantest', 'postmantest', 'postmantest', ''),
-(53, 144, 'testelek123', 'asda123', '112313 asddasdas', ''),
-(54, 2, 'postmantest', 'postmantest', 'postmantest', ''),
 (55, 2, 'postmantest', 'postmantest', 'postmantest', '');
 
 -- --------------------------------------------------------
@@ -93,7 +91,8 @@ INSERT INTO `orders` (`id`, `user_id`, `username`, `email`, `contactInfo`, `item
 (88, 2, 'postmantest', 'postmantest@postmantest.com', '{\"firstname\":\"postmantest\",\"lastname\":\"postmantest\",\"address\":\"postmantest\",\"cardNumber\":\"postmantest\"}', '[10,10]', '[\"postmantest\",\"postmantest\"]', 999),
 (89, 146, 'dwasdsadasddasd', 'dasasdadsads@g.com', '{\"address\":\"asddasasd sdaasdasd312313.,\",\"firstname\":\"asddasasdasd\",\"lastname\":\"asdasdasdasd\",\"cardNumber\":\"sdadasdasasdda -\"}', '[112,112]', '[\"test\",\"test\"]', 246),
 (90, 2, 'postmantest', 'postmantest@postmantest.com', '{\"firstname\":\"postmantest\",\"lastname\":\"postmantest\",\"address\":\"postmantest\",\"cardNumber\":\"postmantest\"}', '[10,10]', '[\"postmantest\",\"postmantest\"]', 999),
-(91, 2, 'postmantest', 'postmantest@postmantest.com', '{\"firstname\":\"postmantest\",\"lastname\":\"postmantest\",\"address\":\"postmantest\",\"cardNumber\":\"postmantest\"}', '[10,10]', '[\"postmantest\",\"postmantest\"]', 999);
+(91, 2, 'postmantest', 'postmantest@postmantest.com', '{\"firstname\":\"postmantest\",\"lastname\":\"postmantest\",\"address\":\"postmantest\",\"cardNumber\":\"postmantest\"}', '[10,10]', '[\"postmantest\",\"postmantest\"]', 999),
+(92, 151, 'Levialap', 'levlev333@gmail.com', '{\"address\":\"4400, Nyíregyháza tulipán-köz 7.\",\"firstname\":\"Lévai\",\"lastname\":\"Levente\",\"cardNumber\":\"1111222233334444\"}', '[131,136,141]', '[\"SAMSUNG UE 55 TU7022KXXH Crystal UHD 4K Smart TV\",\"HP 250 G8 27K19EA laptop (15,6\\\" FHD/Celeron/4GB/256 GB SSD/Win10H)\",\"APPLE iPhone 13 Pro Max Grafit 128 GB Kártyafüggetlen Okostelefon\"]', 740997);
 
 -- --------------------------------------------------------
 
@@ -105,8 +104,8 @@ CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `cost` int(11) NOT NULL,
   `category` varchar(250) COLLATE utf8_hungarian_ci NOT NULL,
-  `name` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
-  `description` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
+  `name` varchar(500) COLLATE utf8_hungarian_ci NOT NULL,
+  `description` varchar(500) COLLATE utf8_hungarian_ci NOT NULL,
   `image` mediumtext COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
@@ -115,24 +114,18 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `cost`, `category`, `name`, `description`, `image`) VALUES
-(111, 1000099, 'tablagép', 'postManPutTest123', 'postManPutTest', 'VykBUuHZrc3do1mhNxvh1.jpeg'),
-(112, 123, 'asdasdadsads', 'testelek1232312321231132312', 'sdasdadasasddas    asd  ', 'n6yrwHfCqauuJE94LuqZd.jpeg'),
-(113, 213132123, 'asdasdasddas', 'sdadasd', 'sdaasdasdasd', 'AZ5m7Ed2UJN3QcMKplq3g.jpeg'),
-(114, 2147483647, '312213312132dsaasddsa', 'sdadasasdasd', 'asdasdasdasdads', 'wPIhkax_8Mybcgh-hssYQ.jpeg'),
-(115, 123, 'asdasd', 'test123', 'asddas asdasd', 'ufl9MWusmZ6qji97RNZI1.jpeg'),
-(116, 213132, 'asdasdasd', 'dsaasddasdas', 'dasdasasdads', 'fLRyDUQbg_jkNYOF_WsCc.jpeg'),
-(117, 2147483647, 'asdasdadsads', 'dssdadas', 'sdaadsasdsadasd', 'vVYpYsE9dm7aQXvHIFuK5.jpeg'),
-(119, 2147483647, 'dasasdasdadsads', 'dassdadasasda', 'dsaasdasddsaasd', 'Jl-oaGRzkzuA9McGZ06Id.jpeg'),
-(120, 2147483647, 'dasadsasdasdads', 'ujtestvvvv', 'dasasdasdasdasd', 'YCAHVxZwxPMJaW_LMCZ3G.jpeg'),
-(121, 1000099, 'tablagép', 'postManPostTest123', 'postManPostTest123', 'MVjSRD0SJUrpBqska0xYl.jpeg'),
-(123, 1000099, 'tablagép', 'postManPostTest123', 'postManPostTest123', 'TZTthJKgB6i_H_VxqCgZ3.jpeg'),
-(124, 1000099, 'tablagép', 'postManPostTest123', 'postManPostTest123', 'BgrqbjRLAqzycph-cue8z.jpeg'),
-(125, 1000099, 'tablagép', 'postManPostTest123', 'postManPostTest123', '_k0R4ftb0HlSCj30p7gec.jpeg'),
-(126, 1000099, 'tablagép', 'postManPostTest123', 'postManPostTest123', 'AfZrsOf-PeNbZATCyc8Vf.jpeg'),
-(127, 1000099, 'tablagép', 'testelek123', 'postManPostTest123', 'NHr1uP_bLQVsqQprGDVS4.jpeg'),
-(128, 1000099, 'tablagép', 'postManPostTest123', 'postManPostTest123', 'xn884RAeY_IH-JLUwEqw5.jpeg'),
-(129, 32131312, 'sdaasdasdads', 'dsasddas', 'sdaadsasdasd', 'tXVNhjEiw9SH-Woh_Mm1I.jpeg'),
-(130, 321132321, 'saddasdasasd', 'ujtermel0423', 'asddasdasasd', '871uXBKpO1dH8bYwTSW74.jpeg');
+(131, 154999, 'Televízió', 'SAMSUNG UE 55 TU7022KXXH Crystal UHD 4K Smart TV', 'Képernyő átmérő (cm / inch): 138 cm / 55 col\r\nFelbontás: 3840 x 2160 pixel\r\nKijelző típusa: LED SMART TV: Igen\r\nSzín: Fekete\r\nCsatlakozók: 2x HDMI, USB, Digitális audio kimenet (optikai), CI slot Termék típusa: UHD Smart LED Televízió', 'Al6QgIiXe4XlERZZUb2i2.png'),
+(132, 79887, 'Televízió', 'STRONG 42FC5433U FHD Android Smart LED televízió, 105cm', 'Képernyő átmérő (cm / inch): 105 cm / 42 col\r\nFelbontás: 1920 x 1080 pixel\r\nKijelző típusa: LED SMART TV: Igen\r\nSzín: Fekete, Ezüst\r\nBluetooth: Igen\r\nCsatlakozók: 2x HDMI, 2x USB, AV bemenet, RJ-45, Digitális audio kimenet (optikai), Fejhallgató kimenet, CI slot', 'm6aiyClGGvCOhuLaJPBec.png'),
+(133, 84999, 'Televízió', 'SAMSUNG UE 32 T4302AKXXH SMART LED Televízió, 80 cm', 'Képernyő átmérő (cm / inch): 80 cm / 32 col\r\nFelbontás: 1366 x 768 pixel\r\nKijelző típusa: LED\r\nSMART TV: Igen\r\nSzín: Fekete\r\nCsatlakozók: 2x HDMI, 1x USB, Komponens bemenet, Kompozit bemenet, RJ-45, Digitális audio kimenet (optikai), Ci slot\r\nTermék típusa: LED Tv', 'u1POu8l5H8RbiE8dU7ml-.png'),
+(134, 54997, 'Televízió', 'OK. ODL 32721HH-DB HD Led televízió, 81 cm', 'Képernyő átmérő (cm / inch): 81.28 cm / 32 col\r\nFelbontás: 1366 x 768 pixel\r\nKijelző típusa: LED\r\nSMART TV: Nem\r\nSzín: Fekete\r\nCsatlakozók: 2x HDMI, USB, Kompozit bemenet, Digitális audio kimenet (koax), Fejhallgató kimenet, PC audio bemenet\r\nTermék típusa: LED Televízió', '4yTkYsiwYRROUeHggxulv.png'),
+(135, 379898, 'Notebook', 'APPLE MacBook Air 2020 13\" Retina asztroszürke Apple M1 (8C/7C)/8GB/256 GB SSD (mgn63mg/a)', 'Processzor: Apple® M1 processzor\r\nKépernyő átmérő (cm / inch): 33.02 cm / 13 col\r\nFelbontás: 2560 x 1600 pixel\r\nMemóriaméret: 8 GB\r\nMerevlemez kapacitása: 256 GB\r\nVideókártya: Apple M1 (hétmagos)\r\nOperációs rendszer: macOS', 'mTw2-V393fDso9PGviXor.png'),
+(136, 135999, 'Laptop', 'HP 250 G8 27K19EA laptop (15,6\" FHD/Celeron/4GB/256 GB SSD/Win10H)', 'Processzor: Intel® Celeron® Processor N4020\r\nKépernyő átmérő (cm / inch): 39.6 cm / 15.6 col\r\nFelbontás: 1920 x 1080 pixel\r\nMemóriaméret: 4 GB\r\nMerevlemez kapacitása: 256 GB\r\nVideókártya: Intel UHD Graphics\r\nOperációs rendszer: Windows 10 Home', '1Zq659Zsoc-0_cgrH-aAB.png'),
+(137, 179999, 'Laptop', 'ASUS VivoBook X515FA-BQ060T Szürke laptop (15,6\" FHD/Core i3/8GB/256 GB SSD/Win10H)', 'Processzor: Intel® Core™ i3-10110U processzor\r\nKépernyő átmérő (cm / inch): 39.6 cm / 15.6 col\r\nFelbontás: 1920 x 1080 pixel\r\nMemóriaméret: 8 GB\r\nMerevlemez kapacitása: 256 GB\r\nVideókártya: Intel UHD Graphics\r\nOperációs rendszer: Windows 10 Home', 'vE27_HcCtoeO5_iRwIiHF.png'),
+(138, 439989, 'Laptop', 'MSI Katana GF66 11UE 9S7-158112-411 Gamer laptop (15,6\" FHD/Core i5/16GB/512 GB SSD/RTX3060 6GB/NoOS)', 'Processzor: Intel® Core™ i5-11400H processzor\r\nKépernyő átmérő (cm / inch): 39.6 cm / 15.6 col\r\nFelbontás: 1920 x 1080 pixel\r\nMemóriaméret: 16 GB\r\nMerevlemez kapacitása: 512 GB\r\nVideókártya: NVIDIA GeForce RTX 3060\r\nVideókártya memória: 6 GB', 'FzB-QDahRrRSioid_qs-7.png'),
+(139, 50998, 'Okostelefon', 'SAMSUNG GALAXY A12 3/32 GB DualSIM Kék Kártyafüggetlen Okostelefon ( SM-A127 )', 'Szín: Kék\r\nTermék típusa: Okostelefon\r\nOperációs rendszer: Android 10\r\nProcesszor: Exynos 850, nyolcmagos\r\nProcesszor sebesség: 4x2.0 GHz Cortex-A55 & 4x2.0 GHz Cortex-A55\r\nKapacitás: 32 GB\r\nMemóriakártya foglalat: Igen', '8pFxsaYFxtA7_lLNUv__j.png'),
+(140, 72999, 'Okostelefon', 'XIAOMI REDMI NOTE 10 5G 4/128 GB DualSIM Kék Kártyafüggetlen Okostelefon', 'Processzor: MediaTek MT6833 Dimensity 700 5G, nyolcmagos\r\nKapacitás: 128 GB\r\nMemóriaméret: 4 GB\r\nKijelző mérete cm / inch: 16.51 cm / 6.5 col\r\nFelbontás (Ma x Szé): 2400 x 1080 pixel\r\nDual SIM: Igen\r\nUjjlenyomat olvasó: Igen', 'UE5HMoXWWx_GylaGU95Bx.png'),
+(141, 449999, 'Okostelefon', 'APPLE iPhone 13 Pro Max Grafit 128 GB Kártyafüggetlen Okostelefon', 'Szín: Szürke (Grafit)\r\nTermék típusa: Okostelefon\r\nOperációs rendszer: iOS 15\r\nProcesszor: Apple A15 Bionic, hatmagos\r\nKapacitás: 128 GB\r\nMemóriakártya foglalat: Nem\r\nMemóriaméret: 6 GB', 'd52sIiu0t0sWMdEbVMXl8.png'),
+(142, 104999, 'Okostelefon', 'XIAOMI REDMI NOTE 10 PRO 6/128 GB DualSIM Kék Kártyafüggetlen Okostelefon', 'Processzor: Qualcomm SM7150 Snapdragon 732G, nyolcmagos\r\nKapacitás: 128 GB\r\nMemóriaméret: 6 GB\r\nKijelző mérete cm / inch: 16.33 cm / 6.67 col\r\nFelbontás (Ma x Szé): 2400 x 1080 pixel\r\nDual SIM: Igen\r\nUjjlenyomat olvasó: Igen', 'bqXWBy2yA3ZeYHOLTJxFT.png');
 
 -- --------------------------------------------------------
 
@@ -174,7 +167,8 @@ INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `username`, `rating`, `des
 (78, 2, 2, 'normal', 2, 'postmantest'),
 (79, 2, 2, 'normal', 2, 'postmantest'),
 (80, 2, 2, 'normal', 2, 'postmantest'),
-(81, 2, 2, 'normal', 2, 'postmantest');
+(81, 2, 2, 'normal', 2, 'postmantest'),
+(82, 151, 131, 'Levialap', 4, 'Jó a képminősége. Hiányolom a falraszerelhetőség lehetőségét.');
 
 -- --------------------------------------------------------
 
@@ -211,7 +205,9 @@ INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`) VALUES
 (146, 'dwasdsadasddasd', 'dasasdadsads@g.com', '$2a$10$4XUesiPqJpp6Gbti0oITjuH7j5hD7OsDoGzEOPKpN1.bdxidUBZ6a', 'normal'),
 (147, 'dasasdasd', 'asdadsadsads@g.com', '$2a$10$ls0FGIO0a/1iwOKic08YjuOPEH2rlMctoVxRQEewKIMRD4.o3AaWq', 'normal'),
 (148, 'asdsaads', 'asdasdads@g.com', '$2a$10$ZizkA8RlA1i3ilZc87kTzOnwWCY9c6b4FgTA7pHYg1LzOeZGn8rdS', 'normal'),
-(149, 'dasdasadsdasadsasas', 'dasasddasasd@g.com', '$2a$10$fOum4iGHt9B5C8IBKzb7u./TNDNBtQx/4hTX8PBcPy1RvGKk88TpC', 'normal');
+(149, 'dasdasadsdasadsasas', 'dasasddasasd@g.com', '$2a$10$fOum4iGHt9B5C8IBKzb7u./TNDNBtQx/4hTX8PBcPy1RvGKk88TpC', 'normal'),
+(150, 'Adminlevi', 'levlev324@gmail.com', '$2a$10$YxKN5dw56P7Dyw/c8kDAk.by9sM.AfZno5TTuL5QEYS2ij1JK03ii', 'admin'),
+(151, 'Levialap', 'levlev333@gmail.com', '$2a$10$dTEU5AIYZeltW9Ka8QoolubXq0H8CboH5XA0cU57MQ49AdXNRtheC', 'normal');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -265,25 +261,25 @@ ALTER TABLE `entries`
 -- AUTO_INCREMENT a táblához `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT a táblához `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
 --
 -- AUTO_INCREMENT a táblához `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT a táblához `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
