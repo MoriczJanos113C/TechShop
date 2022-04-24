@@ -30,7 +30,7 @@ export function Header() {
 
                 {isAdmin && <Link className="link" to="/orders">Rendelések kezelése</Link>}
 
-                {isAdmin && (<NavDropdown title="Termékek" id="basic-nav-dropdown">
+                {isAdmin && (<NavDropdown className="dropdown" title="Termékek" id="basic-nav-dropdown">
                     <NavDropdown.Item>
                         <Link className="link" to="/products">Termékek kezelése</Link>
                     </NavDropdown.Item>

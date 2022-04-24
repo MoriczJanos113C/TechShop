@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Form, ToastContainer, Toast } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ShoppingCartContext, UserContext } from '../App';
-import { useIsAdmin } from "../hooks/useIsAdmin";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 import "../style/ProductsPage.css"
 import "../style/Toast.css"
@@ -13,14 +12,13 @@ export function ProductsPage() {
     const [products, setProducts] = useState([]);
 
 
-    const NUMBER_OF_COLUMNS = 4;
+    const NUMBER_OF_COLUMNS = 12;
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [search, setSearch] = useState("");
-    const [productsByCat, setProductsByCat] = useState([]);
     const [showToast, setShowToast] = useState(false);
     const isLoggedIn = useIsLoggedIn();
     const { user } = useContext(UserContext);
-    const isAdmin = useIsAdmin();
+    
 
     useEffect(() => {
         const fetchProducts = async () => {

@@ -21,6 +21,12 @@
     font-size: large;
 }
 
+.dropdown {
+    color: black;
+    text-decoration: none;
+    font-size: large;
+}
+
 .link:hover {
     color: #4B9AFF;
     text-decoration: none;

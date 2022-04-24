@@ -134,7 +134,7 @@ export function EditProduct(){
         
         if(!String(form.description)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
+            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]{10,}$/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő leírás")
         else{

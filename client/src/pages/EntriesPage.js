@@ -41,7 +41,7 @@ export function EntriesPage(){
 
         if(!String(form.description)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!]{3,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!]{5,}$/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő bejegyzés leírás")
         else{
