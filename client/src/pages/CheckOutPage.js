@@ -52,7 +52,7 @@ export function CheckOutPage(){
             
         if(!String(form.address)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 .,/]{6,}$/
+            /^[a-zA-z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!]{4,}$/
         )&& form.address.trim() != "")
         setAddressError("Nem megfelelő lakcím")
         else{

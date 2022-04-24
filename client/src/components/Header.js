@@ -41,6 +41,7 @@ export function Header() {
                 {!isLoggedIn && <Link className="link" to="/">Bejelentkezés</Link>}
                 {!isLoggedIn && <Link className="link" to="/register">Regisztráció</Link>}
                 <Link className="link" to="/entries">Bejegyzések</Link>
+                <Link className="link" to="/contacts">Elérhetőségek</Link>
 
                 {!isAdmin && isLoggedIn && cart.length > 0 && <Link className="link" to="/cart">Kosár {cart.length}</Link>}
                 {isLoggedIn && <Link className="logOut" to="/logout">Kijelentkezés</Link>}

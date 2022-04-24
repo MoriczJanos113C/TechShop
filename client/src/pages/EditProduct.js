@@ -134,9 +134,9 @@ export function EditProduct(){
         
         if(!String(form.description)
         .match(
-            /^[a-zA-z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!]{10,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
         )&& form.description.trim() != "")
-        setDescriptionError("Nem megfelelő vélemény")
+        setDescriptionError("Nem megfelelő leírás")
         else{
             setDescriptionError("");
         }

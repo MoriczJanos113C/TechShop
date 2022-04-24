@@ -18,6 +18,7 @@ import { OrdersPage } from './pages/OrdersPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { EntriesPage } from './pages/EntriesPage';
 import { EditEntries } from './pages/EditEntries';
+import { ContactsPage } from './pages/ContactsPage';
 
 export const AppRouter = () => {
 
@@ -55,6 +56,9 @@ export const AppRouter = () => {
 
               {isAdmin && (<Route path="/entries/:id" element={<EditEntries/>}/>)}
               <Route path="/entries" element={<EntriesPage />}/>
+
+              {isAdmin && (<Route path="/contacts" element={<ContactsPage/>}/>)}
+              <Route path="/contacts" element={<ContactsPage />}/>
               
               
               
