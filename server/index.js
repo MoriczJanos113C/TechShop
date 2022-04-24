@@ -103,7 +103,6 @@ app.get('/products/product/:id', (req, res)=> {
 app.delete('/deleteProduct/:id', (req, res) => {
     db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
-            console.log(result)
             res.send({message: "Deleted a product"});
         }else{
             res.send({message: "Not deleted any product"})
@@ -122,7 +121,6 @@ app.post('/review', async (req, res) => {
 
     db.query('INSERT INTO reviews (user_id, product_id, description, rating, username) VALUES (?, ?, ?, ?, ?)', [user_id, product_id, description, rating,username], (err, result) => {
         if (err) throw err;
-        console.log(req.body);
         if(result){
             res.send({message: "Review added"});
         }
@@ -147,7 +145,6 @@ app.get('/productReviews/:id', (req, res)=> {
 app.delete('/deleteReview/:id', (req, res) => {
     db.query(`DELETE FROM reviews WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
-            console.log(result)
             res.send({message: "Deleted a review"});
         }else{
             res.send({message: "Not deleted any review"})
@@ -164,7 +161,6 @@ app.post('/entries', (req, res)=> {
 
     db.query(`INSERT INTO entries (user_id, username, title, description)  VALUES (?, ?, ?, ?)`, [user_id, username, title, description], (err, result) => {
         if (err) throw err;
-        console.log(req.body);
         if(result){
         res.send({message: "Entry added"});
         }
@@ -178,13 +174,11 @@ app.post('/entries', (req, res)=> {
 app.put('/entries/:id', async (req, res)=> {
     const title = req.body.title;
     const description = req.body.description;
-    console.log(title)
     
     db.query(`UPDATE entries SET title = ?, description = ? WHERE id = ${req.params.id}`, [title, description], (err, result) => {
         if(err) throw err;
         
         if(result){
-            console.log(result);
             res.send({message: "Entry updated"})
         }else{
             res.send({message: "Entry not updated"})
@@ -223,7 +217,6 @@ app.get('/entries/:id', (req, res)=> {
 app.delete('/deleteEntries/:id', (req, res) => {
     db.query(`DELETE FROM entries WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
-            console.log(result)
             res.send({message: "Deleted an entry"});
         }else{
             res.send({message: "Not deleted any entry"})
@@ -323,7 +316,6 @@ app.get('/orders', (req, res)=> {
 app.delete('/deleteOrder/:id', (req, res) => {
     db.query(`DELETE FROM orders WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
-            
             res.send({message: "Deleted an order"});
         }else{
             res.send({message: "Not deleted any order"})
@@ -366,7 +358,6 @@ app.put('/users/:id', async (req, res)=> {
     db.query(`UPDATE user SET username = ?, password = ?,email = ?, role = ?  WHERE id = ${req.params.id}`, [username, hashedPass,email, role ], (err, result) => {
         if(err) throw err;
         if(result){
-            
             res.send({message: "User updated"})
         }else{
             res.send({message: "User not updated"})
@@ -379,7 +370,6 @@ app.put('/users/:id', async (req, res)=> {
 app.delete('/deleteUser/:id', (req, res) => {
     db.query(`DELETE FROM user WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
-            
             res.send({message: "Deleted a user"});
         }else{
             res.send({message: "Not deleted any user"})

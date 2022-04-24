@@ -60,7 +60,7 @@ export function CreateProductPage(){
         
         if(!String(form.description)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]{10,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő leírás")
         else{
@@ -99,7 +99,7 @@ export function CreateProductPage(){
             ...form,
             [key]: e.target.value,
         });
-        console.log(key,form,e.target.value)
+
     };
 
     const updateFormFileValue = (key) => (e) => {

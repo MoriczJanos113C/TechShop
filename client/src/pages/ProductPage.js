@@ -40,7 +40,7 @@ export function ProductPage(){
             ...form,
             [key]: e.target.value,
         });
-        console.log(key,form,e.target.value)
+
     };
 
     useEffect(() => {
@@ -62,7 +62,7 @@ export function ProductPage(){
 
         if(!String(form.description)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]{5,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!]{5,}$/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő vélemény")
         else{
@@ -125,7 +125,6 @@ export function ProductPage(){
 }
 
 
- //ide barmit tehetesz, diveket akár ki is cserelheted masra 44-61es sorig, ez jelenik meg majd amit az also returnba be injektálsz (91.sor)
     const Product = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
                 <div className="cardContainer">

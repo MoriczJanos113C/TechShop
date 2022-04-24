@@ -27,7 +27,7 @@ export function LoginPage(){
             ...form,
             [key]: e.target.value,
         });
-        console.log(key,form,e.target.value)
+
     };
 
     
@@ -46,7 +46,7 @@ export function LoginPage(){
             setLoginStatus(response.data[0])
             navigate("/products")
         }
-        console.log(response.data);
+
                
     };
 

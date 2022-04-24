@@ -89,7 +89,7 @@ export function EntriesPage(){
             ...form,
             [key]: e.target.value,
         });
-        console.log(key,form,e.target.value)
+
     };
 
     useEffect(() => {

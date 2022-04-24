@@ -31,7 +31,7 @@ export function RegisterPage() {
             ...form,
             [key]: e.target.value,
         });
-        console.log(key, form, e.target.value)
+
     };
 
     useEffect(() => {
@@ -90,7 +90,6 @@ export function RegisterPage() {
                 
                 navigate("/products");
             }
-            console.log(rResponse.data);
 
         }
 

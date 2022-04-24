@@ -19,7 +19,7 @@ export function ProfilePage(){
         const fetchOrders = async () => {
             const { data: orders } = await axios.get(`http://localhost:8080/usersOrder/${user_ID}`);
             setUserOrders(orders);
-            console.log(orders)
+ 
         };
         fetchOrders();
     }, [user_ID]);

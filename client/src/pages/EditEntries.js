@@ -31,7 +31,7 @@ export function EditEntries(){
             ...form,
             [key]: e.target.value,
         });
-        console.log(key,form,e.target.value)
+
     };
 
 
@@ -55,7 +55,7 @@ export function EditEntries(){
 
         if(!String(form.description)
         .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]{5,}$/
+            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!]{5,}$/
         )&& form.description.trim() != "")
         setDescriptionError("Nem megfelelő bejegyzés leírás")
         else{
