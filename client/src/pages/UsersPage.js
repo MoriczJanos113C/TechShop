@@ -49,8 +49,9 @@ export function UsersPage(){
                         column
                         ).map((user) => ( 
                             <>
-                            <p className="information">{user.username}</p>
+                            <p className="information">Felhasználónév: {user.username}</p>
                             <Link className="editLink" to={`/users/${user.id}`}>Szerkesztés</Link>
+                            <p>----------------------------------------------</p>
                             </>
                         )
                     )}
