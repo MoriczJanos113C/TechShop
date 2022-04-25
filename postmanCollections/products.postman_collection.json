@@ -30,7 +30,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/products/product/110",
+					"raw": "http://localhost:8080/products/product/133",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -39,14 +39,14 @@
 					"path": [
 						"products",
 						"product",
-						"110"
+						"133"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "creating a product, will need a bearer token when you login with an account from the devtools(from the network space) Copy",
+			"name": "creating a product",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -65,34 +65,28 @@
 					"formdata": [
 						{
 							"key": "cost",
-							"value": "1000099",
+							"value": "123",
 							"type": "text"
 						},
 						{
 							"key": "category",
-							"value": "tablagép",
+							"value": "postmanPostTest123",
 							"type": "text"
 						},
 						{
 							"key": "name",
-							"value": "postManPostTest123",
+							"value": "postmanPostTest1234",
 							"type": "text"
 						},
 						{
 							"key": "description",
-							"value": "postManPostTest123",
+							"value": "postmanPostTest1212",
 							"type": "text"
 						},
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/C:/Users/moric/Desktop/kepek/69240529_380377642912694_1382069060799299584_n.jpg"
-						},
-						{
-							"key": "image",
-							"value": "wHfCqauuJE94LuqZd.jpeg",
-							"type": "text",
-							"disabled": true
+							"src": "/C:/Users/moric/Desktop/postmanCollections/postmanPostTest.png"
 						}
 					]
 				},
@@ -111,7 +105,7 @@
 			"response": []
 		},
 		{
-			"name": "product update, will need a bearer token when you login with an account from the devtools(from the network space)",
+			"name": "product update",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -131,11 +125,11 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/C:/Users/moric/Desktop/kepek/steamuserimages-a.akamaihd.jpg"
+							"src": "/C:/Users/moric/Desktop/postmanCollections/postmanPutTest.png"
 						},
 						{
 							"key": "cost",
-							"value": "1000099",
+							"value": "134999",
 							"type": "text"
 						},
 						{
@@ -145,23 +139,18 @@
 						},
 						{
 							"key": "name",
-							"value": "postManPutTest123",
+							"value": "LG 43UP75003LF Smart LED televízió, 108 cm, 4K Ultra HD, HDR, webOS ThinQ AI",
 							"type": "text"
 						},
 						{
 							"key": "description",
-							"value": "postManPutTest",
-							"type": "text"
-						},
-						{
-							"key": "image",
-							"value": "wHfCqauuJE94LuqZd.jpeg",
+							"value": "Képernyő átmérő (cm / inch): 108 cm / 43 col Felbontás: 3840 x 2160 pixel Kijelző típusa: LED SMART TV: Igen Szín: Fekete Bluetooth: Igen Csatlakozók: 2x HDMI, USB, RJ-45, Digitális audio kimenet (optikai), CI slot",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/products/111",
+					"raw": "http://localhost:8080/products/144",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -169,7 +158,7 @@
 					"port": "8080",
 					"path": [
 						"products",
-						"111"
+						"144"
 					]
 				}
 			},
@@ -181,7 +170,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/deleteProduct/110",
+					"raw": "http://localhost:8080/deleteProduct/144",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -189,7 +178,7 @@
 					"port": "8080",
 					"path": [
 						"deleteProduct",
-						"110"
+						"144"
 					]
 				}
 			},

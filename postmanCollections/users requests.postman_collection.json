@@ -30,7 +30,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/138",
+					"raw": "http://localhost:8080/users/153",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -38,7 +38,7 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"138"
+						"153"
 					]
 				}
 			},
@@ -51,7 +51,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"postmantesttest123\",\r\n    \"password\":\"postmantestingtest\",\r\n    \"role\":\"postmantest\",\r\n    \"email\":\"postmantestingtest@test.com\"\r\n}",
+					"raw": "{\r\n    \"username\":\"postmantestPuttest123\",\r\n    \"password\":\"postmantestingPuttest\",\r\n    \"role\":\"postmanPuttest\",\r\n    \"email\":\"postmantestingPuttest@test.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -59,7 +59,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/138",
+					"raw": "http://localhost:8080/users/157",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -67,7 +67,7 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"138"
+						"157"
 					]
 				}
 			},
@@ -79,7 +79,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/deleteUser/138",
+					"raw": "http://localhost:8080/deleteUser/157",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -87,7 +87,7 @@
 					"port": "8080",
 					"path": [
 						"deleteUser",
-						"138"
+						"157"
 					]
 				}
 			},
