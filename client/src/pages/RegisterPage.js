@@ -82,6 +82,12 @@ export function RegisterPage() {
                 token,
                 user,
             });
+            if(response.data.message){
+                setLoginStatus(response.data.message)
+            }
+            else{
+                navigate("/products")
+            }
             if (rResponse.data.message) {
                 setLoginStatus(rResponse.data.message)
                 
