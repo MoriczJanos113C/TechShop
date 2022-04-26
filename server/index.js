@@ -9,6 +9,8 @@ const {nanoid} = require('nanoid');
 const mime = require('mime-types');
 app.use(express.json());
 app.use(cors());
+const version = process.versions.node;
+console.log(version);
 
 
 app.use(express.static('./images'))
