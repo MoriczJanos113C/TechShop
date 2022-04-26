@@ -9,10 +9,10 @@ import "../style/header.css"
 
 export function Header() {
 
-    const [cart] = useContext(ShoppingCartContext);
-    const isLoggedIn = useIsLoggedIn();
-    const isAdmin = useIsAdmin();
-    const { user } = useContext(UserContext);
+    const [cart] = useContext(ShoppingCartContext); //cart context from App.js
+    const isLoggedIn = useIsLoggedIn(); //from hooks folder
+    const isAdmin = useIsAdmin(); //from hooks folder
+    const { user } = useContext(UserContext); //user context from App.js
 
     return (
         <Navbar className="navbar" expand="lg">

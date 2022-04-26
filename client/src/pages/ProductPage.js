@@ -14,14 +14,11 @@ const DEFAULT_FORM_OBJECT = {
 };
 export function ProductPage(){
 
-
+    //hooks and contextes and id for a product
     const [product, setProduct] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [reviewByProduct, setReviewByProduct] = useState([]);
     const { id: reviewID } = useParams()
-    
-
-    
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [showToast, setShowToast] = useState(false);
     const {user} = useContext(UserContext);
@@ -34,8 +31,8 @@ export function ProductPage(){
     const [descriptionError, setDescriptionError] = useState("");
 
 
+    //to write to form
     const updateFormValue = (key) => (e) => {
-        
         setForm({
             ...form,
             [key]: e.target.value,
@@ -43,11 +40,8 @@ export function ProductPage(){
 
     };
 
-    useEffect(() => {
-        checkValid();
-    },[form])
 
-
+    //validation for the form
     const checkValid = () => {
 
             
@@ -71,8 +65,13 @@ export function ProductPage(){
         
     }
 
+    //check that the validation is correct
+    useEffect(() => {
+        checkValid();
+    },[form])
 
 
+    //getting one product
     useEffect(() => {
         const fetchProduct = async () => {
             const { data: prods } = await axios.get(`http://localhost:8080/products/product/${productID}`);
@@ -82,7 +81,7 @@ export function ProductPage(){
         fetchProduct();
     }, [productID]);
 
-    
+    //getting the reviews what the product have by calling the review's id
     useEffect(() => {
         const fetchProduct = async () => {
             const { data: review } = await axios.get(`http://localhost:8080/productReviews/${reviewID}`);
@@ -93,12 +92,13 @@ export function ProductPage(){
     }, [reviewID]);
 
     
-
+    //to add a product to the cart
     const addProductToCart = (product) => {
         setCart([...cart, {...product}]);
         setShowToast(true);
     };
 
+    //to add a review for a product, and its sending the user's id, username too 
     const addReview = async (e) => {
         e.preventDefault();
         if(ratingError === "" && descriptionError === "" && form.rating.trim() != "" && form.description.trim() != ""){
@@ -114,6 +114,7 @@ export function ProductPage(){
         }
     };
 
+    //will delete a review from a product if the button is clicked
     const deleteReview = (e, id) => {
         e.preventDefault();
         axios.delete(`http://localhost:8080/deleteReview/${id}`, {
@@ -124,7 +125,7 @@ export function ProductPage(){
     window.location.reload();
 }
 
-
+    //setting up the product card
     const Product = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
                 <div className="cardContainer">
@@ -150,6 +151,7 @@ export function ProductPage(){
         
     
         return(
+            //toast container, what is showing a message after a product added to a cart
             <>
             <ToastContainer 
             style={{"zIndex": "1"}}

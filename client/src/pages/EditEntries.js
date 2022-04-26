@@ -15,17 +15,15 @@ const DEFAULT_FORM_OBJECT = {
     
 
 export function EditEntries(){
-    
+    //hooks and contextes, id for an entry, and navigate 
     const {user} = useContext(UserContext);
     const { id: entriesID } = useParams();
     const navigate = useNavigate();
-
-
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
-
     const [titleError, setTitleError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
 
+    //to write to form
     const updateFormValue = (key) => (e) => {
         setForm({
             ...form,
@@ -35,12 +33,8 @@ export function EditEntries(){
     };
 
 
-    
-    useEffect(() => {
-        checkValid();
-    },[form])
-
-
+   
+    //validation to the form
     const checkValid = () => {
 
             
@@ -63,8 +57,13 @@ export function EditEntries(){
         }
         
     }
-    
+    //check that the validation is correct
+    useEffect(() => {
+        checkValid();
+    },[form])
 
+
+    //getting all the entries with the entry's datas too what will be in the inputs
     useEffect(()=> {
         const getEntries = async () => {
             const { data: ent } = await Axios.get(`http://localhost:8080/entries/${entriesID}`);
@@ -80,7 +79,7 @@ export function EditEntries(){
     
 
 
-
+    //wil update the datas after the form is sent
     const updateProduct = async (e) => {
         e.preventDefault();
         if(titleError === "" && 

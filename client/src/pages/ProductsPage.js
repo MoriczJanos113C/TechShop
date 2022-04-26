@@ -9,9 +9,8 @@ import "../style/Toast.css"
 
 export function ProductsPage() {
 
+    //hooks and contextes
     const [products, setProducts] = useState([]);
-
-
     const NUMBER_OF_COLUMNS = 12;
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [search, setSearch] = useState("");
@@ -19,7 +18,7 @@ export function ProductsPage() {
     const isLoggedIn = useIsLoggedIn();
     const { user } = useContext(UserContext);
     
-
+    //will getting all the products
     useEffect(() => {
         const fetchProducts = async () => {
             const { data: prods } = await axios.get("http://localhost:8080/products");
@@ -33,17 +32,19 @@ export function ProductsPage() {
         return products.filter((col, index) => index % numberOfColumns === columns);
     };
 
-
+    //to add a product to the cart
     const addProductToCart = (product) => {
         setCart([...cart, { ...product }]);
         setShowToast(true);
     };
 
 
+    //to search the searchbar
     const onSearchChange = (e) => {
         setSearch(e.currentTarget.value);
     };
 
+    //to set the searchbar for only working to the product's name 
     const getFilteredProducts = (products) => {
         return products.filter((product) => product.name.includes(search))
     }
@@ -51,7 +52,7 @@ export function ProductsPage() {
     
 
 
-
+    //setting up the product card
     const ProductCard = ({ isAdmin, isLoggedIn, product, addProductToCart }) => {
         return (
             <Card className="homeCards" key={product.id} >
@@ -82,6 +83,7 @@ export function ProductsPage() {
     }
 
     return (
+        //will send a message if the product added to the cart
         <>
             <ToastContainer
                 style={{ "zIndex": "1" }}

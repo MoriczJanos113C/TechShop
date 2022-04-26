@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ConfirmationContext, ShoppingCartContext, UserContext } from "../App";
 import "../style/CheckOutPage.css"
 
+
 const DEFAULT_FORM_OBJECT = {
         address:'',
         firstname:'',
@@ -16,7 +17,7 @@ const DEFAULT_FORM_OBJECT = {
 
 export function CheckOutPage(){   
 
-
+    //hooks and contextes, navigate
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const [cart, setCart] = useContext(ShoppingCartContext);
     const navigate = useNavigate();
@@ -27,25 +28,20 @@ export function CheckOutPage(){
     const [lastnameError, setLastnameError] = useState("");
     const [cardNumberError, setCardnumberError] = useState("");
 
-
+    //to write to form
     const updateFormValue = (key) => (e) => {
-        
         setForm({
             ...form,
             [key]: e.target.value,
         });
     };
-
-    useEffect(() => {
-        checkValid();
-    },[form])
+    
 
 
 
 
 
-
-
+    //validation for the form
     const checkValid = () => {
 
             
@@ -89,6 +85,14 @@ export function CheckOutPage(){
     }
 
 
+    //check that the validation is correct
+    useEffect(() => {
+        checkValid();
+    },[form])
+
+
+
+    //will post the datas from the form, after the form is sent
     const checkOut = async (e) => {
         e.preventDefault();
         if(firstnameError === "" && lastnameError === "" && addressError === "" && cardNumberError === "" && form.firstname.trim() != "" && form.lastname.trim() != "" && form.address.trim() != "" && form.cardNumber.trim() != ""){
@@ -110,7 +114,7 @@ export function CheckOutPage(){
     
    
 
-
+    //if the user not having any products in his/her cart will navigate him/her to the products page
     useEffect(() => {
         if(cart.length === 0){
             navigate("/products")

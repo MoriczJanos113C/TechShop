@@ -16,7 +16,7 @@ const DEFAULT_FORM_OBJECT = {
 
 export function RegisterPage() {
 
-
+    //hooks, contextes and navigate
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
@@ -25,8 +25,8 @@ export function RegisterPage() {
     const [passwordError, setPasswordError] = useState("");
     const [loginStatus, setLoginStatus] = useState("");
     
+    //to write to form
     const updateFormValue = (key) => (e) => {
-
         setForm({
             ...form,
             [key]: e.target.value,
@@ -34,10 +34,8 @@ export function RegisterPage() {
 
     };
 
-    useEffect(() => {
-        checkValid();
-    }, [form])
-
+    
+    //validation to the form
     const checkValid = () => {
 
 
@@ -71,7 +69,12 @@ export function RegisterPage() {
 
     }
 
+    //check that the validation is correct
+    useEffect(() => {
+        checkValid();
+    },[form])
 
+    //will register a user if the form's is valid and if the user is forgetting he already having an account, he will logged in with his/her account what he/she already had before
     const registerUser = async (e) => {
         e.preventDefault();
         if (usernameError === "" && passwordError === "" && emailError === "" && form.email.trim() != "" && form.username.trim() != "" && form.password.trim() != "") {

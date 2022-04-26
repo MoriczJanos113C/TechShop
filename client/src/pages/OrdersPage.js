@@ -7,12 +7,13 @@ import "../style/OrdersPage.css"
 
 export function OrdersPage(){
 
+    //hooks and contextes
     const [orders, setOrders] = useState([]);
     const [search, setSearch] = useState("");
     const NUMBER_OF_COLUMNS = 2;
     const {user} = useContext(UserContext);
 
-    
+    //will getting all the orders
     useEffect(() => {
         const fetchOrders = async () => {
             const { data: orders } = await axios.get("http://localhost:8080/orders");
@@ -21,10 +22,12 @@ export function OrdersPage(){
         fetchOrders();
     }, []);
 
+    //to search the searchbar
     const onSearchChange = (e) => {
         setSearch(e.currentTarget.value);
     };
 
+    //to set the searchbar for the users's name to search her/his order
     const getFilteredUsers = (orders) => {
         return orders.filter((order) => order.username.includes(search))
     }
@@ -33,6 +36,8 @@ export function OrdersPage(){
         return orders.filter((col, index) => index % numberOfColumns === columns);
     };
 
+
+    //will delete an order if the button is clicked
     const deleteReview = (e, id) => {
         e.preventDefault();
         axios.delete(`http://localhost:8080/deleteOrder/${id}`, {

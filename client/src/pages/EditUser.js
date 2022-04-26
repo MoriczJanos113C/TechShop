@@ -16,7 +16,7 @@ const DEFAULT_FORM_OBJECT = {
 export function EditUser(){
     
     
-    
+    //hooks, contextes, navigate and id for a user
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const {user} = useContext(UserContext);
     const { id: userID } = useParams();
@@ -26,6 +26,7 @@ export function EditUser(){
     const [roleError, setRoleError] = useState("");
     const [emailError, setEmailError] = useState("");
 
+    //to write to form
     const updateFormValue = (key) => (e) => {
         
         setForm({
@@ -35,6 +36,7 @@ export function EditUser(){
 
     };
 
+    //to get all the users with the user's datas what will be in the input
     useEffect(()=> {
         const getUser = async () => {
             const { data: form } = await Axios.get(`http://localhost:8080/users/${userID}`);
@@ -48,11 +50,9 @@ export function EditUser(){
         getUser();
     }, [])
 
-    useEffect(() => {
-        checkValid();
-    },[form])
+    
 
-
+    //validation for the form
     const checkValid = () => {
 
             
@@ -92,8 +92,13 @@ export function EditUser(){
             setEmailError("");
         }
     }
+    //check that the validation is correct
+    useEffect(() => {
+        checkValid();
+    },[form])
 
 
+    //will update the datas after the form is sent
     const updateUser = async (e) => {
         e.preventDefault();
         if(usernameError === "" && passwordError === "" && roleError === "" && emailError === "" &&
@@ -110,6 +115,7 @@ export function EditUser(){
         }
     };
 
+    //will delete a user after the button is clicked
     const deleteUser = () => {
             Axios.delete(`http://localhost:8080/deleteUser/${userID}`, {
             headers:{

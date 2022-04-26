@@ -6,10 +6,12 @@ import "../style/UsersPage.css"
 
 export function UsersPage(){
 
+    //hooks
     const [users, setUsers] = useState([]);
     const [search, setSearch] = useState("");
     const NUMBER_OF_COLUMNS = 2;
 
+    //getting all the users
     useEffect(() => {
         const fetchUsers = async () => {
             const { data: users } = await axios.get("http://localhost:8080/users");
@@ -18,10 +20,13 @@ export function UsersPage(){
         fetchUsers();
     }, []);
 
+
+    //to search the searchbar
     const onSearchChange = (e) => {
         setSearch(e.currentTarget.value);
     };
 
+    //to set the searchbar for only working to the user's name 
     const getFilteredUsers = (users) => {
         return users.filter((user) => user.username.includes(search))
     }

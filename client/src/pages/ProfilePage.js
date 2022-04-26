@@ -6,20 +6,23 @@ import "../style/ProfilePage.css"
 
 export function ProfilePage(){
 
+    //hooks and contextes and navigate
     const {user} = useContext(UserContext);
     const {id: user_ID} = useParams()
     const [userOrders, setUserOrders] = useState([]);
 
     const navigate = useNavigate();
 
+    //if the user want to check the other user's profile page he/she cant, because this checking the user's id and if he is changing it will bringing the user back to only his/her profile page
     useEffect(() => {
         if(user_ID != user.id){
-            navigate("/")
+            navigate(`/profile/${user.id}`)
         }
-        const fetchOrders = async () => {
-            const { data: orders } = await axios.get(`http://localhost:8080/usersOrder/${user_ID}`);
-            setUserOrders(orders);
- 
+
+    //getting all the orders what the user ordered by the user's id
+    const fetchOrders = async () => {
+        const { data: orders } = await axios.get(`http://localhost:8080/usersOrder/${user_ID}`);
+        setUserOrders(orders);
         };
         fetchOrders();
     }, [user_ID]);

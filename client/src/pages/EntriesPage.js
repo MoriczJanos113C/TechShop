@@ -12,21 +12,16 @@ const DEFAULT_FORM_OBJECT = {
 
 export function EntriesPage(){
 
-    
+    //hooks and contextes 
     const [entries, setEntries] = useState([]);
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const {user} = useContext(UserContext);
     const isAdmin = useIsAdmin();
-
     const [titleError, setTitleError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
     
 
-    
-
-    
-
-
+    //validation for the form
     const checkValid = () => {
 
             
@@ -50,6 +45,12 @@ export function EntriesPage(){
         
     }
 
+    //check that the validation is correct
+    useEffect(() => {
+        checkValid();
+    },[form])
+
+    //getting all the entries
     useEffect(() => {
         const fetchEntries = async () => {
             const { data: ent } = await axios.get("http://localhost:8080/entries");
@@ -59,6 +60,7 @@ export function EntriesPage(){
     }, []);
 
 
+    //will post the datas from the form after the form is sent
     const addEntries = async (e) => {
         e.preventDefault();
         if(titleError === "" && descriptionError === "" && form.title.trim() != "" && form.description.trim() != ""){
@@ -73,6 +75,7 @@ export function EntriesPage(){
         }
     };
 
+    //will delete the entry after the button is clicked
     const deleteEntries = (e, id) => {
         e.preventDefault();
         axios.delete(`http://localhost:8080/deleteEntries/${id}`, {
@@ -83,8 +86,8 @@ export function EntriesPage(){
     window.location.reload();
 }
 
+    //to write to form
     const updateFormValue = (key) => (e) => {
-        
         setForm({
             ...form,
             [key]: e.target.value,
@@ -92,9 +95,7 @@ export function EntriesPage(){
 
     };
 
-    useEffect(() => {
-        checkValid();
-    },[form])
+    
 
     return(
         <>

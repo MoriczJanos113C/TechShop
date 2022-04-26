@@ -7,21 +7,26 @@ import "../style/ShoppingCartPage.css"
 
 export function ShoppingCartPage(){
 
+    //hook and navigate
     const [cart, setCart] = useContext(ShoppingCartContext);
     const navigate = useNavigate();
 
+    //totalCost of the cart by products prizes
     const totalCost = cart.reduce((sum, product) => sum+product.cost, 0)
 
+    //to remove from the cart
     const removeProduct = (product) => {
         setCart(cart.filter(productInCart => productInCart !== product))
     }
 
+    //if the cart is empty the user cant enter this page
     useEffect(() => {
         if(cart.length === 0){
             navigate("/products")
         }
     })
 
+    //setting up the product's appearance
     const ShoppingCartItem = ({ product, removeProduct }) => {
         return (
             <Row className="pruductCards" bg="light" expand="lg">

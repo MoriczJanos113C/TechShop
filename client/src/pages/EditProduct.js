@@ -17,19 +17,18 @@ const DEFAULT_FORM_OBJECT = {
 export function EditProduct(){
     
 
-    
+    //hooks, contextes, navigate and id for the product
     const {user} = useContext(UserContext);
     const { id: productId } = useParams();
     const navigate = useNavigate();
-
-
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
-
     const [nameError, setNameError] = useState("");
     const [costError, setCostError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
     const [categoryError, setCategoryError] = useState("");
 
+
+    //getting all the entries with the entry's datas too what will be in the inputs
     useEffect(()=> {
         const getProduct = async () => {
             const { data: product } = await Axios.get(`http://localhost:8080/products/product/${productId}`);
@@ -48,7 +47,7 @@ export function EditProduct(){
     }, [])
 
 
-
+    //wil update the datas after the form is sent
     const updateProduct = async (e) => {
         e.preventDefault();
         if(nameError === "" && categoryError === "" && descriptionError === "" && costError === "" && form.name.trim() != "" && form.category.trim() != "" && form.description.trim() != ""){
@@ -70,6 +69,8 @@ export function EditProduct(){
         }
     };
 
+
+    //will delete a product after the button is clicked
     const deleteProduct = () => {
             Axios.delete(`http://localhost:8080/deleteProduct/${productId}`, {
             headers:{
@@ -79,8 +80,9 @@ export function EditProduct(){
         navigate("/products")
     }
 
-    const updateFormValue = (key) => (e) => {
-        
+
+    //to write to form
+    const updateFormValue = (key) => (e) => {    
         setForm({
             ...form,
             [key]: e.target.value,
@@ -88,8 +90,8 @@ export function EditProduct(){
 
     };
 
+    //to the file
     const updateFormFileValue = (key) => (e) => {
-        console.log(key)
         setForm({
             ...form,
             [key]: e.target.files[0],
@@ -98,10 +100,8 @@ export function EditProduct(){
 
 
     
-    useEffect(() => {
-        checkValid();
-    },[form])
     
+    //validation for the form
     const checkValid = () => {
 
             
@@ -141,6 +141,12 @@ export function EditProduct(){
             setDescriptionError("");
         }
     }
+    
+    
+    //check that the validation is correct
+    useEffect(() => {
+        checkValid();
+    },[form])
 
     return(
 

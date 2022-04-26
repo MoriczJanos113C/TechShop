@@ -17,17 +17,16 @@ const DEFAULT_FORM_OBJECT = {
 export function CreateProductPage(){
 
     
-
+    //hooks and contextes, navigate
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
-
     const [nameError, setNameError] = useState("");
     const [costError, setCostError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
     const [categoryError, setCategoryError] = useState("");
 
-    
+    //validation for the form
     const checkValid = () => {
 
             
@@ -68,10 +67,15 @@ export function CreateProductPage(){
         }
     }
 
+    //check that the validation is correct
     useEffect(() => {
         checkValid();
     },[form])
 
+
+    //will post the datas from the form after the form sent
+    //multipart form data because, its sending a file too
+    //its creating a product
     const createProduct =  async (e) => {
         e.preventDefault();
         if(nameError === "" && categoryError === "" && descriptionError === "" && costError === "" &&
@@ -94,6 +98,7 @@ export function CreateProductPage(){
         }
     };
 
+    //to write to form
     const updateFormValue = (key) => (e) => {
         setForm({
             ...form,
@@ -101,7 +106,7 @@ export function CreateProductPage(){
         });
 
     };
-
+    //to the file
     const updateFormFileValue = (key) => (e) => {
         setForm({
             ...form,
