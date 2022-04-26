@@ -1,19 +1,24 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
-const mysql = require('mysql');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const multer = require('multer');
-const {nanoid} = require('nanoid');
-const mime = require('mime-types');
+//modules
+const express = require('express');//express
+const app = express(); //express variable
+const cors = require('cors');//react connection
+const mysql = require('mysql');//database connection
+const jwt = require('jsonwebtoken');//giving a token to the user
+const bcrypt = require('bcryptjs');//crypting a password for example
+const multer = require('multer'); //for handling multipart/form-data
+const {nanoid} = require('nanoid'); //a tiny, secure, URL-friendly, unique string ID generator for JavaScript
+const mime = require('mime-types'); //javascript content-type utility
+
+//It parses incoming JSON requests and puts the parsed data in req.body
 app.use(express.json());
+
+//enable the express server to respond to preflight requests
 app.use(cors());
-const version = process.versions.node;
-console.log(version);
 
+//setting up where to upload the files
+app.use(express.static('./images'));
 
-app.use(express.static('./images'))
+//image storage
 const storage = multer.diskStorage({
     destination : function (req,file,cb){
         cb(null, './images')
@@ -26,6 +31,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 
+//creating database connection
 const db = mysql.createConnection({
     user:"root",
     host:"localhost",
@@ -34,7 +40,7 @@ const db = mysql.createConnection({
 });
 
 
-
+//will create a product in multipart form data
 app.post('/products', upload.single('file'), (req, res)=> {
 
     const cost = req.body.cost;
@@ -54,6 +60,7 @@ app.post('/products', upload.single('file'), (req, res)=> {
     });
 });
 
+//will giving all the products
 app.get('/products', (req, res)=> {
     
     db.query("SELECT * FROM product", (err, result) => {
@@ -65,7 +72,7 @@ app.get('/products', (req, res)=> {
     });
 });
 
-
+//will update a product in multi part form data
 app.put('/products/:id', upload.single('file'), async (req, res)=> {
     const cost= req.body.cost;
     const category= req.body.category;
@@ -90,7 +97,7 @@ app.put('/products/:id', upload.single('file'), async (req, res)=> {
     );
 });
 
-
+//will giving one product
 app.get('/products/product/:id', (req, res)=> {
     db.query("SELECT * FROM product WHERE id = ?", req.params.id, (err, result) => {
         if (result){
@@ -102,6 +109,7 @@ app.get('/products/product/:id', (req, res)=> {
     });
 });
 
+//will delete one product
 app.delete('/deleteProduct/:id', (req, res) => {
     db.query(`DELETE FROM product WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
@@ -112,6 +120,7 @@ app.delete('/deleteProduct/:id', (req, res) => {
     })
 })
 
+//will create a review
 app.post('/review', async (req, res) => {
 
     
@@ -133,6 +142,7 @@ app.post('/review', async (req, res) => {
     
 });
 
+//will give a review/reviews for a product
 app.get('/productReviews/:id', (req, res)=> {
     db.query("SELECT * FROM reviews WHERE product_id = ?", req.params.id, (err, result) => {
         if (result){
@@ -144,6 +154,7 @@ app.get('/productReviews/:id', (req, res)=> {
     });
 });
 
+//will delete a review
 app.delete('/deleteReview/:id', (req, res) => {
     db.query(`DELETE FROM reviews WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
@@ -154,7 +165,7 @@ app.delete('/deleteReview/:id', (req, res) => {
     });
 });
 
-
+//will create an entry
 app.post('/entries', (req, res)=> {
     const user_id = req.body.user_id;
     const username = req.body.username;
@@ -172,7 +183,7 @@ app.post('/entries', (req, res)=> {
     });
 });
 
-
+//will update an entry
 app.put('/entries/:id', async (req, res)=> {
     const title = req.body.title;
     const description = req.body.description;
@@ -191,6 +202,7 @@ app.put('/entries/:id', async (req, res)=> {
     );
 });
 
+//will give all the entries
 app.get('/entries', (req, res)=> {
     db.query("SELECT * FROM entries", (err, result) => {
         if (result){
@@ -201,6 +213,7 @@ app.get('/entries', (req, res)=> {
     });
 });
 
+//will give one entry
 app.get('/entries/:id', (req, res)=> {
     db.query("SELECT * FROM entries WHERE id = ?", req.params.id, (err, result) => {
         if (result){
@@ -212,10 +225,7 @@ app.get('/entries/:id', (req, res)=> {
     });
 });
 
-
-
-
-
+//will delete an entry
 app.delete('/deleteEntries/:id', (req, res) => {
     db.query(`DELETE FROM entries WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
@@ -227,7 +237,8 @@ app.delete('/deleteEntries/:id', (req, res) => {
 })
 
 
-//USER OPERATIONS
+//will register a user with hashed password
+//will check if the username or email is already taken
 app.post('/register',async (req, res)=> {
     const username = req.body.username;
     const password = req.body.password;
@@ -250,6 +261,8 @@ app.post('/register',async (req, res)=> {
     })
 });
 
+//will login in a user
+//will check if the password or username is correct
 app.post('/login', (req, res)=> {
     const {username, password} = req.body;
 
@@ -275,9 +288,7 @@ app.post('/login', (req, res)=> {
     );
 });
 
-
-
-
+//will create an order what the user did
 app.post('/checkout', async (req, res) => {
     
     const contactInfo = req.body.contactInfo;
@@ -304,8 +315,8 @@ app.post('/checkout', async (req, res) => {
     
 });
 
+//will give all the orders
 app.get('/orders', (req, res)=> {
-    
     db.query("SELECT * FROM orders", (err, result) => {
         if (result){
             res.send(result);
@@ -315,6 +326,7 @@ app.get('/orders', (req, res)=> {
     });
 });
 
+//will delete an order
 app.delete('/deleteOrder/:id', (req, res) => {
     db.query(`DELETE FROM orders WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
@@ -325,8 +337,7 @@ app.delete('/deleteOrder/:id', (req, res) => {
     });
 });
 
-
-
+//will give all the users
 app.get('/users', (req, res)=> {
     
     db.query("SELECT * FROM user", (err, result) => {
@@ -338,7 +349,7 @@ app.get('/users', (req, res)=> {
     });
 });
 
-
+//will give one user
 app.get('/users/:id', (req, res)=> {
     db.query("SELECT * FROM user WHERE id = ?", req.params.id, (err, result) => {
         if (result){
@@ -350,6 +361,7 @@ app.get('/users/:id', (req, res)=> {
     });
 });
 
+//will update one user
 app.put('/users/:id', async (req, res)=> {
     const username= req.body.username;
     const password = req.body.password;
@@ -369,6 +381,7 @@ app.put('/users/:id', async (req, res)=> {
     );
 });
 
+//will delete one user
 app.delete('/deleteUser/:id', (req, res) => {
     db.query(`DELETE FROM user WHERE id = ${req.params.id}`,(err, result) => {
         if(result){
@@ -379,6 +392,7 @@ app.delete('/deleteUser/:id', (req, res) => {
     });
 });
 
+//will give the user's orders
 app.get('/usersOrder/:id', (req, res)=> {
     db.query(`SELECT * FROM orders WHERE user_id = ${req.params.id}`, (err, result) => {
         if (result){
