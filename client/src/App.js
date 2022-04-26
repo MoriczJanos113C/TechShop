@@ -2,35 +2,37 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import { AppRouter } from './AppRouter';
 
-//modulok telepítése
-//npm install react-bootstrap bootstrap@5.1.3
-//npm install react-router-dom
-//npm install axios
 
-
+//creating a shoppingcart context
 export const ShoppingCartContext = React.createContext();
+//creating a user context
 export const UserContext = React.createContext();
+//creating a confirmation context
 export const ConfirmationContext = React.createContext();
 
 function App() {
 
   const confirmationState = useState(null);
 
+  //localstorage for the cart
   const cartState = useState(() => {
     const cartInLocalStorage = localStorage.getItem('cart');
     return cartInLocalStorage ? JSON.parse(cartInLocalStorage) : [];
   });
 
+  //localstorage for the user
   const userState = useState(() => {
     const userInLocalStorage = localStorage.getItem('user');
     return userInLocalStorage ? JSON.parse(userInLocalStorage) : {};
   });
   
 
+  //will save the user's datas to localstorage
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(userState[0]));
   }, userState)
 
+  //will save the cart's datas to localstorage
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cartState[0]));
   }, cartState)
