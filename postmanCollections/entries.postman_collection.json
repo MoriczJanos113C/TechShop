@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6009c9d0-6c2f-4723-ac5c-7103bf438dfd",
+		"_postman_id": "e038f7db-ca30-43f8-ba93-dcfbbe2f9d22",
 		"name": "entries",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -48,7 +48,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/entries/67",
+					"raw": "http://localhost:8080/entries/68",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -56,7 +56,7 @@
 					"port": "8080",
 					"path": [
 						"entries",
-						"67"
+						"68"
 					]
 				}
 			},

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "93a1fa54-7864-4aa6-80f9-9fdb98e6ea0b",
+		"_postman_id": "395e6e57-c0b1-45c5-abb8-d4195b156464",
 		"name": "users requests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -59,7 +59,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/162",
+					"raw": "http://localhost:8080/users/163",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -67,7 +67,7 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"162"
+						"163"
 					]
 				}
 			},
