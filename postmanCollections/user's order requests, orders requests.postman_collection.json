@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "67d05719-b870-4517-8dd2-987089f19118",
+		"_postman_id": "781c7937-6b62-4938-b068-333818f8d245",
 		"name": "user's order requests, orders requests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -58,7 +58,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/usersOrder/153",
+					"raw": "http://localhost:8080/usersOrder/159",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -66,7 +66,7 @@
 					"port": "8080",
 					"path": [
 						"usersOrder",
-						"153"
+						"159"
 					]
 				}
 			},
@@ -78,7 +78,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/deleteOrder/97",
+					"raw": "http://localhost:8080/deleteOrder/101",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -86,7 +86,7 @@
 					"port": "8080",
 					"path": [
 						"deleteOrder",
-						"97"
+						"101"
 					]
 				}
 			},
