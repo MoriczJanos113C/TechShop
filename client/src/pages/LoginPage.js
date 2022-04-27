@@ -12,7 +12,7 @@ const DEFAULT_FORM_OBJECT = {
     };
     
     
-export function LoginPage(){
+export function LoginPage({submit}){
 
     
     //hooks and contextes
@@ -49,7 +49,7 @@ export function LoginPage(){
             navigate("/products")
         }
 
-               
+          
     };
 
     //its navigating the user to the frontpage with a button without logging in
@@ -66,22 +66,24 @@ export function LoginPage(){
                     <h1 className="headLine">Bejelentkezés</h1>
                         <Form onSubmit={loginUser}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label>Felhasználónév</Form.Label>
+                                    <Form.Label htmlFor="username">Felhasználónév</Form.Label>
                                     <Form.Control className="input"
+                                            id="username"
                                             onChange={updateFormValue("username")}
                                             value={form.username} 
                                             type="text" placeholder="Felhasználónév" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">
-                                        <Form.Label>Jelszó</Form.Label>
+                                        <Form.Label htmlFor="password">Jelszó</Form.Label>
                                         <Form.Control className="input"
+                                            id="password"
                                             onChange={updateFormValue("password")}
                                             value={form.password} 
                                             type="password" 
                                             placeholder="Jelszó" />
                                 </Form.Group>
-                                <Button className="btn" type="submit">
+                                <Button className="btn" data-testid="login" type="submit">
                                     Bejelentkezés
                                 </Button>
                                 {loginStatus && <p>{loginStatus}</p>}
