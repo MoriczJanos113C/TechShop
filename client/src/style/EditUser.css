@@ -1,44 +1,43 @@
-.users{
+.users {
     background-color: grey;
     padding-bottom: 3cm;
 }
 
 .mb-3 {
     padding-bottom: 20px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
 
-.headLine{
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+.headLine {
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif !important;
     padding-top: 1.5cm;
     padding-bottom: 1cm;
     text-decoration: underline;
 }
 
-.submitBtn{
+.submitBtn {
     color: black !important;
-    background-color: #00FF00 !important;
+    background-color: #00ff00 !important;
     border-style: double !important;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif !important;
 }
-.submitBtn:hover{
-    background-color: #FFFF00 !important;
+.submitBtn:hover {
+    background-color: #ffff00 !important;
 }
 
 .deleteBtn {
     color: black !important;
-    background-color: #EE4B2B !important;
+    background-color: #ee4b2b !important;
     border-style: double !important;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif !important;
 }
 
 .deleteBtn:hover {
     background-color: red !important;
 }
 
-.input{
+.input {
     background-color: rgb(238, 238, 238) !important;
     border-color: black !important;
     color: black;
-
 }

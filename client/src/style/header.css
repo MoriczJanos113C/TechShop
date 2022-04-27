@@ -1,6 +1,6 @@
 .navbar {
     background-color: #e8ebe4;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
 
 .home {
@@ -10,7 +10,7 @@
 }
 
 .home:hover {
-    color: #4B9AFF;
+    color: #4b9aff;
     text-decoration: none;
     font-size: xx-large;
 }
@@ -22,7 +22,7 @@
 }
 
 .link:hover {
-    color: #4B9AFF;
+    color: #4b9aff;
     text-decoration: none;
     font-size: large;
 }
@@ -34,23 +34,19 @@
 }
 
 #dropdown:hover {
-    color: #4B9AFF;
+    color: #4b9aff;
     text-decoration: none;
     font-size: large;
 }
-
-
 
 .logOut {
     color: red;
     text-decoration: none;
     font-size: large;
-    
 }
 
 .logOut:hover {
     color: rgb(68, 11, 11);
     text-decoration: none;
     font-size: large;
-    
 }

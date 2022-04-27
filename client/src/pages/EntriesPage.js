@@ -6,72 +6,80 @@ import { UserContext } from "../App";
 import { useIsAdmin } from "../hooks/useIsAdmin";
 
 const DEFAULT_FORM_OBJECT = {
-    title:'',
-    description:'',
+    title: "",
+    description: "",
 };
 
-export function EntriesPage(){
-
-    //hooks and contextes 
+export function EntriesPage() {
+    //hooks and contextes
     const [entries, setEntries] = useState([]);
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const isAdmin = useIsAdmin();
     const [titleError, setTitleError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
-    
 
     //validation for the form
     const checkValid = () => {
-
-            
-        if(!String(form.title)
-        .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
-        )&& form.title.trim() != "")
-        setTitleError("Nem megfelelő bejegyzés cím")
-        else{
+        if (
+            !String(form.title).match(
+                /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
+            ) &&
+            form.title.trim() != ""
+        )
+            setTitleError("Nem megfelelő bejegyzés cím");
+        else {
             setTitleError("");
         }
 
-        if(!String(form.description)
-        .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
-        )&& form.description.trim() != "")
-        setDescriptionError("Nem megfelelő bejegyzés leírás")
-        else{
+        if (
+            !String(form.description).match(
+                /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
+            ) &&
+            form.description.trim() != ""
+        )
+            setDescriptionError("Nem megfelelő bejegyzés leírás");
+        else {
             setDescriptionError("");
         }
-        
-    }
+    };
 
     //check that the validation is correct
     useEffect(() => {
         checkValid();
-    },[form])
+    }, [form]);
 
     //getting all the entries
     useEffect(() => {
         const fetchEntries = async () => {
-            const { data: ent } = await axios.get("http://localhost:8080/entries");
+            const { data: ent } = await axios.get(
+                "http://localhost:8080/entries"
+            );
             setEntries(ent);
         };
         fetchEntries();
     }, []);
 
-
     //will post the datas from the form after the form is sent
     const addEntries = async (e) => {
         e.preventDefault();
-        if(titleError === "" && descriptionError === "" && form.title.trim() != "" && form.description.trim() != ""){
-        const {data: ent } = await axios.post("http://localhost:8080/entries", { 
-        user_id: user.id,
-        username: user.username,
-        title: form.title,
-        description: form.description,
-        });
-        setEntries(ent.id);
-        window.location.reload();
+        if (
+            titleError === "" &&
+            descriptionError === "" &&
+            form.title.trim() != "" &&
+            form.description.trim() != ""
+        ) {
+            const { data: ent } = await axios.post(
+                "http://localhost:8080/entries",
+                {
+                    user_id: user.id,
+                    username: user.username,
+                    title: form.title,
+                    description: form.description,
+                }
+            );
+            setEntries(ent.id);
+            window.location.reload();
         }
     };
 
@@ -79,12 +87,12 @@ export function EntriesPage(){
     const deleteEntries = (e, id) => {
         e.preventDefault();
         axios.delete(`http://localhost:8080/deleteEntries/${id}`, {
-        headers:{
-            'Authorization': `Bearer ${user.token}`
-        }
-    });
-    window.location.reload();
-}
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        });
+        window.location.reload();
+    };
 
     //to write to form
     const updateFormValue = (key) => (e) => {
@@ -92,70 +100,68 @@ export function EntriesPage(){
             ...form,
             [key]: e.target.value,
         });
-
     };
 
-    
-
-    return(
+    return (
         <>
-        <Container>
-                 {isAdmin && (
-                     <Form onSubmit={addEntries}>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label >Bejegyzés címe</Form.Label>
-                                        <Form.Control className="input"
-                                                onChange={updateFormValue("title")}
-                                                value={form.title} 
-                                                placeholder="Bejegyzés címe" />
-                                    </Form.Group>
-                                    {titleError && <p>{titleError}</p>}
-                                    <Form.Group className="mb-3">
-                                            <Form.Label >Bejegyzés írása</Form.Label>
-                                            <Form.Control className="input"
-                                                onChange={updateFormValue("description")}
-                                                value={form.description} 
-                                                placeholder="Leírás"
-                                                type="text" as="textarea" 
-                                            rows={10}/>
-                                    </Form.Group>
-                                    {descriptionError && <p>{descriptionError}</p>}
-                                    <Button className="reviewBtn" type="submit">
-                                        Bejegyzés elküldése
-                                    </Button>
-                                </Form>
-                 )}
-            </Container>
-                       
-                   
-                
-
-        
-            {entries?.map(ent =>  
-                <Container>
-                <h1 key={ent.id}>{ent.title}</h1>
-                <h2>{ent.description}</h2>
-                    {isAdmin && (
-                    <>
-                    
-                        <Button onClick={(e) => deleteEntries(e, ent.id)} className="deleteBtn">Törlés</Button>
-                        <p>.</p>
-                        <Link className="editLink" to={`/entries/${ent.id}`}>Bejegyzés Szerkesztés</Link>
-                        
-                        <p>Bejegyzést írta: {ent.username}</p>
-                        </>     
+            <Container>
+                {isAdmin && (
+                    <Form onSubmit={addEntries}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Bejegyzés címe</Form.Label>
+                            <Form.Control
+                                className="input"
+                                onChange={updateFormValue("title")}
+                                value={form.title}
+                                placeholder="Bejegyzés címe"
+                            />
+                        </Form.Group>
+                        {titleError && <p>{titleError}</p>}
+                        <Form.Group className="mb-3">
+                            <Form.Label>Bejegyzés írása</Form.Label>
+                            <Form.Control
+                                className="input"
+                                onChange={updateFormValue("description")}
+                                value={form.description}
+                                placeholder="Leírás"
+                                type="text"
+                                as="textarea"
+                                rows={10}
+                            />
+                        </Form.Group>
+                        {descriptionError && <p>{descriptionError}</p>}
+                        <Button className="reviewBtn" type="submit">
+                            Bejegyzés elküldése
+                        </Button>
+                    </Form>
                 )}
-        
-            
-            
-                
-            
-        </Container> 
-        )}
+            </Container>
+
+            {entries?.map((ent) => (
+                <Container>
+                    <h1 key={ent.id}>{ent.title}</h1>
+                    <h2>{ent.description}</h2>
+                    {isAdmin && (
+                        <>
+                            <Button
+                                onClick={(e) => deleteEntries(e, ent.id)}
+                                className="deleteBtn"
+                            >
+                                Törlés
+                            </Button>
+                            <p>.</p>
+                            <Link
+                                className="editLink"
+                                to={`/entries/${ent.id}`}
+                            >
+                                Bejegyzés Szerkesztés
+                            </Link>
+
+                            <p>Bejegyzést írta: {ent.username}</p>
+                        </>
+                    )}
+                </Container>
+            ))}
         </>
-            
-        
-        
-        
-    )
+    );
 }

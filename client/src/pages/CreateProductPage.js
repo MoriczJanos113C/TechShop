@@ -4,22 +4,19 @@ import Axios from "axios";
 import React from "react";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
-import "../style/CreateProductPage.css"
-
+import "../style/CreateProductPage.css";
 
 const DEFAULT_FORM_OBJECT = {
-        name:'',
-        cost: '',
-        category: '',
-        description:''
-    };
+    name: "",
+    cost: "",
+    category: "",
+    description: "",
+};
 
-export function CreateProductPage(){
-
-    
+export function CreateProductPage() {
     //hooks and contextes, navigate
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT);
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const [nameError, setNameError] = useState("");
     const [costError, setCostError] = useState("");
@@ -28,73 +25,78 @@ export function CreateProductPage(){
 
     //validation for the form
     const checkValid = () => {
-
-            
-        if(!String(form.name)
-        .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
-        )&& form.name.trim() != "")
-        setNameError("Nem megfelelő termék név")
-        else{
+        if (
+            !String(form.name).match(
+                /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
+            ) &&
+            form.name.trim() != ""
+        )
+            setNameError("Nem megfelelő termék név");
+        else {
             setNameError("");
         }
 
-        if(!String(form.category)
-        .match(
-            /^[a-zA-z\u00C0-\u024F0-9 -]{4,}$/
-        )&& form.category.trim() != "")
-        setCategoryError("Nem megfelelő termék kategória")
-        else{
+        if (
+            !String(form.category).match(/^[a-zA-z\u00C0-\u024F0-9 -]{4,}$/) &&
+            form.category.trim() != ""
+        )
+            setCategoryError("Nem megfelelő termék kategória");
+        else {
             setCategoryError("");
         }
 
-        if(!String(form.cost)
-        .match(
-            /^[0-9]{1,}$/
-        )&& form.cost.trim() != "")
-        setCostError("Nem megfelelő ár")
-        else{
+        if (!String(form.cost).match(/^[0-9]{1,}$/) && form.cost.trim() != "")
+            setCostError("Nem megfelelő ár");
+        else {
             setCostError("");
         }
-        
-        if(!String(form.description)
-        .match(
-            /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
-        )&& form.description.trim() != "")
-        setDescriptionError("Nem megfelelő leírás")
-        else{
+
+        if (
+            !String(form.description).match(
+                /^[a-zA-Z\u00C0-\u024F0-9 $()_+\-=\[\]{};':"\\|,.<>\/?!\n]/
+            ) &&
+            form.description.trim() != ""
+        )
+            setDescriptionError("Nem megfelelő leírás");
+        else {
             setDescriptionError("");
         }
-    }
+    };
 
     //check that the validation is correct
     useEffect(() => {
         checkValid();
-    },[form])
-
+    }, [form]);
 
     //will post the datas from the form after the form sent
     //multipart form data because, its sending a file too
     //its creating a product
-    const createProduct =  async (e) => {
+    const createProduct = async (e) => {
         e.preventDefault();
-        if(nameError === "" && categoryError === "" && descriptionError === "" && costError === "" &&
-        form.name.trim() != "" && form.category.trim() != "" && form.description.trim() != "" &&
-        form.cost.trim() != ""){
-        const formData = new FormData();
-        formData.append("name", form.name);
-        formData.append("cost", form.cost);
-        formData.append("category", form.category);
-        formData.append("description", form.description);
-        formData.append("file", form.file);
-        await Axios.post("http://localhost:8080/products", formData, {
-            headers: {
-                'content-type': 'multipart/form-data',
-                Authorization: `Bearer ${user.token}`,
-            }
-        });
-        setForm(DEFAULT_FORM_OBJECT);
-        navigate("/products");
+        if (
+            nameError === "" &&
+            categoryError === "" &&
+            descriptionError === "" &&
+            costError === "" &&
+            form.name.trim() != "" &&
+            form.category.trim() != "" &&
+            form.description.trim() != "" &&
+            form.cost.trim() != ""
+        ) {
+            const formData = new FormData();
+            formData.append("name", form.name);
+            formData.append("cost", form.cost);
+            formData.append("category", form.category);
+            formData.append("description", form.description);
+            formData.append("file", form.file);
+            await Axios.post("http://localhost:8080/products", formData, {
+                headers: {
+                    "content-type": "multipart/form-data",
+                    Authorization: `Bearer ${user.token}`,
+                },
+            });
+            setForm(DEFAULT_FORM_OBJECT);
+            navigate("/products");
         }
     };
 
@@ -104,7 +106,6 @@ export function CreateProductPage(){
             ...form,
             [key]: e.target.value,
         });
-
     };
     //to the file
     const updateFormFileValue = (key) => (e) => {
@@ -113,64 +114,74 @@ export function CreateProductPage(){
             [key]: e.target.files[0],
         });
     };
-    
 
-    return(
-        
+    return (
         <div className="product">
-                <Row>
-                    <Col></Col>
-                    <Col xs={6}>
+            <Row>
+                <Col></Col>
+                <Col xs={6}>
                     <h1 className="headLine">Új termék hozzáadása</h1>
-                        <Form onSubmit={createProduct}>
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Név</Form.Label>
-                                    <Form.Control className="input"
-                                            onChange={updateFormValue("name")}
-                                            value={form.name} 
-                                            type="name" placeholder="ide írd a termék nevét" />
-                                </Form.Group>
-                                {nameError && <p>{nameError}</p>}
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Kategória</Form.Label>
-                                    <Form.Control className="input"
-                                            onChange={updateFormValue("category")}
-                                            value={form.category} 
-                                            type="text" placeholder="ide írd a termék kategóriáját" />
-                                </Form.Group>
-                                {categoryError && <p>{categoryError}</p>}
-                                <Form.Group className="mb-3">
-                                        <Form.Label>Ár</Form.Label>
-                                        <Form.Control className="input"
-                                            onChange={updateFormValue("cost")}
-                                            value={form.cost}
-                                            type="number" 
-                                            placeholder="Ide írd a termék árát" />
-                                </Form.Group>
-                                {costError && <p>{costError}</p>}
-                                <Form.Group className="mb-3" >
-                                    <Form.Label>Termék leírása</Form.Label>
-                                        <Form.Control className="input"
-                                            onChange={updateFormValue("description")}
-                                            value={form.description} 
-                                            type="text" as="textarea" 
-                                            rows={3}/>
-                                </Form.Group>
-                                {descriptionError && <p>{descriptionError}</p>}
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Kép</Form.Label>
-                                    <Form.Control className="input"
-                                            onChange={updateFormFileValue("file")}
-                                            type="file" />
-                                </Form.Group>
-                                <Button className="btn" type="submit">
-                                    Új termék felvétele
-                                </Button>
-                            </Form>
-                        </Col>
-                    <Col></Col>
-                </Row>
+                    <Form onSubmit={createProduct}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Név</Form.Label>
+                            <Form.Control
+                                className="input"
+                                onChange={updateFormValue("name")}
+                                value={form.name}
+                                type="name"
+                                placeholder="ide írd a termék nevét"
+                            />
+                        </Form.Group>
+                        {nameError && <p>{nameError}</p>}
+                        <Form.Group className="mb-3">
+                            <Form.Label>Kategória</Form.Label>
+                            <Form.Control
+                                className="input"
+                                onChange={updateFormValue("category")}
+                                value={form.category}
+                                type="text"
+                                placeholder="ide írd a termék kategóriáját"
+                            />
+                        </Form.Group>
+                        {categoryError && <p>{categoryError}</p>}
+                        <Form.Group className="mb-3">
+                            <Form.Label>Ár</Form.Label>
+                            <Form.Control
+                                className="input"
+                                onChange={updateFormValue("cost")}
+                                value={form.cost}
+                                type="number"
+                                placeholder="Ide írd a termék árát"
+                            />
+                        </Form.Group>
+                        {costError && <p>{costError}</p>}
+                        <Form.Group className="mb-3">
+                            <Form.Label>Termék leírása</Form.Label>
+                            <Form.Control
+                                className="input"
+                                onChange={updateFormValue("description")}
+                                value={form.description}
+                                type="text"
+                                as="textarea"
+                                rows={3}
+                            />
+                        </Form.Group>
+                        {descriptionError && <p>{descriptionError}</p>}
+                        <Form.Group className="mb-3">
+                            <Form.Label>Kép</Form.Label>
+                            <Form.Control
+                                className="input"
+                                onChange={updateFormFileValue("file")}
+                                type="file"
+                            />
+                        </Form.Group>
+                        <Button className="btn" type="submit">
+                            Új termék felvétele
+                        </Button>
+                    </Form>
+                </Col>
+                <Col></Col>
+            </Row>
         </div>
-        
     );
-};
+}

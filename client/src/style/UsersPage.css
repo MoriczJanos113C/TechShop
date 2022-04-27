@@ -1,25 +1,25 @@
-.users{
+.users {
     background-color: grey;
     padding-bottom: 1.5cm !important;
     padding-top: 3cm !important;
 }
 
-.input{
+.input {
     background-color: rgb(238, 238, 238) !important;
     border-color: black !important;
     color: black;
     margin-top: 30px;
     margin-bottom: 30px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
 
-.editLink{
+.editLink {
     color: black;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
     font-size: large;
 }
 
-.information{
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+.information {
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
     font-size: large;
 }

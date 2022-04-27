@@ -3,6 +3,6 @@ import { UserContext } from "../App";
 
 //will decide if the user is logged in
 export const useIsLoggedIn = () => {
-    const {token} = useContext(UserContext);
+    const { token } = useContext(UserContext);
     return !!token;
-}
+};
