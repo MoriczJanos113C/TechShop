@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "efb8cd99-9bb9-4eea-9822-ba54f1e0b588",
+		"_postman_id": "1962811f-e040-42a9-95a6-0366244b21b1",
 		"name": "user's order requests, orders requests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -78,7 +78,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/deleteOrder/101",
+					"raw": "http://localhost:8080/deleteOrder/100",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -86,7 +86,7 @@
 					"port": "8080",
 					"path": [
 						"deleteOrder",
-						"101"
+						"100"
 					]
 				}
 			},

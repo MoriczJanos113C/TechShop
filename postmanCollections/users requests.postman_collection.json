@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "395e6e57-c0b1-45c5-abb8-d4195b156464",
+		"_postman_id": "69dae6ca-03f3-49ca-ab45-e947584d3964",
 		"name": "users requests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -59,7 +59,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/163",
+					"raw": "http://localhost:8080/users/162",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -67,7 +67,7 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"163"
+						"162"
 					]
 				}
 			},
@@ -79,7 +79,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/deleteUser/163",
+					"raw": "http://localhost:8080/deleteUser/162",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -87,7 +87,7 @@
 					"port": "8080",
 					"path": [
 						"deleteUser",
-						"163"
+						"162"
 					]
 				}
 			},

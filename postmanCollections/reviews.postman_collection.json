@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "92b320f5-77cb-4b5a-a61e-04096b13a51e",
+		"_postman_id": "13381201-4025-4364-882c-c278036b7547",
 		"name": "reviews",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -59,7 +59,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/deleteReview/97",
+					"raw": "http://localhost:8080/deleteReview/96",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -67,7 +67,7 @@
 					"port": "8080",
 					"path": [
 						"deleteReview",
-						"97"
+						"96"
 					]
 				}
 			},

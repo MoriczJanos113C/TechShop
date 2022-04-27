@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b9d26c85-8770-4fda-bae4-44f8859115ba",
+		"_postman_id": "7fdb449c-5a70-4744-8d37-1e529181d7b1",
 		"name": "products",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -86,7 +86,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/C:/Users/moric/Desktop/postmanCollections/postmanPostTest.png"
+							"src": "/C:/Users/moric/Desktop/techsh/TechShop/postmanCollections/pictures for put, post request/postmanPostTest.png"
 						}
 					]
 				},
@@ -125,7 +125,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/C:/Users/moric/Desktop/postmanCollections/postmanPutTest.png"
+							"src": "/C:/Users/moric/Desktop/techsh/TechShop/postmanCollections/pictures for put, post request/postmanPutTest.png"
 						},
 						{
 							"key": "cost",
