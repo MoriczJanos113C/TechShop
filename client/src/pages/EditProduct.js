@@ -30,7 +30,6 @@ export function EditProduct() {
             const { data: product } = await Axios.get(
                 `http://localhost:8080/products/product/${productId}`
             );
-            console.log(product);
             setForm({
                 name: product[0].name,
                 cost: product[0].cost,
