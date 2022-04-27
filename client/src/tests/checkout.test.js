@@ -6,7 +6,7 @@ import { act } from 'react-dom/test-utils'
 import { ShoppingCartContext, UserContext } from '../App'
 
 
-/*describe("CheckOutPage", () => {
+describe("CheckOutPage", () => {
     describe("Valid inputs", () => {
         it('calls the onSubmit function', async () => {
             const mockOnSubmit = jest.fn()
@@ -85,4 +85,4 @@ describe("Hibás kártya szám", () => {
         expect(container.innerHTML).toMatch("A kártya számnak érvényesnek kell lennie")
 })
 })
-})*/
+})

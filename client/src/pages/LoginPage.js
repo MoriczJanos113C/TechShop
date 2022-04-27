@@ -12,7 +12,7 @@ const DEFAULT_FORM_OBJECT = {
     };
     
     
-export function LoginPage({submit}){
+export function LoginPage(){
 
     
     //hooks and contextes

@@ -4,8 +4,7 @@ import {render, fireEvent, getByText, getByLabelText} from '@testing-library/rea
 import { act } from 'react-dom/test-utils'
 import { ShoppingCartContext, UserContext } from '../App'
 import { AppRouter } from '../AppRouter'
-
-/*describe("UsersPage", () => {
+describe("UsersPage", () => {
     describe("Valid inputs", () => {
         it('calls the onSubmit function', async () => {
             const mockOnSubmit = jest.fn()
@@ -27,4 +26,4 @@ import { AppRouter } from '../AppRouter'
         expect(mockOnSubmit).toHaveBeencalled()
     })
 })
-})*/
+})

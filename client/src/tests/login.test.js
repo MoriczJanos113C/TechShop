@@ -25,7 +25,7 @@ describe('LoginPage', () => {
     })
 })
 
-/*describe("LoginPage", () => {
+describe("LoginPage", () => {
             describe("Valid inputs", () => {
                 it('calls the onSubmit function', async() => {
                     const mockOnSubmit = jest.fn()
@@ -82,5 +82,5 @@ describe('LoginPage', () => {
                         expect(container.innerHTML).toMatch("Hibás jelszó")
                     })
                 })
-            })*/
+            })
 

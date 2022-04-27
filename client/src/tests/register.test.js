@@ -4,7 +4,7 @@ import {render, fireEvent, getByText, getByLabelText} from '@testing-library/rea
 import { act } from 'react-dom/test-utils'
 import { ShoppingCartContext, UserContext } from '../App'
 import { AppRouter } from '../AppRouter'
-/*
+
 test('rednders form properly', () => {
     const {getByTestId, getByLabelText} = render(<RegisterPage/>);
 
@@ -106,4 +106,4 @@ describe("RegisterPage", () => {
             expect(container.innerHTML).toMatch("A jelszónak többnek kell lennie mint 5 karakter")
     })
 })
-})*/
+})
